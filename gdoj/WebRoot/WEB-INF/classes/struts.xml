@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<include file="struts-default.xml" />
+	<constant name="struts.i18n.encoding" value="UTF-8"/>  
+	<constant name="struts.custom.i18n.resources" value="globalMessages"></constant>
+	<!-- 此constant设置临时文件存放目录，因为默认的default.properties中没有指定 -->
+	<constant name="struts.multipart.saveDir" value="/tmp"/>
+	<constant name="struts.multipart.maxSize" value="9000000000"/>
+	<!-- 将action托管给spring -->
+	<constant name="struts.action.extension" value=",action,do"/>
+	<constant name="struts.objectFactory" value="spring"></constant>
+	
+	<!-- 设置为开发模式 -->
+    <constant name="struts.devMode" value="true" />
+    
+    
+    <package name="gdoj" extends="struts-default" >
+		<interceptors>  
+			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
+			<interceptor name="isEnter" class="com.gdoj.common.interceptor.EnterInterceptor"/>
+			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
+			<interceptor name="isContestStart" class="contestInterceptorBean"/>
+			<interceptor name="isContestRegister" class="IsContestRegisterInterceptorBean"/>
+			<interceptor name="isAdmin" class="com.gdoj.common.interceptor.IsNoEditAdminInterceptor"/>
+			<interceptor name="isAdmin2" class="com.gdoj.common.interceptor.IsAdminInterceptor"/>
+			<interceptor name="isHead" class="com.gdoj.common.interceptor.IsHeadInterceptor"/>
+		</interceptors>
+		<global-results>
+			<result name="home">/index.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
+			<result name="error">/jsp/error.jsp</result>	
+			<result name="contestPending">/jsp/error.jsp</result>
+		</global-results> 
+		<action name="home">	
+		<result name="success">/index.jsp</result>
+		</action>
+		<!-- 使用通配符号定义Action的name -->
+		<action name="*">
+		<!-- 将请求转发该jsp路径下同名的JSP页面 -->
+		<result>/jsp/{1}.jsp</result>
+		</action>
+		
+		<action name="*">	
+		<result name="success">/jsp/unknownurl.jsp</result>
+		</action>
+		<action name="/*">	
+		<result name="success">/jsp/unknownurl.jsp</result>
+		</action>
+		<action name="admin">
+			<result name="success">/jsp/admin/index.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>	
+			<interceptor-ref name="isAdmin"></interceptor-ref>			
+		</action>
+		
+		<action name="queue" class="com.gdoj.common.action.QueueAction">	
+			<result name="success" >/jsp/error.jsp</result>
+		</action>
+		<action name="search" class="searchBean" method="search">
+			<result name="input">/jsp/searchlist.jsp</result>
+			<result name="success">/jsp/searchlist.jsp</result>			
+		</action>
+		<action name="uploadphoto" class="uploadBean" method="uploadPhoto">		
+			<interceptor-ref name="fileUpload">
+	          <param name="maximumSize">5242880</param>
+	          <param name="allowedTypes">image/jpeg,image/jpg,image/bmp,image/gif,image/png,image/pjpeg,image/x-png</param>
+	          </interceptor-ref>
+      		   <interceptor-ref name="defaultStack"/> 
+      		  <result name="input" type="redirect">settings</result>
+      		  <result name="success" type="redirect">settings</result>
+		</action>
+		<action name="redirect" class="com.gdoj.common.action.RedirectAction">	
+		</action>
+		<action name="image-upload" class="com.gdoj.common.action.ImageUploadAction" method="uploadImage">	
+		</action>
+		<action name="register" class="registerBean">	
+			<result name="input">/jsp/register.jsp</result>	
+			<result name="success"  type="redirect">/settings</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isEnter"></interceptor-ref>
+
+		</action>
+		<action name="registration" >
+			<result name="success">/jsp/register.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isEnter"></interceptor-ref>
+		</action>
+		<action name="password-recovery">
+			<result name="success">/jsp/password-recovery.jsp</result>			
+		</action>
+		<action name="passwordRecovery" class="passwordRecoveryBean">
+			<result name="input">/jsp/password-recovery.jsp</result>
+			<result name="success">/jsp/success.jsp</result>			
+		</action>
+		<action name="enter">
+			<result name="success">/jsp/login.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isEnter"></interceptor-ref>
+		</action>
+		<action name="login" class="loginBean">
+			<result name="input">/jsp/login.jsp</result>	
+			<result name="success" type="redirect">redirect.action</result>
+		</action>
+		<action name="loginEx" class="jsonLoginBean" method="loginEx">		
+		</action> 
+		<action name="logout" class="com.gdoj.common.action.LogoutAction">		
+			<result name="success" type="redirect">redirect.action</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>
+		</action>
+		<action name="userList" class="listUserBean">
+			<result name="success">index.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>
+		</action>
+		<action name="profile" class="profileBean" method="queryUser">
+			<result name="success">/jsp/profile.jsp</result>
+		</action>
+		<action name="settings" class="settingsBean" method="settings">	   
+			<result name="success">/jsp/modifyuser.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>
+		</action>
+		<action name="modifyUser" class="modifyUserBean" method="modifyUser">	
+			<result name="input">/jsp/modifyuser.jsp</result>
+			<result name="success" type="redirect">/profile/${username}</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>
+		</action>
+		<action name="userInfo" class="userTipBean" method="userInfo">
+			
+		</action>
+		<action name="showImage" class="com.gdoj.common.action.ShowImageAction" method="showImage">
+			
+		</action>
+		<action name="view-source" class="solutionSourceBean" method="solutionSource">
+			<result name="success">/jsp/viewsource.jsp</result> 	
+		</action>
+		<action name="view-compileinfo" class="compileInfoBean" method="getCompileError">
+			<result name="success">/jsp/viewcompileerror.jsp</result>
+		</action>
+		<action name="problemset" class="problemListBean" method="problemSet">
+			<result name="success">/jsp/problemset.jsp</result>	
+		</action>
+
+		<action name="contests" class="contestListBean" method="contestSet">
+			<result name="success">/jsp/contest/contestlist.jsp</result>	
+		</action>
+
+		<action name="contest" class="contestShowBean" method="contestShow">
+			<result name="success">/jsp/contest/contestshow.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isContestStart"></interceptor-ref>
+			<interceptor-ref name="isContestRegister"></interceptor-ref>
+		</action>
+		<action name="contestRegistrants" class="contestRegistrantsBean" method="queryRegistrantsList">
+			<result name="success">/jsp/contest/registrantslist.jsp</result>	
+		</action>
+		<action name="mails" class="MailBean" method="queryRecvMails">
+			<result name="success">/jsp/mailrecvlist.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>
+		</action>
+		<action name="topic" class="messagesListBean" method="topicList">
+			<result name="success">/jsp/messageslist.jsp</result>
+		</action>	
+		<action name="recent-actions" class="recentActionBean" method="recentAction">
+			<result name="success">/jsp/recentaction.jsp</result>
+		</action>
+		<action name="news" class="newsListBean" method="queryNews">
+			<result name="success" >/jsp/newslist.jsp</result>	
+		</action>
+		
+		<action name="newsshow" class="newsBean" method="showNews">
+			<result name="success" >/jsp/newsshow.jsp</result>	
+		</action>
+		<action name="statistic-chart">
+			<result name="success" >/jsp/chart.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+	</package>
+	<package name="topic" extends="struts-default" namespace="/topic">
+		<interceptors>  
+			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
+			<interceptor name="isEnter" class="com.gdoj.common.interceptor.EnterInterceptor"/>
+			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
+		</interceptors>
+		<global-results>
+			<result name="home">/index.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
+			<result name="error">/jsp/error.jsp</result>	
+		</global-results> 
+		<action name="show" class="MessagesBean" method="showMessage">
+			<result name="success">/jsp/messageshow.jsp</result>
+			<result name="input" >/jsp/messageshow.jsp</result>			
+		</action>
+		<action name="edit" class="MessagesBean" method="editMessage">
+			<result name="success">/jsp/messageedit.jsp</result>		
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>			
+		</action>				
+		<action name="new">
+			<result name="success">/jsp/messagenew.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>			
+		</action>
+
+	</package>
+
+	<package name="problemset" extends="struts-default" namespace="/problemset">
+		<interceptors>  
+			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
+			<interceptor name="isEnter" class="com.gdoj.common.interceptor.EnterInterceptor"/>
+			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
+		</interceptors>
+		<global-results>
+			<result name="home">/index.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
+			<result name="error">/jsp/error.jsp</result>	
+		</global-results> 
+		
+		<action name="problem" class="problemShowBean" method="problemShow">
+			<result name="success">/jsp/problemshow.jsp</result>	
+		</action>
+		<action name="standings" class="standingsBean" method="standings">
+			<result name="success">/jsp/standings.jsp</result>	
+		</action>
+		<action name="status" class="solutionListBean" method="queryStatusList">
+			<result name="success">/jsp/status.jsp</result>	
+		</action>
+		<action name="submit" class="beforSubmitBean" >		
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<result name="success">/jsp/submitsolution.jsp</result>	
+		</action>
+		<action name="submited" class="submitBean" method="submitSolution">
+			<result name="input">/jsp/submitsolution.jsp</result>
+			<result name="success" type="redirect">/problemset/status</result>
+		</action>
+		<action name="statistic" class="solutionStatisticBean" method="queryProblemStatistic">
+			<result name="success">/jsp/statistic.jsp</result>	
+		</action>
+
+				
+	</package>	
+		
+	<package name="contest" extends="struts-default" namespace="/contest">
+		<interceptors>  
+			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
+			<interceptor name="isEnter" class="com.gdoj.common.interceptor.EnterInterceptor"/>
+			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
+			<interceptor name="isContestStart" class="contestInterceptorBean"/>
+			<interceptor name="isContestRegister" class="IsContestRegisterInterceptorBean"/>
+		</interceptors>
+		<global-results>
+			<result name="home">/index.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
+			<result name="error">/jsp/error.jsp</result>	
+			<result name="contestPending">/jsp/error.jsp</result>
+		</global-results> 	
+		
+		<action name="UnRegisterContest" class="contestUnRegisterBean" method="UnRegisterContest">
+			<result name="success">/contestRegistrants/${contestId}</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isContestRegister"></interceptor-ref>			
+		</action>
+		<action name="problem" class="cproblemShowBean" method="problemShow">
+			<result name="success">/jsp/contest/problemshow.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isContestStart"></interceptor-ref>	
+			<interceptor-ref name="isContestRegister"></interceptor-ref>			
+		</action>
+		<action name="status" class="contestSolutionListBean" method="queryStatusList">
+			<result name="success">/jsp/contest/status.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isContestStart"></interceptor-ref>	
+			<interceptor-ref name="isContestRegister"></interceptor-ref>		
+		</action>
+		<action name="standings" class="contestStandingsBean" method="queryStandingsList">
+			<result name="success">/jsp/contest/standings.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isContestStart"></interceptor-ref>
+<!--			<interceptor-ref name="isContestRegister"></interceptor-ref>-->
+		</action>
+		<action name="submit" class="com.gdoj.common.action.ContestSubmitAction">		
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isContestStart"></interceptor-ref>
+			<interceptor-ref name="isContestRegister"></interceptor-ref>
+			<result name="success">/jsp/contest/submit.jsp</result>	
+		</action>
+		<action name="submited" class="contestSubmitBean" method="submitSolution">
+			<result name="input">/jsp/contest/submit.jsp</result>
+			<result name="success" type="redirect">/contest/${contestId}/status</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isContestStart"></interceptor-ref>
+			<interceptor-ref name="isContestRegister"></interceptor-ref>	
+		</action>
+		<action name="recent">
+			<result name="success">/jsp/contest/other_oj.jsp</result>	
+		</action>	
+
+		
+	</package>		
+	<package name="mails" extends="struts-default" namespace="/mails">
+		<interceptors>  
+			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
+			<interceptor name="isEnter" class="com.gdoj.common.interceptor.EnterInterceptor"/>
+			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
+		</interceptors>
+		<global-results>
+			<result name="home">/index.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
+			<result name="error">/jsp/error.jsp</result>	
+		</global-results> 
+		<action name="show" class="MailBean" method="showMail">
+			<result name="success">/jsp/mailshow.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>			
+		</action>
+		<action name="send" class="MailBean" method="querySendMails">
+			<result name="success">/jsp/mailsendlist.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>			
+		</action>
+		<action name="new" class="newMailBean" method="newMail">
+			<result name="success">/jsp/mailnew.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>			
+		</action>
+	</package>
+	
+	<package name="admin" extends="struts-default" namespace="/admin">
+		<interceptors>  
+			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
+			<interceptor name="isEnter" class="com.gdoj.common.interceptor.EnterInterceptor"/>
+			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
+			<interceptor name="isAdmin" class="com.gdoj.common.interceptor.IsNoEditAdminInterceptor"/>
+			<interceptor name="isAdmin2" class="com.gdoj.common.interceptor.IsAdminInterceptor"/>
+			<interceptor name="isHead" class="com.gdoj.common.interceptor.IsHeadInterceptor"/>
+		</interceptors>
+		<global-results>
+			<result name="home">/index.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
+			<result name="error">/jsp/error.jsp</result>	
+		</global-results> 
+
+		<action name="Privilege" class="privilegeBean" method="ListPrivilege">
+			<result name="success">/jsp/admin/privilegelist.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>	
+			<interceptor-ref name="isHead"></interceptor-ref>
+		</action>
+		<action name="addPrivilege" class="privilegeBean" method="addPrivilege">
+			<result name="success">/admin/Privilege</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isHead"></interceptor-ref>	
+		</action>
+		<action name="deletePrivilege" class="privilegeBean" method="deletePrivilege">
+			<result name="success">/admin/Privilege</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isHead"></interceptor-ref>	
+		</action>
+		<action name="users" class="adminUserListBean" method="userList">
+			<result name="success">/jsp/admin/userlist.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isHead"></interceptor-ref>	
+		</action>
+		<action name="problemset" class="adminProblemListBean" method="problemSet">
+			<result name="success">/jsp/admin/problemset.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin"></interceptor-ref>	
+		</action>
+		<action name="problem" class="adminProblemShowBean" method="problemShow">
+			<result name="success">/jsp/admin/problemshow.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="newproblem">
+			<result name="success">/jsp/admin/addproblem.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+	    </action>
+	    <action name="addproblem" class="problemAddBean" method="problemAdd">
+			<result name="input" >/jsp/admin/addproblem.jsp</result>	
+			<result name="success" type="redirect">/admin/problemset</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="problemUpdate" class="problemModifyBean" method="problemModify">
+			<result name="input" >/jsp/admin/addproblem.jsp</result>	
+			<result name="success" type="redirect">/admin/problemset/problem/${problem.problem_id}</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="problemEdit" class="problemBeforeModifyBean" method="problemBeforeModify">
+			<result name="success">/jsp/admin/problemedit.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+
+		<action name="status" class="adminSolutionsBean" method="queryStatusList">
+			<result name="success">/jsp/admin/status.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>	
+		<action name="view-source" class="adminSolutionSourceBean" method="solutionSource">
+			<result name="success">/jsp/viewsource.jsp</result> 
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isHead"></interceptor-ref>	
+		</action>
+		
+		<action name="json-view-source" class="adminSolutionSourceBean" method="JsonSolutionSource">
+			<result name="success">/jsp/viewsource.jsp</result> 
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isHead"></interceptor-ref>	
+		</action>
+		
+		<action name="contests" class="adminContestListBean" method="contestSet">
+			<result name="success">/jsp/admin/contestlist.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>	
+		<action name="contest" class="adminContestShowBean" method="contestShow">
+			<result name="success">/jsp/admin/contestshow.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		
+		 <action name="contestaddproblem" class="cproblemAddBean" method="problemAdd">
+	    	<result name="input" >/jsp/admin/contestshow.jsp</result>	
+			<result name="success" type="redirect">/admin/contest/${problem.contest_id}</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="contestProblemDelete" class="cproblemDeleteBean" method="problemDelete">	    	
+			<result name="success" type="redirect">/admin/contest/${contestId}</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="newcontest">
+			<result name="success">/jsp/admin/addcontest.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+	    </action>
+	    <action name="addcontest" class="contestBean" method="contestAdd">
+	    	<result name="input" >/jsp/admin/addcontest.jsp</result>	
+			<result name="success" type="redirect">/admin/contests</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="contestUpdate" class="contestBean" method="contestModify">
+			<result name="input" >/jsp/admin/contestedit.jsp</result>
+			<result name="success" type="redirect">/admin/contest/${contest.contest_id}</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="contestEdit" class="contestBean" method="contestBeforeModify">
+			<result name="success">/jsp/admin/contestedit.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="delContest" class="contestBean" method="delContest">
+			<result name="success" type="redirect">/admin/contests</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="resumeContest" class="contestBean" method="resumeContest">
+			<result name="success" type="redirect">/admin/contests</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		
+		<action name="testFileList" class="com.gdoj.admin.action.TestFileListAction">
+			<result name="success">/jsp/admin/testfilelist.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin"></interceptor-ref>
+		</action>
+		<action name="showFileContent" class="com.gdoj.admin.action.ShowFileContentAction">
+			<result name="success" >/jsp/admin/showfile.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin"></interceptor-ref>
+		</action>
+		<action name="showTestFile" class="com.gdoj.admin.action.ShowTestFileAction">
+			<result name="success" >/jsp/admin/showfile.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin"></interceptor-ref>		
+		</action>
+		<action name="UploadFile" class="com.gdoj.admin.action.UploadFileAction">
+			<result name="success" type="redirect">/admin/problemset/data/${problemId}</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		
+		</action>
+		<action name="topUsers" class="com.gdoj.admin.action.TopUsersAction" method="MakeTopUsers">		
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+			<result name="success" type="redirect">/admin</result>	
+		</action>
+		<action name="recent-action" class="com.gdoj.admin.action.RecentActionAction" method="MakeRecentAction">		
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+			<result name="success" type="redirect">/admin</result>	
+		</action>
+		<action name="OpenPath" class="com.gdoj.admin.action.GetFileListAction" method="fileList">
+			<result name="success" >/jsp/admin/showpath.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="reJudge" class="rejudgeBean" method="reJudge">
+			<result name="success" type="redirect">/admin/problemset/status</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="addPrivilege" class="privilegeBean" method="addPrivilege">
+			<result name="success" type="redirect">/admin/privilege</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isHead"></interceptor-ref>
+		</action>
+		<action name="delPrivilege" class="privilegeBean" method="deletePrivilege">
+			<result name="success" type="redirect">/admin/privilege</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isHead"></interceptor-ref>
+		</action>
+		<action name="privilege" class="privilegeBean" method="ListPrivilege">
+			<result name="success">/jsp/admin/privilegelist.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isHead"></interceptor-ref>
+		</action>
+		<action name="newsnew">
+			<result name="success" >/jsp/admin/newsnew.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="newsedit" class="newsBean" method="beforeModifyNews">
+			<result name="success" >/jsp/admin/newsedit.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="newsshow" class="newsBean" method="showNews_admin">
+			<result name="success" >/jsp/admin/newsshow.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="news" class="newsListBean" method="queryNews_admin">
+			<result name="success" >/jsp/admin/newslist.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="home-edit" class="com.gdoj.admin.action.HomeEditAction" method="homeedit">
+			<result name="success" >/jsp/admin/home.jsp</result>	
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+		<action name="homemaker" class="com.gdoj.admin.action.HomeMakerAction" method="homemaker">
+			<result name="success" type="redirect">/admin</result>		
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>
+				
+		<action name="operate" class="com.gdoj.admin.action.AdminAction">
+			<result name="input">/jsp/admin/index.jsp</result>
+			<result name="success" type="redirect">/admin</result>
+			<result name="admin">/jsp/admin/index.jsp</result>
+			<result name="switchs">/jsp/admin/switch.jsp</result>		
+			<interceptor-ref name="defaultStack"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isAdmin2"></interceptor-ref>
+		</action>		
+	</package>
+	
+		 <!-- 注意这里扩展不再是 struts-default,而是 json-default -->  
+   <package name="json" extends="json-default">   
+   		<interceptors>  
+			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
+			<interceptor name="isEnter" class="com.gdoj.common.interceptor.EnterInterceptor"/>
+			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
+			<interceptor name="isContestStart" class="contestInterceptorBean"/>
+			<interceptor name="isContestRegister" class="IsContestRegisterInterceptorBean"/>
+			<interceptor name="isAdmin" class="com.gdoj.common.interceptor.IsNoEditAdminInterceptor"/>
+			<interceptor name="isAdmin2" class="com.gdoj.common.interceptor.IsAdminInterceptor"/>
+			<interceptor name="isHead" class="com.gdoj.common.interceptor.IsHeadInterceptor"/>
+		</interceptors>
+      	<global-results>
+			<result name="home">/index.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
+			<result name="error">/jsp/error.jsp</result>	
+		</global-results>
+       	<action name="locale" class="localeBean">
+			<result type="json"/>    	
+		</action>      
+         
+        <action name="ajaxUsers" class="getUsersBean">
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 
+		</action>       
+		<action name="postmessage" class="postMessageBean" method="postMessage">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 
+		</action>
+		<action name="vote" class="messageVoteBean" method="vote">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 			
+		</action>
+	   <action name="latestMessages" class="latestMessagesBean" method="latestMessages">
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 
+		</action>
+		<action name="registerContest" class="registerContestBean" method="registerToContest">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 			
+		</action>  		
+		<action name="ajaxStatus" class="jsonStatusBean" method="queryStatus">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 			
+		</action> 
+		<action name="jsonSolutions" class="jsonSolutionListBean" method="queryStatusList">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 			
+		</action> 
+		<action name="jsonProblemset" class="jsonProblemListBean" method="problemSet">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 			
+		</action>  	
+		<action name="contestProblems" class="jsoncproblemListBean" method="jsonProblems">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 	
+			<interceptor-ref name="defaultStack"></interceptor-ref>							
+			<interceptor-ref name="isContestStart"></interceptor-ref>
+		</action>  	
+
+		<action name="viewsource" class="jsonSolutionSourceBean" method="solutionSource">
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 	
+		</action>
+		<action name="viewcompileinfo" class="jsonCompileInfoBean" method="getCompileError">
+			<result type="json"/>   
+				<param name="excludeProperties"></param> 
+		</action>
+		<action name="onlineUsers" class="com.gdoj.common.action.JsonOnlineUserAction" method="onlineUsers">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 			
+		</action> 
+		
+		<action name="postmail" class="postMailBean" method="postMail">
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 
+		</action>
+		<action name="new-mail-count" class="newMailCountBean" method="countNewMails">
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 
+		</action>
+		<action name="ajaxTags" class="jsonTagsListBean" method="queryTags">
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 
+		</action>
+		<action name="postnews" class="postNewsBean" method="saveNews">
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 
+		</action>
+		<action name="chart" class="StatisticBean" method="statistic">
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 
+		</action>
+		<action name="ping" class="com.gdoj.common.action.PingAction" method="ping">
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 
+		</action>
+    </package>  
+	
+	
+</struts>
+

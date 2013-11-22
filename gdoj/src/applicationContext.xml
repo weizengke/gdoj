@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/gdoj">
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value="rootpwd"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<!-- 指定使用方言 -->
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<!-- 是否在控制台输出sql语句 -->
+				<prop key="show_sql">true</prop>
+<!--				<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+<!--				<prop key="hibernate.jdbc.batch_size">20</prop>-->
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/gdoj/user/vo/User.hbm.xml</value>
+				<value>com/gdoj/message/vo/Message.hbm.xml</value>
+				<value>com/gdoj/problem/vo/Problem.hbm.xml</value>
+				<value>com/gdoj/solution/vo/Solution.hbm.xml</value>
+				<value>com/gdoj/solution_source/vo/Solution_source.hbm.xml</value>
+				<value>com/gdoj/compileinfo/vo/CompileInfo.hbm.xml</value>
+				<value>com/gdoj/contest/vo/Contest.hbm.xml</value>
+				<value>com/gdoj/contest/problem/vo/CProblem.hbm.xml</value>
+				<value>com/gdoj/contest/attend/vo/Attend.hbm.xml</value>
+				<value>com/gdoj/mail/vo/Mail.hbm.xml</value>
+				<value>com/gdoj/vote/vo/Vote.hbm.xml</value>
+				<value>com/gdoj/tags/vo/Tags.hbm.xml</value>
+				<value>com/gdoj/tagsview/vo/Tagsview.hbm.xml</value>
+				<value>com/gdoj/privilege/vo/Privilege.hbm.xml</value>
+				<value>com/gdoj/news/vo/News.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 定义事务管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 这个bean主要是为了得到ApplicationContext 所以它不需要其它属性-->
+     <bean class="com.util.MyApplicationContextUtil"></bean>
+     
+	<bean name="uploadBean" class="com.gdoj.common.action.UploadAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="onlineUserBean" class="com.gdoj.listener.OnlineHttpSessionListener" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="localeBean" class="com.gdoj.common.action.LocaleAction" scope="prototype">	
+	</bean>
+	<bean name="beforSubmitBean" class="com.gdoj.common.action.SubmitAction" scope="prototype">	
+		<property name="userService" ref="userService" />
+	</bean>
+		<bean name="contestBeforeSubmitBean" class="com.gdoj.common.action.ContestSubmitAction" scope="prototype">
+		<property name="contestService" ref="contestService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="searchBean" class="com.gdoj.common.action.SearchAction" scope="prototype">	
+		<property name="userService" ref="userService" />
+		<property name="problemService" ref="problemService" />
+		<property name="messageService" ref="messageService" />
+	</bean>
+	<!-- User -->
+	<bean id="userService"
+		class="com.gdoj.user.service.UserServiceImpl">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="userDao" class="com.gdoj.user.dao.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="listUserBean" class="com.gdoj.user.action.UserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="passwordRecoveryBean" class="com.gdoj.common.action.FindPasswordAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="registerBean" class="com.gdoj.common.action.RegisterAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="settingsBean" class="com.gdoj.user.action.SettingsUserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="modifyUserBean" class="com.gdoj.user.action.ModifyUserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="loginBean" class="com.gdoj.common.action.LoginAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="jsonLoginBean" class="com.gdoj.common.action.JsonLoginAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="getUsersBean" class="com.gdoj.user.action.UserListAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="getUserBean" class="com.gdoj.user.action.UserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="profileBean" class="com.gdoj.user.action.ProfileAction" scope="prototype">
+		<property name="userService" ref="userService" />
+		<property name="solutionService" ref="solutionService" />
+		<property name="problemService" ref="problemService" />
+	</bean>
+	<!--End User -->
+	
+	<bean name="standingsBean" class="com.gdoj.user.action.StandingsAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<!-- Vote -->
+	<bean id="voteService" class="com.gdoj.vote.service.VoteServiceImpl">
+		<property name="voteDao" ref="voteDao" />
+	</bean>
+	<bean id="voteDao" class="com.gdoj.vote.dao.VoteDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- End Vote -->
+	<!-- Message -->
+	<bean id="messageService" class="com.gdoj.message.service.MessageServiceImpl">
+		<property name="messageDao" ref="messageDao" />
+	</bean>
+	<bean id="messageDao" class="com.gdoj.message.dao.MessageDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="MessagesBean" class="com.gdoj.message.action.MessageAction" scope="prototype">
+			<property name="userService" ref="userService" />
+		<property name="messageService" ref="messageService" />
+		<property name="tagsviewService" ref="tagsviewService" />
+		<property name="tagsService" ref="tagsService" />
+	</bean>
+	<bean name="messagesListBean" class="com.gdoj.message.action.MessageListAction" scope="prototype">
+			<property name="userService" ref="userService" />
+		<property name="messageService" ref="messageService" />
+	</bean>
+	<bean name="latestMessagesBean" class="com.gdoj.message.action.JsonLatestMessageAction" scope="prototype">
+		<property name="messageService" ref="messageService" />
+	</bean>
+	<bean name="recentActionBean" class="com.gdoj.message.action.LatestMessageListAction" scope="prototype">
+		<property name="messageService" ref="messageService" />
+	</bean>
+	<bean name="adminRecentActionBean" class="com.gdoj.message.action.RecentActionAction" scope="prototype">
+		<property name="messageService" ref="messageService" />
+	</bean>
+	<bean name="postMessageBean" class="com.gdoj.message.action.PostMessageAction" scope="prototype"><!-- prototype每次都new一个，要不会造成对象共享  -->
+		<property name="messageService" ref="messageService" />
+		<property name="tagsviewService" ref="tagsviewService" />
+		<property name="tagsService" ref="tagsService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="messageVoteBean" class="com.gdoj.message.action.JsonMessageVoteAction" scope="prototype"><!-- prototype每次都new一个，要不会造成对象共享  -->
+		<property name="messageService" ref="messageService" />
+		<property name="voteService" ref="voteService" />
+	</bean>
+	<!-- Problem -->
+	<bean id="problemService" class="com.gdoj.problem.service.ProblemServiceImpl">
+		<property name="problemDao" ref="problemDao" />
+	</bean>
+	<bean id="problemDao" class="com.gdoj.problem.dao.ProblemDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="problemListBean" class="com.gdoj.problem.action.ProblemListAction" scope="prototype">
+		<property name="problemService" ref="problemService" />
+		<property name="solutionService" ref="solutionService" />
+		<property name="tagsviewService" ref="tagsviewService" />
+		<property name="tagsService" ref="tagsService" />
+	</bean>
+	<bean name="jsonProblemListBean" class="com.gdoj.problem.action.JsonProblemListAction" scope="prototype">
+		<property name="problemService" ref="problemService" />
+	</bean>
+	<bean name="problemShowBean" class="com.gdoj.problem.action.ProblemShowAction" scope="prototype">
+		<property name="problemService" ref="problemService" />
+		<property name="tagsviewService" ref="tagsviewService" />
+		<property name="tagsService" ref="tagsService" />
+	</bean>
+	<bean name="problemAddBean" class="com.gdoj.problem.action.ProblemAction" scope="prototype">
+		<property name="problemService" ref="problemService" />
+		<property name="tagsviewService" ref="tagsviewService" />
+		<property name="tagsService" ref="tagsService" />
+	</bean>
+	<bean name="problemBeforeModifyBean" class="com.gdoj.problem.action.ProblemAction" scope="prototype">
+		<property name="problemService" ref="problemService" />
+		<property name="tagsviewService" ref="tagsviewService" />
+		<property name="tagsService" ref="tagsService" />
+	</bean>
+	<bean name="problemModifyBean" class="com.gdoj.problem.action.ProblemAction" scope="prototype">
+		<property name="problemService" ref="problemService" />
+		<property name="tagsviewService" ref="tagsviewService" />
+		<property name="tagsService" ref="tagsService" />
+	</bean>
+	
+	
+	<!-- Solution -->
+	<bean id="solutionService" class="com.gdoj.solution.service.SolutionServiceImpl">
+		<property name="solutionDao" ref="solutionDao" />
+		
+	</bean>
+	<bean id="solutionDao" class="com.gdoj.solution.dao.SolutionDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="solutionListBean" class="com.gdoj.solution.action.SolutionListAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+		<property name="problemService" ref="problemService" />
+		<property name="contestService" ref="contestService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="submitBean" class="com.gdoj.solution.action.SubmitionAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+		<property name="problemService" ref="problemService" />
+		<property name="solutionSourceService" ref="solutionSourceService" />
+	</bean>
+	<bean name="contestSolutionListBean" class="com.gdoj.solution.action.ContestSolutionListAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="contestService" ref="contestService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="jsonStatusBean" class="com.gdoj.solution.action.JsonStatusAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="jsonSolutionListBean" class="com.gdoj.solution.action.JsonSolutionListAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="contestSubmitBean" class="com.gdoj.solution.action.ContestSubmitionAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="solutionSourceService" ref="solutionSourceService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="solutionStatisticBean" class="com.gdoj.solution.action.SolutionStatisticAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+		<property name="problemService" ref="problemService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="StatisticBean" class="com.gdoj.solution.action.StatisticAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+		<property name="problemService" ref="problemService" />
+		<property name="contestService" ref="contestService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	
+<!-- Compile Error -->
+	<bean id="compileInfoService" class="com.gdoj.compileinfo.service.CompileInfoServiceImpl">
+		<property name="compileInfoDao" ref="compileInfoDao" />
+	</bean>
+	<bean id="compileInfoDao" class="com.gdoj.compileinfo.dao.CompileInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="compileInfoBean" class="com.gdoj.compileinfo.action.CompileInfoAction" scope="prototype">
+		<property name="compileInfoService" ref="compileInfoService" />
+	</bean>
+	<bean name="jsonCompileInfoBean" class="com.gdoj.compileinfo.action.JsonCompileInfoAction" scope="prototype">
+		<property name="compileInfoService" ref="compileInfoService" />
+	</bean>
+	
+<!-- Solution source -->
+	<bean id="solutionSourceService" class="com.gdoj.solution_source.service.Solution_sourceServiceImpl">
+		<property name="solutionSourceDao" ref="solutionSourceDao" />
+	</bean>
+	<bean id="solutionSourceDao" class="com.gdoj.solution_source.dao.Solution_sourceDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="solutionSourceBean" class="com.gdoj.solution_source.action.Solution_sourceAction" scope="prototype">
+		<property name="solutionSourceService" ref="solutionSourceService" />
+		<property name="solutionService" ref="solutionService" />
+		<property name="problemService" ref="problemService" />
+		<property name="contestService" ref="contestService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="jsonSolutionSourceBean" class="com.gdoj.solution_source.action.JsonSolution_sourceAction" scope="prototype">
+		<property name="solutionSourceService" ref="solutionSourceService" />
+		<property name="solutionService" ref="solutionService" />
+		<property name="problemService" ref="problemService" />
+		<property name="contestService" ref="contestService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<!-- Contest -->
+	<bean id="contestService" class="com.gdoj.contest.service.ContestServiceImpl">
+		<property name="contestDao" ref="contestDao" />
+		
+	</bean>
+	<bean id="contestDao" class="com.gdoj.contest.dao.ContestDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="contestListBean" class="com.gdoj.contest.action.ContestListAction" scope="prototype">
+		<property name="contestService" ref="contestService" />
+		<property name="attendService" ref="attendService" />
+	</bean>
+	<bean name="contestShowBean" class="com.gdoj.contest.action.ContestShowAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+		<property name="contestService" ref="contestService" />
+		<property name="cproblemService" ref="cproblemService" />
+	</bean>
+	<bean name="contestBean" class="com.gdoj.contest.action.ContestAction" scope="prototype">
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="contestInterceptorBean" class="com.gdoj.common.interceptor.ContestInterceptor" scope="prototype">
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="IsContestRegisterInterceptorBean" class="com.gdoj.common.interceptor.IsContestRegisterInterceptor" scope="prototype">
+		<property name="contestService" ref="contestService" />
+		<property name="attendService" ref="attendService" />
+	</bean>
+
+	
+		<!--Contest Problem -->
+	<bean id="cproblemService" class="com.gdoj.contest.problem.service.CProblemServiceImpl">
+		<property name="cproblemDao" ref="cproblemDao" />
+	</bean>
+	<bean id="cproblemDao" class="com.gdoj.contest.problem.dao.CProblemDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="cproblemShowBean" class="com.gdoj.contest.problem.action.ProblemShowAction" scope="prototype">
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="problemService" ref="problemService" />
+	</bean>
+	<bean name="cproblemAddBean" class="com.gdoj.contest.problem.action.ProblemAction" scope="prototype">
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="cproblemBeforeModifyBean" class="com.gdoj.contest.problem.action.ProblemAction" scope="prototype">
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="cproblemModifyBean" class="com.gdoj.contest.problem.action.ProblemAction" scope="prototype">
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+		<bean name="cproblemDeleteBean" class="com.gdoj.contest.problem.action.ProblemAction" scope="prototype">
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="jsoncproblemListBean" class="com.gdoj.contest.problem.action.JsonProblemListAction" scope="prototype">
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+	
+	<!--Contest Attend -->
+	<bean id="attendService" class="com.gdoj.contest.attend.service.AttendServiceImpl">
+		<property name="attendDao" ref="attendDao" />
+	</bean>
+	<bean id="attendDao" class="com.gdoj.contest.attend.dao.AttendDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="registerContestBean" class="com.gdoj.contest.attend.action.RegisterContestAction" scope="prototype">
+		<property name="attendService" ref="attendService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="contestUnRegisterBean" class="com.gdoj.contest.attend.action.UnRegisterContestAction" scope="prototype">
+		<property name="attendService" ref="attendService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+	<bean name="contestStandingsBean" class="com.gdoj.contest.attend.action.ContestStandingsAction" scope="prototype">
+		<property name="attendService" ref="attendService" />
+		<property name="contestService" ref="contestService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="contestRegistrantsBean" class="com.gdoj.contest.attend.action.ContestRegistrantsAction" scope="prototype">
+		<property name="attendService" ref="attendService" />
+		<property name="contestService" ref="contestService" />
+		<property name="userService" ref="userService" />
+	</bean>
+
+	<!-- admin -->
+	<bean name="adminUserListBean" class="com.gdoj.admin.action.UserListAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="adminProblemListBean" class="com.gdoj.admin.action.ProblemListAction" scope="prototype">
+		<property name="problemService" ref="problemService" />
+	</bean>
+	<bean name="adminContestListBean" class="com.gdoj.admin.action.ContestListAction" scope="prototype">
+		<property name="contestService" ref="contestService" />
+		<property name="attendService" ref="attendService" />
+	</bean>
+		<bean name="adminContestShowBean" class="com.gdoj.admin.action.ContestShowAction" scope="prototype">
+		<property name="contestService" ref="contestService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="problemService" ref="problemService" />
+	</bean>
+		<bean name="adminProblemShowBean" class="com.gdoj.admin.action.ProblemShowAction" scope="prototype">
+		<property name="problemService" ref="problemService" />
+	</bean>
+	<bean name="rejudgeBean" class="com.gdoj.admin.action.ReJudgeAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+	</bean>
+	<bean name="adminSolutionsBean" class="com.gdoj.admin.action.SolutionListAction" scope="prototype">
+		<property name="solutionService" ref="solutionService" />
+		<property name="problemService" ref="problemService" />
+		<property name="contestService" ref="contestService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="adminSolutionSourceBean" class="com.gdoj.admin.action.Solution_sourceAction" scope="prototype">
+		<property name="solutionSourceService" ref="solutionSourceService" />
+		<property name="solutionService" ref="solutionService" />
+		<property name="problemService" ref="problemService" />
+		<property name="contestService" ref="contestService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<!-- Mail -->
+	<bean id="mailService" class="com.gdoj.mail.service.MailServiceImpl">
+		<property name="mailDao" ref="mailDao" />
+	</bean>
+	<bean id="mailDao" class="com.gdoj.mail.dao.MailDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="MailBean" class="com.gdoj.mail.action.MailAction" scope="prototype">
+		<property name="mailService" ref="mailService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="postMailBean" class="com.gdoj.mail.action.PostMailAction" scope="prototype">
+		<property name="mailService" ref="mailService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="newMailCountBean" class="com.gdoj.mail.action.JsonNewMailCountAction" scope="prototype">
+		<property name="mailService" ref="mailService" />
+	</bean>
+	<bean name="newMailBean" class="com.gdoj.mail.action.NewMailAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	
+	<!-- Tags -->
+	<bean id="tagsService" class="com.gdoj.tags.service.TagsServiceImpl">
+		<property name="tagsDao" ref="tagsDao" />
+	</bean>
+	<bean id="tagsDao" class="com.gdoj.tags.dao.TagsDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="jsonTagsListBean" class="com.gdoj.tags.action.JsonTagsListAction" scope="prototype">
+		<property name="tagsService" ref="tagsService" />
+	</bean>
+	<!-- End Tags -->
+	
+	<!-- Tags -->
+	<bean id="tagsviewService" class="com.gdoj.tagsview.service.TagsviewServiceImpl">
+		<property name="tagsviewDao" ref="tagsviewDao" />
+	</bean>
+	<bean id="tagsviewDao" class="com.gdoj.tagsview.dao.TagsviewDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- End Tags -->
+	
+	<!-- Privilege -->
+	<bean id="privilegeService" class="com.gdoj.privilege.service.PrivilegeServiceImpl">
+		<property name="privilegeDao" ref="privilegeDao" />
+	</bean>
+	<bean id="privilegeDao" class="com.gdoj.privilege.dao.PrivilegeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="privilegeBean" class="com.gdoj.privilege.action.PrivilegeAction" scope="prototype">
+		<property name="privilegeService" ref="privilegeService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="IsNoEditAdminInterceptorBean" class="com.gdoj.common.interceptor.IsNoEditAdminInterceptor" scope="prototype">
+		<property name="privilegeService" ref="privilegeService" />
+	</bean>
+	<bean name="IsAdminInterceptorBean" class="com.gdoj.common.interceptor.IsAdminInterceptor" scope="prototype">
+		<property name="privilegeService" ref="privilegeService" />
+	</bean>
+	<bean name="IsHeadInterceptorBean" class="com.gdoj.common.interceptor.IsHeadInterceptor" scope="prototype">
+		<property name="privilegeService" ref="privilegeService" />
+	</bean>
+	<!-- End Privilege -->
+	<!-- News -->
+	<bean id="newsService" class="com.gdoj.news.service.NewsServiceImpl">
+		<property name="newsDao" ref="newsDao" />
+	</bean>
+	<bean id="newsDao" class="com.gdoj.news.dao.NewsDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="newsBean" class="com.gdoj.news.action.NewsAction" scope="prototype">
+		<property name="newsService" ref="newsService" />
+	</bean>
+	<bean name="postNewsBean" class="com.gdoj.news.action.PostNewsAction" scope="prototype">
+		<property name="newsService" ref="newsService" />
+	</bean>
+	<bean name="newsListBean" class="com.gdoj.news.action.NewsListAction" scope="prototype">
+		<property name="newsService" ref="newsService" />
+	</bean>
+	
+	<bean name="userTipBean" class="com.gdoj.common.action.UserInfoTipAction" scope="prototype">
+		<property name="messageService" ref="messageService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	
+	
+	
+	
+	<!-- 要调用的工作类 -->  
+        <bean id="quartzJob" class="com.gdoj.bean.QuartzJob"></bean>  
+        <!-- 定义调用对象和调用对象的方法 -->  
+        <bean id="jobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+            <!-- 调用的类 -->  
+            <property name="targetObject">  
+                <ref bean="quartzJob"/>  
+            </property>  
+            <!-- 调用类中的方法 -->  
+            <property name="targetMethod">  
+                <value>work</value>  
+            </property>  
+        </bean>  
+   
+        <!-- 定义触发时间 per 30 minutes  -->  
+        <bean id="doTime" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+            <property name="jobDetail">  
+                <ref bean="jobtask"/>  
+            </property>  
+            <!-- cron表达式 -->  
+            <property name="cronExpression">  
+                <value>0 30 * * * ?</value>  
+            </property>  
+        </bean>  
+        <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  -->  
+        <bean id="startQuertz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">    
+            <property name="triggers">  
+                <list>  
+                    <ref bean="doTime"/>  
+                </list>  
+            </property>  
+        </bean>  
+
+	<!-- online users -->
+		<bean id="QuartzOnlineUsersJob" class="com.gdoj.bean.QuartzOnlineUsersJob"></bean>  
+        <!-- 定义调用对象和调用对象的方法 -->  
+        <bean id="jobtaskOnlineUsers" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+            <!-- 调用的类 -->  
+            <property name="targetObject">  
+                <ref bean="QuartzOnlineUsersJob"/>  
+            </property>  
+            <!-- 调用类中的方法 -->  
+            <property name="targetMethod">  
+                <value>work</value>  
+            </property>  
+        </bean>  
+   
+        <!-- 定义触发时间 per 1 minutes  -->  
+        <bean id="doTimeOnlineUsers" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+            <property name="jobDetail">  
+                <ref bean="jobtaskOnlineUsers"/>  
+            </property>  
+            <!-- cron表达式 -->  
+            <property name="cronExpression">  
+                <value>0 0,15,30,45 * * * ?</value>  
+            </property>  
+        </bean>  
+        <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  -->  
+        <bean id="startQuertzOnlineUsers" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">    
+            <property name="triggers">  
+                <list>  
+                    <ref bean="doTimeOnlineUsers"/>  
+                </list>  
+            </property>  
+        </bean>  
+
+</beans>

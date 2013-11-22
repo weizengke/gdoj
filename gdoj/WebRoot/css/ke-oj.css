@@ -1,0 +1,22 @@
+.ke-content {
+	font-size: 10pt;
+}
+.ke-content pre {
+	font-size:9pt;
+	font-family:Courier New,Arial;
+	border:1px solid #ddd;
+	border-left:5px solid #6CE26C;
+	background:#f6f6f6;
+	padding:5px;
+}
+
+.ke-content p {
+	margin: 0 0 15px 0;
+}
+
+.ke-content div.ref {border:1px solid #ddd;margin:0 0 10px 0;padding:2px;font-size:9pt;background:#ffe;}
+.ke-content div.ref h4 {margin:0;padding:1px 3px;background:#CC9966;color:#fff;font-size:9pt;font-weight:normal;}
+.ke-content div.ref .ref_body {margin:0;padding:2px;line-height:20px;color:#666;font-size:9pt;}
+
+
+.ke-content blockquote {margin:15px 10px;border:2px solid #eee;padding:5px 5px 5px 35px;background:#f4f5f7 url('../img/blockquote.gif') no-repeat left top;color:#060;font-size:9pt;}
