@@ -14,7 +14,7 @@ import cookielib
 import time
 import os
 import re
-import os.path 
+import os.path
 import shutil
 import sys
 
@@ -52,28 +52,28 @@ def login(username,password):
     else:
         print 'login success...'
         return TRUE
-    
+
 #submit
 def submit(pid,lang,source_path):
 
     source = ''
     f=file(source_path)
     # if no mode is specified, 'r'ead mode is assumed by default
-    while True: 
-        line = f.readline() 
-        if len(line) == 0: # Zero length indicates EOF 
-            break 
+    while True:
+        line = f.readline()
+        if len(line) == 0: # Zero length indicates EOF
+            break
         #print line,
         source += line
         # Notice comma to avoid automatic newline added by Python
-    f.close() 
+    f.close()
     # close the file
 
     #print source
 
     #incase that less than 50 byte
     source += str('                                                 ');
-    
+
     url='http://acm.hdu.edu.cn/submit.php?action=submit'
     values={'check':'0','problemid':pid,'language':lang,'usercode':source}
     data = urllib.urlencode(values)
@@ -129,7 +129,7 @@ def dispatch(opt):
 
 if __name__=="__main__":
 
-    # <opt> <problemId> <languageId> <username> <password> <source-path> 
+    # <opt> <problemId> <languageId> <username> <password> <source-path>
     # submit pid lang username password source-path
     # status pid lang username
     # ce rid
@@ -137,14 +137,14 @@ if __name__=="__main__":
 
         count = len(sys.argv)
         print 'Argv-num :',count
-        
+
         if count <= 1:
             print 'No argv, so break.'
             break
-            
+
         print type(sys.argv)
         print str(sys.argv)
-        
+
         #for a in range(1, len(sys.argv)):
         #    print sys.argv[a]
 
@@ -152,37 +152,37 @@ if __name__=="__main__":
             print 'Do submit...'
 
             pid = sys.argv[2]
-            lang = sys.argv[3]            
+            lang = sys.argv[3]
             username = sys.argv[4]
             password = sys.argv[5]
             source_path = sys.argv[6]
             filename = sys.argv[7]
 
             print pid,lang,username,password,source_path,filename
-            
+
             login(username,password)
             submit(pid,lang,source_path)
             break
-        
+
         if sys.argv[1] == 'status':
             print 'Do status...'
             pid = sys.argv[2]
-            lang = sys.argv[3]            
+            lang = sys.argv[3]
             username = sys.argv[4]
             filename = sys.argv[5]
 
             print pid,lang,username,filename
-            
+
             status(pid,username,lang)
             break
-        
+
         if sys.argv[1] == 'ce':
             print 'Do ce...'
             rid = sys.argv[2]
             filename = sys.argv[3]
 
             print rid,filename
-            
+
             getCompileError(rid)
             break
         else:
