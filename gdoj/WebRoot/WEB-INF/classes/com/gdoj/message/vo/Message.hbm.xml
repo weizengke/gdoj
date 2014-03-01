@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.gdoj.message.vo.Message" table="message">
+        <id name="message_id" type="java.lang.Integer">
+            <column name="message_id" />
+            <generator class="native" />
+        </id>
+         <property name="problem_id" type="java.lang.Integer">
+            <column name="problem_id" not-null="false" />
+        </property>
+         <property name="contest_id" type="java.lang.Integer">
+            <column name="contest_id" not-null="false" />
+        </property>
+         <property name="module_id" type="java.lang.Integer">
+            <column name="module_id" not-null="true" />
+        </property>
+         <property name="parent_id" type="java.lang.Integer">
+            <column name="parent_id" not-null="false" />
+        </property>       
+         <property name="root_id" type="java.lang.Integer">
+            <column name="root_id" not-null="false" />
+        </property>   
+        <property name="title" type="java.lang.String">
+            <column name="title" length="255" not-null="true" />
+        </property>     
+        <property name="content" type="java.lang.String">
+            <column name="content"  not-null="false" />
+        </property>   
+        <property name="orderNum" type="java.lang.Integer">
+            <column name="orderNum" not-null="false" />
+        </property>  
+        <property name="votes" type="java.lang.Integer">
+            <column name="votes" not-null="false" />
+        </property> 
+          <property name="views" type="java.lang.Integer">
+            <column name="views" not-null="false" />
+        </property> 
+        <property name="in_date" type="java.util.Date">
+            <column name="in_date"  not-null="false" />
+        </property>
+        <property name="create_user" type="java.lang.String">
+            <column name="create_user" length="20" not-null="true" />
+        </property>   
+		<property name="defunct" type="java.lang.String">
+            <column name="defunct" length="1" not-null="false" />
+        </property>   
+    </class>
+</hibernate-mapping>

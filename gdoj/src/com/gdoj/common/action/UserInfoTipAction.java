@@ -89,7 +89,7 @@ buf+="<div id='UserMotto'>";
 if(user_.getMotto()!=null&&!user_.getMotto().trim().equals("")){
 	buf+= (user_.getMotto().length()>30)?user_.getMotto().subSequence(0, 30)+"...":user_.getMotto();
 }
-buf+="</div><br style='clear:both'>";
+buf+="</div><div style='clear:both'></div>";
 buf+="<div id='UserStat'>"+
 	"<ul>"+
 	"<li><em>"+userService.getUserRank(user_)+"</em>"+getText("rank")+"</li>"+
@@ -101,7 +101,7 @@ buf+="<div id='UserStat'>"+
 
 "<div class='opts'>"+
 
-"</div>"+
+"</div><div style='clear:both'></div>"+
 "<div id='Logs'>"+
 	"<strong>"+getText("recent-action")+"£º</strong>"+
 	"<div class='log'>";

@@ -8,7 +8,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/classes/applicationContext*.xml</param-value>
 	</context-param>
-	
+
   <filter>  
       <filter-name>UrlRewriteFilter</filter-name>  
       <filter-class>  
@@ -23,8 +23,7 @@
   <filter-mapping>  
       <filter-name>UrlRewriteFilter</filter-name>  
       <url-pattern>/*</url-pattern>  
-      <dispatcher>REQUEST</dispatcher>
-    <dispatcher>FORWARD</dispatcher>
+
   </filter-mapping> 
  
 	<!-- struts2 过滤器 -->

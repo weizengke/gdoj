@@ -89,8 +89,8 @@ public class ModifyUserAction extends ActionSupport{
 
 	public String modifyUser() throws Exception {
 		try {	
-		//	username = "solo";
-		//	System.out.println(user.getEmail()+" "+user.getMotto());
+			username = "NULL";
+			//System.out.println(user.getEmail()+" "+user.getMotto());
 			
 			username = (String)ActionContext.getContext().getSession().get("session_username");
 			this.setUsername(username);
@@ -202,7 +202,7 @@ public class ModifyUserAction extends ActionSupport{
 				user_.setBirthday(birDay);
 				user_.setLanguage(this.getUser().getLanguage());
 				user_.setOpensource(this.getUser().getOpensource());
-			//	System.out.println(username+ " submit modify...");
+				//System.out.println(username+ " submit modify...");
 				userService.save(user_);
 				success = true;
 				return SUCCESS;

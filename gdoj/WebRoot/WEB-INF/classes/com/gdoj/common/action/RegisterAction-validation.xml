@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN" 
+		"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+	<field name="username">
+		<field-validator type="requiredstring">
+			<message>Username shouldn't be empty.</message>
+		</field-validator>
+		 <field-validator type="regex">  
+                 <param name="expression"><![CDATA[(^[_A-Za-z0-9]+[a-zA-Z0-9_.]{3,19}$)]]></param>  
+                 <message>Invalid username</message>  
+            </field-validator>  
+		<field-validator type="stringlength">
+            <param name="minLength">4</param>
+            <param name="maxLength">20</param>
+            <message>username's length should be between ${minLength} and ${maxLength}.</message>
+        </field-validator>
+
+	</field>
+	
+	<field name="password">
+        <field-validator type="requiredstring">
+         <param name="trim">true</param>
+            <message>password shouldn't be empty.</message>
+        </field-validator>
+         <field-validator type="stringlength">
+            <param name="minLength">6</param>
+            <param name="maxLength">20</param>
+            <message>password should be between ${minLength} and ${maxLength}</message>
+        </field-validator>
+    </field>
+    
+    <field name="repeat_password">
+        <field-validator type="requiredstring">
+            <message>repeat password shouldn't be empty.</message>
+        </field-validator>
+        
+        <field-validator type="stringlength">
+            <param name="minLength">6</param>
+            <param name="maxLength">20</param>
+            <message>repassword should be between ${minLength} and ${maxLength}</message>
+        </field-validator>
+        <field-validator type="fieldexpression">
+		<param name="expression">
+			<![CDATA[(password.equals(repeat_password))]]>
+		</param>
+		<message>Repeat password mismatched</message>
+	</field-validator>
+    </field>
+    <field name="email" >  
+    		<field-validator type="requiredstring">
+            <message>E-mail shouldn't be empty.</message>
+        	</field-validator>
+            <field-validator type="regex">  
+                 <param name="expression"><![CDATA[(^[-_A-Za-z0-9]+@([_A-Za-z0-9]+.)+[A-Za-z0-9]{2,3}$)]]></param>  
+                 <message>Invalid E-mail</message>  
+            </field-validator>  
+    </field>  
+</validators>

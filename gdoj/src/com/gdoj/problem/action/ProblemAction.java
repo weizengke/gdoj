@@ -173,8 +173,9 @@ public class ProblemAction extends ActionSupport{
 			problem_.setAuthor(problem.getAuthor());
 			problem_.setTag(problem.getTag());
 			
-			
-			
+			problem_.setOj_name(problem.getOj_name());
+			problem_.setOj_pid(problem.getOj_pid());
+			problem_.setIsvirtual(problem.getIsvirtual());
 			
 			tags = new ArrayList<String>();
 			if(tag1!=null&&!"".equals(tag1.trim())){
