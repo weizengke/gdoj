@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.55, for Win32 (ia32)
+-- MySQL dump 10.13  Distrib 5.1.72, for Win64 (unknown)
 --
 -- Host: localhost    Database: gdoj
 -- ------------------------------------------------------
--- Server version	5.1.55-community
+-- Server version	5.1.72-community
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -83,7 +83,7 @@ CREATE TABLE `attend` (
   `Z_time` int(11) DEFAULT '0',
   `Z_wrongsubmits` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,9 +95,9 @@ DROP TABLE IF EXISTS `compile_info`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `compile_info` (
   `solution_id` int(11) NOT NULL DEFAULT '0',
-  `error` text,
+  `error` text CHARACTER SET gbk,
   PRIMARY KEY (`solution_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +121,7 @@ CREATE TABLE `contest` (
   `end_reg` datetime DEFAULT NULL,
   `type` int(11) DEFAULT '0',
   PRIMARY KEY (`contest_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,7 +144,7 @@ CREATE TABLE `contest_problem` (
   `defunct` char(1) DEFAULT NULL,
   `point` int(11) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,7 +165,7 @@ CREATE TABLE `mail` (
   `create_date` datetime DEFAULT NULL,
   `defunct` char(1) DEFAULT NULL,
   PRIMARY KEY (`mail_id`,`title`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,14 +203,14 @@ DROP TABLE IF EXISTS `news`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `news` (
   `news_id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET gbk NOT NULL,
-  `content` text CHARACTER SET gbk NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
   `date` datetime DEFAULT NULL,
   `create_user` varchar(255) DEFAULT NULL,
   `orderNum` int(11) DEFAULT NULL,
   `defunct` char(1) DEFAULT NULL,
   PRIMARY KEY (`news_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,10 +222,10 @@ DROP TABLE IF EXISTS `privilege`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `privilege` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `rightstr` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `username` varchar(20) NOT NULL,
+  `rightstr` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +263,7 @@ CREATE TABLE `problem` (
   `oj_pid` int(11) DEFAULT NULL,
   `isvirtual` int(1) unsigned zerofill DEFAULT NULL,
   PRIMARY KEY (`problem_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -286,7 +286,7 @@ CREATE TABLE `solution` (
   `contest_id` int(11) DEFAULT NULL,
   `testcase` int(11) DEFAULT NULL,
   PRIMARY KEY (`solution_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,7 +300,7 @@ CREATE TABLE `solution_source` (
   `solution_id` int(11) NOT NULL,
   `source` text,
   PRIMARY KEY (`solution_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,12 +312,12 @@ DROP TABLE IF EXISTS `tags`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tags` (
   `tag_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) NOT NULL,
   `indate` datetime DEFAULT NULL,
-  `create_user` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `defunct` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_user` varchar(20) DEFAULT NULL,
+  `defunct` char(1) DEFAULT NULL,
   PRIMARY KEY (`tag_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -336,7 +336,7 @@ CREATE TABLE `tagsview` (
   KEY `tag_id` (`tag_id`),
   KEY `problem_id` (`problem_id`),
   KEY `message_id` (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,6 +365,7 @@ CREATE TABLE `users` (
   `rating` int(11) DEFAULT '0',
   `lastlogin` datetime DEFAULT NULL,
   `avatar` varchar(1) DEFAULT NULL,
+  `lastaccesstime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`,`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -378,12 +379,12 @@ DROP TABLE IF EXISTS `vote`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vote` (
   `vote_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(20) NOT NULL,
   `message_id` int(11) NOT NULL,
   `vote` int(11) DEFAULT NULL,
   `vote_date` datetime DEFAULT NULL,
   PRIMARY KEY (`vote_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -395,6 +396,4 @@ CREATE TABLE `vote` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-12  2:31:23
-
-
+-- Dump completed on 2014-05-13 23:36:51
