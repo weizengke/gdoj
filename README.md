@@ -3,8 +3,6 @@ gdoj
 
 The best windows online judge platform for ACM ,  enjoy it !
 
-GUET Online Judge： http://acm.guet.edu.cn/ ， 欢迎访问AC
-
 【如果您使用了我们的产品，请您在 http://weizengke.com 留言哦，您的支持是我们不断进步的动力】
 
 OJ
