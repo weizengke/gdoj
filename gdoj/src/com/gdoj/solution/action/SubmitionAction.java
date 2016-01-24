@@ -10,7 +10,6 @@ import com.gdoj.solution.service.SolutionService;
 import com.gdoj.solution.vo.Solution;
 import com.gdoj.solution_source.service.Solution_sourceService;
 import com.gdoj.solution_source.vo.Solution_source;
-import com.gdoj.test.thread.JudgeQueue;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.util.Config;
