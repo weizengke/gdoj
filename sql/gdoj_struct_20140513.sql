@@ -225,7 +225,7 @@ CREATE TABLE `privilege` (
   `username` varchar(20) NOT NULL,
   `rightstr` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,7 +367,7 @@ CREATE TABLE `users` (
   `avatar` varchar(1) DEFAULT NULL,
   `lastaccesstime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`,`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -397,3 +397,11 @@ CREATE TABLE `vote` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2014-05-13 23:36:51
+
+LOCK TABLES `users` WRITE;
+INSERT INTO `users` VALUES ('1', 'Administrator', 'administrator', 'Admin', 'administrator@guet.com', 'GUET', 'Just manage Online Judge System', 'N', '1989-10-01 00:00:00', '2012-02-20 23:58:58', null, '1', 'Y', '0', '0', '0', null, null, null);
+UNLOCK TABLES;
+
+LOCK TABLES `privilege` WRITE;
+INSERT INTO `privilege` VALUES ('1', 'Administrator', 'HEAD');
+UNLOCK TABLES;
