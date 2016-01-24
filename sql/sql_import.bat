@@ -9,7 +9,7 @@ echo Time: %time%
 echo.
 echo *****************************
 
-set path="D:\OJ\mysql_bak\gdoj_bak_2013051220734.sql"
+set path="E:\gdoj\trunk\sql\gdoj_bak_2013051220734.sql"
 
 D:\mysql\bin\mysql -uroot -prootpwd gdoj < %path%
 
