@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*,
+﻿<%@ page language="java" import="java.util.*,
 java.io.File,
 javax.xml.parsers.DocumentBuilder,
 javax.xml.parsers.DocumentBuilderFactory,org.w3c.dom.Document,org.w3c.dom.NodeList" 
@@ -60,7 +60,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<%
 			   try {
 			   		long lasting = System.currentTimeMillis();
-					File f = new File("D:\\OJ\\GDOJ\\Language.xml");
+					File f = new File("D:\\OJ\\conf\\Language.xml");
 					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder builder = factory.newDocumentBuilder();
 					Document doc = builder.parse(f);
