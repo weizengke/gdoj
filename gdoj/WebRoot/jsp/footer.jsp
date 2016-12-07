@@ -3,8 +3,8 @@
  
 
  <div id="footer">
-    Copyright &copy; 2011-2014 <a href="http://weizengke.com" style="text-decoration: none;" target="_blank">weizengke.com</a>. All Rights Reserved. <a href="topic/75" style="text-decoration: none;" target="_blank">Open Source Project</a><br>
-	The Programming Contest Web 1.1 platform & Judge Kernel 1.0.1 version.
+    Copyright &copy; 2011-2017 <a href="http://debugforces.com" style="text-decoration: none;" target="_blank">weizengke.com</a>. All Rights Reserved. <a href="topic/75" style="text-decoration: none;" target="_blank">Open Source Project</a><br>
+	The Programming Contest Web 1.1 platform & Judge Kernel 1.0.3 version.
 </div>
 
 <script type="text/javascript">
