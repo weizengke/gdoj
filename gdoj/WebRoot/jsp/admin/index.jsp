@@ -63,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<a href="admin/recent-action">生成RecentAction页面</a>(自动生成)<br/>
      		<a href="admin/topUsers">生成Top10页面</a>(自动生成)<br/>
 			<a href="admin/OpenPath.action?type=OJ_PATH&path=OJ_TMP">查看输出文件目录</a><br/>
-			<a href="admin/OpenPath.action?type=OJ_WEB&path=upload\\file">查看上传文件目录</a><br/>
+			<a href="admin/OpenPath.action?type=OJ_WEB&path=upload/file">查看上传文件目录</a><br/>
 			<form id="runcmd" method="post" action="admin/operate!runcmd.action">
 				<input  id="cmdline" style="width: 256px;"  name="cmdline" maxlength="256" /> 
 				<input id="sub" style="width: 86px;" type="Submit" value="Run"/>
