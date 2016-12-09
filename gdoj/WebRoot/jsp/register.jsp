@@ -10,12 +10,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head lang="en">
     <base href="<%=basePath%>">
-    <title>Register - GUET Online Judge</title>
+    <title>Register - Online Judge</title>
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="expires" content="-1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<meta http-equiv="keywords" content="GUET,ACM,OJ,OnlineJudge,JAVA,C++,Program Contest">
-	<meta http-equiv="description" content="GuiLin University of Electronic Technology Online Judge System fof ACM">
+	<meta http-equiv="keywords" content="ACM,OJ,OnlineJudge,JAVA,C++,Program Contest">
+	<meta http-equiv="description" content="Online Judge System for ACM">
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
 		
 	<link rel="stylesheet" href="themes/base/jquery.ui.all.css">

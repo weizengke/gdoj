@@ -9,11 +9,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title><s:text name="topic"/> - <s:property value="messagebean.title"/> - GUET Online Judge</title>
+    <title><s:text name="topic"/> - <s:property value="messagebean.title"/> - Online Judge</title>
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="expires" content="-1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<meta http-equiv="keywords" content="GUET,ACM,OJ,OnlineJudge,JAVA,C++,Program Contest">
+	<meta http-equiv="keywords" content="ACM,OJ,OnlineJudge,JAVA,C++,Program Contest">
 	<meta http-equiv="description" content="<s:property value="messagebean.title"/> - <s:property value="messagebean.content_abstract"/>">
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>

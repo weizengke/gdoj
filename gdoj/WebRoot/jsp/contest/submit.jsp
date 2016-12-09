@@ -14,8 +14,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     <title>Submit Solution</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<meta http-equiv="keywords" content="GUET,ACM,OnlineJudge,JAVA,C++,Program Contest">
-	<meta http-equiv="description" content="GuiLin University of Electronic Technology Online Judge System for ACM">
+	<meta http-equiv="keywords" content="ACM,OJ,OnlineJudge,JAVA,C++,Program Contest">
+	<meta http-equiv="description" content="Online Judge System for ACM">
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
 	
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
@@ -88,7 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<%
 			   try {
 			   		long lasting = System.currentTimeMillis();
-					File f = new File("D:\\OJ\\GDOJ\\Language.xml");
+					File f = new File("D:\\OJ\\conf\\Language.xml");
 					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder builder = factory.newDocumentBuilder();
 					Document doc = builder.parse(f);
