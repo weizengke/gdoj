@@ -82,8 +82,8 @@ $(document).ready(function(){
 });
 </script>
 		<ul class="hleft">
-			<li class="logo2"><span style="font-size:17px;"><b>Online Judge</b></span></li>
-			<li class="t_conlinejudge"> <a href="home" ><s:text name="home"/></a></li>	
+			<li class="logo2"><span style="font-size:19px;"><a href="" ><b>Online Judge</b></a></span></li>
+			<!--  <li class="t_conlinejudge"> <a href="home" ><s:text name="home"/></a></li>	-->
 			<li><a href="news"><s:text name="news"/></a></li>		  
 			<li><a href="topic"><s:text name="topic"/></a></li>			
 		<script type="text/javascript">
