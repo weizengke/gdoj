@@ -46,13 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <div class="rb">&nbsp;</div>
 	    	<div style="padding: 4px 0 0 6px;position: relative;">
 				<div class="left"><s:text name="problems"/></div>
-				<div class="right">
-				<!--	
-				    <a href="problemset?ORDER=<s:property value="order"/>&OJ=" style="text-decoration: none;">  ALL </a>|
-					<a href="problemset?ORDER=<s:property value="order"/>&OJ=GUET" style="text-decoration: none;">  GUET </a>|
-					<a href="problemset?ORDER=<s:property value="order"/>&OJ=HDU" style="text-decoration: none;">  HDU </a>
-				-->
-				</div>
+				<div class="right"></div>
 			</div> 	
 			<br/>	
 			<div class="innertable" style="position: relative;margin:0.3em 3px 0 3px;">
