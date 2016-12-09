@@ -47,12 +47,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div style="padding: 4px 0 0 6px;position: relative;">
 				<div class="left"><s:text name="problems"/>
 				</div>
+				<!--
 				<div class="right" style="margin:0 24px 0 0px;">
 					<a href="problemset?ORDER=<s:property value="order"/>&OJ=" style="text-decoration: none;">  ALL </a>|
 					<a href="problemset?ORDER=<s:property value="order"/>&OJ=GUET" style="text-decoration: none;">  GUET </a>|
 					<a href="problemset?ORDER=<s:property value="order"/>&OJ=HDU" style="text-decoration: none;">  HDU </a>
 				</div>
-
+				-->
 			</div> 		
 			<div class="innertable" style="position: relative;margin:0.3em 3px 0 3px;">
 				<div class="ilt">&nbsp;</div>
@@ -62,13 +63,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					   <th class="id left-item"><s:text name="problemid"/></th>
 					   <th class="title"><s:text name="problem"/></th>
 					   <th class="solved">
-					   <s:if test="order=='BY_SOLVED_ASC'"><a href="problemset?ORDER=BY_SOLVED_DESC&OJ=<s:property value="ojName"/>" style="color: #000;text-decoration: none;">					
+					   <s:if test="order=='BY_SOLVED_ASC'"><a href="problemset?ORDER=BY_SOLVED_DESC" style="color: #000;text-decoration: none;">					
 					   	 <s:text name="solved"/><img alt="Sort desc." title="Sort desc." src="img/order/tablesorter-desc.gif" style="vertical-align: middle;">   
 					   </a></s:if>
-					   <s:elseif test="order=='BY_SOLVED_DESC'"><a href="problemset?ORDER=BY_SOLVED_ASC&OJ=<s:property value="ojName"/>" style="color: #000;text-decoration: none;">
+					   <s:elseif test="order=='BY_SOLVED_DESC'"><a href="problemset?ORDER=BY_SOLVED_ASC" style="color: #000;text-decoration: none;">
 					  	 <s:text name="solved"/><img alt="Sort asc." title="Sort asc." src="img/order/tablesorter-asc.gif" style="vertical-align: middle;">   
 					   </a></s:elseif>
-					   <s:else><a href="problemset?ORDER=BY_SOLVED_DESC&OJ=<s:property value="ojName"/>" style="color: #000;text-decoration: none;">
+					   <s:else><a href="problemset?ORDER=BY_SOLVED_DESC" style="color: #000;text-decoration: none;">
 						  <s:text name="solved"/><img alt="Sort desc." title="Sort desc." src="img/order/tablesorter-bg.gif" style="vertical-align: middle;"> 
 					   </a>
 					   </s:else>
@@ -107,17 +108,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class=left></div>
 			<div class="right">
 					<s:if test="page>1">
-						<a href="problemset/page/<s:property value="page-1"/>?ORDER=<s:property value="order"/>&OJ=<s:property value="ojName"/>" style="color:#000;text-decoration: none;">  &larr; </a>
+						<a href="problemset/page/<s:property value="page-1"/>?ORDER=<s:property value="order"/>" style="color:#000;text-decoration: none;">  &larr; </a>
 					</s:if>	
 					<s:iterator value="pageList" status="st_page">				
 						<s:if test="pageList[#st_page.index]==0">...</s:if>
-						<s:else><a href="problemset/page/<s:property/>?ORDER=<s:property value="order"/>&OJ=<s:property value="ojName"/>" style="color:#000;text-decoration: none;">
+						<s:else><a href="problemset/page/<s:property/>?ORDER=<s:property value="order"/>" style="color:#000;text-decoration: none;">
 							<s:if test="page==pageList[#st_page.index]"><b><s:property/></b></s:if>
 							<s:else><s:property/></s:else>
 						</a></s:else>
 					</s:iterator>	
 					<s:if test="page < pageCount">		
-						<a href="problemset/page/<s:property value="page+1"/>?ORDER=<s:property value="order"/>&OJ=<s:property value="ojName"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
+						<a href="problemset/page/<s:property value="page+1"/>?ORDER=<s:property value="order"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
 					</s:if>						
 		   </div>
 		</div>  	    	  
