@@ -1,7 +1,7 @@
 gdoj
 ====
 
-演示地址：http://oj.debugforces.com/
+演示地址：http://debugforces.com/
 
 The best windows online judge platform for ACM ,  enjoy it !
 
