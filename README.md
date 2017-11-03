@@ -20,3 +20,4 @@ sql
 为gdoj数据库结构文件
 
 
+更换代码仓库到码云（Change to gitee）: https://gitee.com/jungle/online-judge
