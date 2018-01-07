@@ -1,4 +1,4 @@
-@echo off
+@echo on
 echo.
 echo MySQL Data Import
 
@@ -9,7 +9,9 @@ echo Time: %time%
 echo.
 echo *****************************
 
-set path="E:\gdoj\trunk\sql\gdoj_bak_2013051220734.sql"
+set CUR_DIR=%cd%
+
+set path="%CUR_DIR%\gdoj_struct.sql"
 
 D:\mysql\bin\mysql -uroot -prootpwd gdoj < %path%
 
@@ -20,4 +22,4 @@ echo MySQL Import successfully...
 echo.:P
 echo.
 
-ping null
+pause>nul

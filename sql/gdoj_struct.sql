@@ -285,6 +285,8 @@ CREATE TABLE `solution` (
   `verdict` tinyint(4) DEFAULT NULL,
   `contest_id` int(11) DEFAULT NULL,
   `testcase` int(11) DEFAULT NULL,
+  `failcase` int(11) DEFAULT NULL,
+  `json_result` text,
   PRIMARY KEY (`solution_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
