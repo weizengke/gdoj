@@ -55,23 +55,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				   			 		<s:if test="user.nickname==''||user.nickname==null"><s:property value="user.username"/></s:if><s:else><s:property value="user.nickname"/></s:else>
 				   			 		<s:if test="user.school==null||user.school==''"></s:if><s:else> , <s:property value="user.school"/></s:else>
 				   			 	</span></li>
-				       			<li><span style="color:#378059;"><s:if test="user.motto==null||user.motto==''">Welcome to GUET Online Judge</s:if><s:else><s:property value="user.motto"/></s:else></span></li>
+				       			<li><span style="color:#378059;"><s:if test="user.motto==null||user.motto==''">Welcome to Online Judge</s:if><s:else><s:property value="user.motto"/></s:else></span></li>
 				       			
 				       			<s:if test="#session.session_username==user.username">
-	                   			<li>E-mail: <s:property value="user.email" default="0"/> &nbsp; &nbsp;<span style="color:grey">(not visible)</span></li>
-						        <li>Birthday: <s:date name="user.birthday" nice="false" format="yyyy-MM-dd"/>&nbsp; &nbsp;<span style="color:grey">(not visible)</span></li>       
+	                   			<li><s:text name="profile.email"/>: <s:property value="user.email" default="0"/> &nbsp; &nbsp;<span style="color:grey">(<s:text name="profile.invisible"/>)</span></li>
+						        <li><s:text name="profile.birthday"/>: <s:date name="user.birthday" nice="false" format="yyyy-MM-dd"/>&nbsp; &nbsp;<span style="color:grey">(<s:text name="profile.invisible"/>)</span></li>       
 						        </s:if>
 				       			<!-- 
 				   				<li><span title="<s:date name="user.lastlogin" nice="true" format="yyyy-MM-dd HH:mm:ss"/>"> Last login: <s:date name="user.lastlogin" nice="false" format="yyyy-MM-dd HH:mm:ss"/></span></li> 
 				       		 	 -->
-				       		 	<li><span title="<s:date name="user.lastaccesstime" nice="false" format="yyyy-MM-dd HH:mm:ss"/>"> Last visit: <s:property value="lastAccessTime" default="unknow"/></span> <s:if test="statusFlag == 1"><span style="color:green;font-weight:bold;">Online Now</span></s:if> </li>
-	                   			<li><span title="<s:date name="user.regdate" nice="false" format="yyyy-MM-dd HH:mm:ss"/>"> Registered: <s:property value="registerDate" default="unknow"/></span></li> 	       	
+				       		 	<li><span title="<s:date name="user.lastaccesstime" nice="false" format="yyyy-MM-dd HH:mm:ss"/>"><s:text name="profile.Last_visit"/>: <s:property value="lastAccessTime" default="unknow"/></span> <s:if test="statusFlag == 1"><span style="color:green;font-weight:bold;">Online Now</span></s:if> </li>
+	                   			<li><span title="<s:date name="user.regdate" nice="false" format="yyyy-MM-dd HH:mm:ss"/>"> <s:text name="profile.Registered"/>: <s:property value="registerDate" default="unknow"/></span></li> 	       	
 
-						        <li>Default Language: <s:property value="%{getText('language'+user.language)}"/></li>
-						        <li>Open Source: <s:if test="user.opensource==\"N\"">No</s:if>
+						        <li><s:text name="profile.default_language"/>: <s:property value="%{getText('language'+user.language)}"/></li>
+						        <li><s:text name="profile.open_source"/>: <s:if test="user.opensource==\"N\"">No</s:if>
 								<s:else>Yes</s:else>
 								</li>
-						        <li>Rank: <b><s:property value="rank" default="0"/></b> &nbsp;&nbsp;Solve: <b><s:property value="user.solved" default="0"/></b>  &nbsp;&nbsp;Submissions: <b><s:property value="user.submit" default="0"/></b></li>				       
+						        <li><s:text name="profile.rank"/>: <b><s:property value="rank" default="0"/></b> &nbsp;&nbsp;<s:text name="profile.solve"/>: <b><s:property value="user.solved" default="0"/></b>  &nbsp;&nbsp;<s:text name="profile.submissions"/>: <b><s:property value="user.submit" default="0"/></b></li>				       
 				       			<li></li>
 				   				    
 						       </ul>

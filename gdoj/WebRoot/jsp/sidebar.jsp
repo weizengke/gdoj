@@ -1,83 +1,104 @@
 ﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
-   
-   	<link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
-
-    <style>
-	.ui-autocomplete-loading { background: white url('img/ui-anim_basic_16x16.gif') right center no-repeat; }
-	.ui-autocomplete {
-		max-height: 200px;
-		overflow-y: auto;
-		/* prevent horizontal scrollbar */
-		overflow-x: hidden;
-		/* add padding to account for vertical scrollbar */
-		padding-right: 3px;
-		
-		font-size:11px;
-		line-height: 12px;
-	}
-	/* IE 6 doesn't support max-height
-	 * we use height instead, but this forces the menu to always be this tall
-	 */
-	* html .ui-autocomplete {
-		height: 200px;
-	}	
-	</style>
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<style>
+.ui-autocomplete-loading { background: white url('img/ui-anim_basic_16x16.gif') right center no-repeat; }
+.ui-autocomplete {
+	max-height: 200px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
+	padding-right: 3px;
 	
-	<jsp:include page="/WEB-INF/templates/sidebarex.html"></jsp:include>
-	
-
-	<div class="sidebox roundbox ">
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>	    
-	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
-	            	<div class="title-sidebox" style="width: 100%"><s:text name="sidebar.topusers"/></div>
-	            </div>  
-	           	<div class="top10">
-	            <table class="rtable">
-					<tbody>
-					<tr>
-					<th class="left-item" style="width:28px;">#</th>
-					<th class="user" ><s:text name="author"/></th>
-					<th class="" style="width:48px;"><s:text name="solved"/></th>
-					</tr>
-						<jsp:include page="/WEB-INF/templates/topusers.html"></jsp:include>
-					</tbody>
-				</table>
-	            </div>
-	            <div class="bottom-link" >
-					<table style="width:100%;">
-                    <tbody>
-                        <tr>
-                            <td style="text-align:left;">
-                            </td>
-                            <td style="text-align:right;">
-                                    <a href="problemset/standings">More &rarr;</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    </table>
-				</div>   
+	font-size:11px;
+	line-height: 12px;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+	height: 200px;
+}	
+</style>
+<!-- web board -->
+<jsp:include page="/WEB-INF/templates/sidebarex.html"></jsp:include>
+<!-- top 10 -->
+<div class="sidebox roundbox ">
+	<div class="roundbox-lt">
+		&nbsp;
 	</div>
-	
-		        <div class="sidebox roundbox">
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>	    
-	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
-	            	<div class="title-sidebox" style="width: 100%"><s:text name="sidebar.findusers"/></div>
-	            </div>  
-	            
-	            <form class="handleForm" action="profile">
-		            <div style="padding:1em;text-align:right;">
-		                <label style="padding-right:0.3em;">Username:</label>
-		                <input style="width:11em;" type="text" class="handleBox"/>
-		            </div>
-		            <div style="padding: 0 1em 1em 1em;text-align:right;">
-		                <input style="height:1.65em;padding:0 0.75em;" type="submit" value="Find"/>
-		            </div>
-		        </form>
+	<div class="roundbox-rt">
+		&nbsp;
+	</div>
+	<div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
+		<div class="title-sidebox" style="width: 100%">
+			<s:text name="sidebar.topusers" />
+		</div>
+	</div>
+	<div class="top10">
+		<table class="rtable">
+			<tbody>
+				<tr>
+					<th class="left-item" style="width: 28px;">
+						#
+					</th>
+					<th class="user">
+						<s:text name="author" />
+					</th>
+					<th class="" style="width: 48px;">
+						<s:text name="solved" />
+					</th>
+				</tr>
+				<jsp:include page="/WEB-INF/templates/topusers.html"></jsp:include>
+			</tbody>
+		</table>
+	</div>
+	<div class="bottom-link">
+		<table style="width: 100%;">
+			<tbody>
+				<tr>
+					<td style="text-align: left;">
+					</td>
+					<td style="text-align: right;">
+						<a href="problemset/standings"><s:text name="sidebar.more"/> &rarr;</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
 
-<script src="js/jquery-ui.min.js"></script>	
+<!-- top findusers -->
+<!-- 
+<div class="sidebox roundbox">
+	<div class="roundbox-lt">
+		&nbsp;
+	</div>
+	<div class="roundbox-rt">
+		&nbsp;
+	</div>
+	<div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
+		<div class="title-sidebox" style="width: 100%">
+			<s:text name="sidebar.findusers" />
+		</div>
+	</div>
+
+	<form class="handleForm" action="profile">
+		<div style="padding: 1em; text-align: right;">
+			<label style="padding-right: 0.3em;">
+				<s:text name="author" />
+				:
+			</label>
+			<input style="width: 11em;" type="text" class="handleBox" />
+		</div>
+		<div style="padding: 0 1em 1em 1em; text-align: right;">
+			<input style="height: 1.65em; padding: 0 0.75em;" type="submit"
+				value="Find" />
+		</div>
+	</form>
+
+	<script src="js/jquery-ui.min.js"></script>
 	<script>
 	$(function() {
 		var cache = {},
@@ -120,47 +141,60 @@
         window.location = link;
         return false;
 
-    });
-		
-		
+    	});
 	});
 </script>
-   </div> 
-	
-	<div class="sidebox roundbox " >
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>	    
-	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
-	            	<div class="title-sidebox" style=""><s:text name="sidebar.recentaction"/></div>
-	            </div>  
-	            <div class="latest_news" style="">
-	            	<jsp:include page="/WEB-INF/templates/latesttopic.html"></jsp:include>
-	            </div>
-	            <div class="bottom-link" >
-					<table style="width: 100%">
-                    <tbody>
-                        <tr>
-                            <td style="text-align:left;">
-                            </td>
-                            <td style="text-align:right;">
-                                    <a href="#">Detailed &rarr;</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-				</div>    
+</div>
+-->
+<!-- top recentaction -->
+<div class="sidebox roundbox ">
+	<div class="roundbox-lt">
+		&nbsp;
+	</div>
+	<div class="roundbox-rt">
+		&nbsp;
+	</div>
+	<div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
+		<div class="title-sidebox" style="">
+			<s:text name="sidebar.recentaction" />
 		</div>
-
-   		<div class="sidebox roundbox" >
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>    
-	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
-	            	<div class="title-sidebox" style="width: 100%"><s:text name="sidebar.onlineusers"/> (<span class="user-sum">0</span>)</div>
-	            </div>  
-	            <div class="sidebar-online-users" style="padding: 6px;">					
-	           		<img alt="Loading..." src='img/loader.gif'/>
-	            </div>	           
-	       </div>      	  
+	</div>
+	<div class="latest_news" style="">
+		<jsp:include page="/WEB-INF/templates/latesttopic.html"></jsp:include>
+	</div>
+	<div class="bottom-link">
+		<table style="width: 100%">
+			<tbody>
+				<tr>
+					<td style="text-align: left;">
+					</td>
+					<td style="text-align: right;">
+						<a href="topic"><s:text name="sidebar.more"/> &rarr;</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<!-- top onlineusers -->
+<div class="sidebox roundbox">
+	<div class="roundbox-lt">
+		&nbsp;
+	</div>
+	<div class="roundbox-rt">
+		&nbsp;
+	</div>
+	<div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
+		<div class="title-sidebox" style="width: 100%">
+			<s:text name="sidebar.onlineusers" />
+			(
+			<span class="user-sum">0</span>)
+		</div>
+	</div>
+	<div class="sidebar-online-users" style="padding: 6px;">
+		<img alt="Loading..." src='img/loader.gif' />
+	</div>
+</div>
 <script type="text/javascript">
 $(document).ready(function() {
 			$.post(
@@ -196,39 +230,3 @@ $(document).ready(function() {
             );
 });
 </script>
-
-<!--  
-<script>
-$.fn.smartFloat = function() {
-	var position = function(element) {
-		var top = element.position().top, pos = element.css("position");
-		$(window).scroll(function() {
-			var scrolls = $(this).scrollTop();
-			if (scrolls > top) {
-				if (window.XMLHttpRequest) {
-					element.css({
-						position: "fixed",
-						top: 0
-					});	
-				} else {
-					element.css({
-						top: scrolls
-					});	
-				}
-			}else {
-				element.css({
-					position: pos,
-					top: pos
-				});	
-			}
-		});
-	};
-	return $(this).each(function() {
-		position($(this));						 
-	});
-};
-
-//绑定
-$("#float").smartFloat();
-</script>
--->

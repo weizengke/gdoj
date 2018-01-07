@@ -44,17 +44,14 @@ public class SearchAction extends ActionSupport {
 	public String search()throws Exception {
 		
 		try {
-			
-			
-			//word=new String(word_.getBytes("UTF8"), "ISO8859_1");
-			
-			//System.out.println(word+" "+word_);
-			
 			if (word == null || word.trim().length() == 0) {
 				this.addFieldError("word", "Input the keyword!");
 				return INPUT;
 			}
 			String word_ = word;
+			
+			word = new String(word_.getBytes("ISO-8859-1"), "UTF8");
+			//System.out.println(word+" "+word_);	
 			
 			userList = new ArrayList<User>();
 			problemList = new ArrayList<Problem>();
@@ -63,26 +60,26 @@ public class SearchAction extends ActionSupport {
 			
 			if(type.equals("user")){
 				//user
-				sql = "from User u where u.username like ? or u.nickname like ? order by u.username ASC";
-				userList = userService.query(sql,word_);
+				sql = "from User u where u.username like ? or u.nickname like ? or u.school like ? order by u.username ASC";
+				userList = userService.query(sql,word);
 			}else if(type.equals("problem")){
 				//problem
 				sql = "from Problem p where p.problem_id like ? or p.title like ? or p.tag like ? order by p.problem_id ASC";
-				problemList = problemService.query(sql,word_);
+				problemList = problemService.query(sql,word);
 			}else if(type.equals("topic")){
 				//topic
 				sql = "from Message m where m.message_id=m.root_id and m.title like ? order by m.message_id DESC";
-				messageList = messageService.query(sql,word_);
+				messageList = messageService.query(sql,word);
 			}else{
 				//user
-				sql = "from User u where u.username like ? or u.nickname like ? order by u.username ASC";
-				userList = userService.query(sql,word_);
+				sql = "from User u where u.username like ? or u.nickname like ? or u.school like ? order by u.username ASC";
+				userList = userService.query(sql,word);
 				//problem
 				sql = "from Problem p where p.problem_id like ? or p.title like ? or p.tag like ? order by p.problem_id ASC";
-				problemList = problemService.query(sql,word_);
+				problemList = problemService.query(sql,word);
 				//topic
 				sql = "from Message m where m.message_id=m.root_id and m.title like ? order by m.message_id DESC";
-				messageList = messageService.query(sql,word_);
+				messageList = messageService.query(sql,word);
 				type="all";
 			}
 			size = userList.size()+problemList.size()+messageList.size();

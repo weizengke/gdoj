@@ -30,7 +30,7 @@ public class User implements java.io.Serializable {
 	public User() {
 		this.avatar = "N";
 		this.defunct = "N";
-		this.opensource = "N";
+		this.opensource = "Y";
 		this.language = 1;
 		this.solved = 0;
 		this.submit = 0;

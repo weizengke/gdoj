@@ -27,7 +27,7 @@ public class QuartzJob {
 	@SuppressWarnings("deprecation")
 	public void work()  
     {  
-	   // System.out.println(new Date()+":"+" Generate Top 10.");
+	    
 	    try {
 	    	//System.out.println(Thread.currentThread().getContextClassLoader().getResource("").toExternalForm());  
 	    	String root =  Thread.currentThread().getContextClassLoader().getResource("").toString();
@@ -46,6 +46,7 @@ public class QuartzJob {
 			MyFreeMarker.generator(root, "topusers.ftl", "topusers.html",
 					"topusers", map);
 			
+			//System.out.println(new Date()+":"+" Generate Top 10.");
 			
 			/*
 			 * 
@@ -73,13 +74,15 @@ public class QuartzJob {
 	            File f = new File(root + "otheroj.json");
 	            
 	            StreamHandler.write(f,content);
-	 
+	            
+	            //System.out.println(new Date()+":"+" Generate recent contest.");
+	            
 	        } catch (MalformedURLException e) { 
 	            // ... 
-	        	
+	        	System.out.println("get other oj contest error, MalformedURLException.");  
 	        } catch (IOException e) { 
 	            // ... 
-	        	System.out.println("get other oj contest error");  
+	        	System.out.println("get other oj contest error, IOException.");  
 	        }
 			
 		} catch (Exception e) {

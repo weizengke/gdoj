@@ -1,6 +1,7 @@
 package com.gdoj.user.action;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.gdoj.bean.OnlineUserBean;
@@ -97,7 +98,26 @@ public class ProfileAction extends ActionSupport {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-
+	
+	public String getFriendlyDate(Date time){
+		if(time == null) return getText("unknown");
+		int ct = (int)((System.currentTimeMillis() - time.getTime())/1000);
+		if(ct < 3600)
+			return Math.max(ct / 60,1) +getText("minutes_before");
+		if(ct >= 3600 && ct < 86400)
+			return ct / 3600 +getText("hours_before");
+		if(ct >= 86400 && ct < 2592000){ //86400 * 30
+			int day = ct / 86400 ;	
+			if(day>1){
+				return day +getText("days_before");	
+			}
+			return getText("yesterday");			
+		}
+		if(ct >= 2592000 && ct < 31104000) //86400 * 30
+			return ct / 2592000 +getText("months_before");
+		return ct / 31104000 + getText("years_before");
+	}
+	
 	public String queryUser()  throws Exception {
 		try {
 			if(username==null){
@@ -149,13 +169,15 @@ public class ProfileAction extends ActionSupport {
 			
 			
 			registerDate = new String();
-			registerDate = DateUtil.toFriendlyDate(user.getRegdate());
+			//registerDate = DateUtil.toFriendlyDate(user.getRegdate());
+			registerDate = getFriendlyDate(user.getRegdate());
 			/* lastAccestTime */
 			lastAccessTime = new String();
 			OnlineUserBean ou = new OnlineUserBean();
 			ou = OnlineUsers.getUser(username);
 			if (null != ou){
-				lastAccessTime = DateUtil.toFriendlyDate(ou.getLastAccessTime());
+				//lastAccessTime = DateUtil.toFriendlyDate(ou.getLastAccessTime());
+				lastAccessTime = getFriendlyDate(ou.getLastAccessTime());
 				user.setLastaccesstime(ou.getLastAccessTime());
 				if (1 == ou.getStatusFlag()){
 					statusFlag = 1;
@@ -164,7 +186,8 @@ public class ProfileAction extends ActionSupport {
 				}
 			}
 			else{
-				lastAccessTime = DateUtil.toFriendlyDate(user.getLastaccesstime());
+				//lastAccessTime = DateUtil.toFriendlyDate(user.getLastaccesstime());
+				lastAccessTime = getFriendlyDate(user.getLastaccesstime());
 				statusFlag = 0;
 			}
 			

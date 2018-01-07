@@ -159,7 +159,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 														<%
 										   try {
 										   		long lasting = System.currentTimeMillis();
-												File f = new File("D:\\OJ\\GDOJ\\Language.xml");
+												File f = new File("D:\\OJ\\conf\\Language.xml");
 												DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 												DocumentBuilder builder = factory.newDocumentBuilder();
 												Document doc = builder.parse(f);

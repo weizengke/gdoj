@@ -87,7 +87,7 @@ public class Solution_sourceAction extends ActionSupport {
 	public String solutionSource() throws Exception{
 		
 		try {
-			System.out.println("Source[" + solutionId + "] is open via link...");
+			//System.out.println("Source[" + solutionId + "] is open via link...");
 			
 			Solution_source solutionSource_ = new Solution_source();
 			solutionSource_ = solutionSourceService

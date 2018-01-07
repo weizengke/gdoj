@@ -100,6 +100,9 @@ $(document).ready(function() {
 	
 	 
     <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?uid=1339907478548202&type=left&amp;move=0" charset="utf-8"></script>
+<!-- JiaThis Button END -->
   </div>
   </body>
 </html>

@@ -92,7 +92,7 @@ public class JsonSolution_sourceAction extends ActionSupport {
 	}
 	public String solutionSource() throws Exception{
 		try {
-			System.out.println("Source[" + solutionId + "] is open via ajax...");
+			//System.out.println("Source[" + solutionId + "] is open via ajax...");
 			Solution_source solutionSource_ = new Solution_source();
 			solutionSource_ = solutionSourceService
 					.querySolutionSource(solutionId);

@@ -17,19 +17,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
-  <!--  <script type="text/javascript" src="js/json.js"></script> -->	
-  	<script type="text/javascript">
-      $(document).ready(function() {	
-});
-</script>  
-
   </head>
 
   <body>  
   	<jsp:include   page="/jsp/head.jsp"></jsp:include>
-  	<div id="body">
-		 
-
+  	<div id="body">		 
 		<div id="sidebar"> 	
             <div class="sidebox roundbox">
             	<div class="roundbox-lt">&nbsp;</div>
@@ -46,13 +38,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
      <div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
    		<div id="nav-content" >	
-	    	 <a href="admin">Admin</a>
-	    	   	  <a href="admin/news">News</a>
+	    	<a href="admin">Admin</a>
+	    	<a href="admin/news">News</a>
 	     	<a href="admin/problemset">Problems</a>
 	     	<a href="admin/problemset/status">Status</a>
 	     	<a href="admin/contests">Contests</a>
 	     	<a href="admin/user">Users</a>	
-	     		<a href="admin/privilege">Privilege</a>		     		
+	     	<a href="admin/privilege">Privilege</a>		     		
   	 	</div>
 		 <!-- Ended  -->
 	    <div class="datatable">	

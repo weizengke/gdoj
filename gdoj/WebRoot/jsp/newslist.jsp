@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>News - Online Judge</title>
+    <title><s:text name="news"/> - Online Judge</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta http-equiv="keywords" content="ACM,OJ,OnlineJudge,JAVA,C++,Program Contest">
 	<meta http-equiv="description" content="Online Judge System for ACM">

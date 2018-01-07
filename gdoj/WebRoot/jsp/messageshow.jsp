@@ -180,10 +180,15 @@ SyntaxHighlighter.all();
 						 			<div id=mc_<s:property value="messageId"/> class="comment">
 						 			<span style="float:left; width:40px;"><a href="profile/<s:property value="author"/>" class="user-tip" user="<s:property value="author"/>"><img style="width:32px;height:32px;margin:3px 0 0 5px;" src="<s:if test="avatar==\"Y\"">upload/userphoto/<s:property value="author"/>/</s:if><s:else>img/</s:else>photo_50.jpg"/></a></span>
 						 				<div style="margin-left:50px;">
-							 				<a href="profile/<s:property value="author"/>" name="rpl_<s:property value="messageId"/>"><s:property value="author"/></a> <span style="color:grey"><s:text name="post"/> <s:date name="in_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/></span> 
+							 				<a href="profile/<s:property value="author"/>" name="rpl_<s:property value="messageId"/>"><s:property value="author"/></a>
+							 				 <span style="color:grey"> <s:text name="post"/> 
+							 				   <span  title="<s:date name="in_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/>">
+							 				    <s:property value="friendly_Date"/>
+							 				   </span> 
+							 				 </span>    
 							 			<s:if test="#session.session_username!=null">
 										<s:if test="#session.session_username!=author">
-											<a href="javascript:ReplyInline(<s:property value="messageId"/>,<s:property value="rootId"/>)">回复此评论</a>
+											<a href="javascript:ReplyInline(<s:property value="messageId"/>,<s:property value="rootId"/>)"><s:text name="reply_comment"/></a>
 							 			</s:if>	
 							 			</s:if>	
 							 				<span commentid="<s:property value="messageId"/>" style="float:right;">

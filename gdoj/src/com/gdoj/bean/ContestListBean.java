@@ -15,8 +15,22 @@ public class ContestListBean {
 	private String regStatus;
 	
 	private String isRegister;
+	private String friendlyLeftTime;
+	private String friendlyRegleftTime;
 
-
+	public String getFriendlyLeftTime() {
+		return friendlyLeftTime;
+	}
+	public void setFriendlyLeftTime(String friendlyLeftTime) {
+		this.friendlyLeftTime = friendlyLeftTime;
+	}
+	public String getFriendlyRegleftTime() {
+		return friendlyRegleftTime;
+	}
+	public void setFriendlyRegleftTime(String friendlyRegleftTime) {
+		this.friendlyRegleftTime = friendlyRegleftTime;
+	}
+	
 	public String getLeftTime() {
 		return leftTime;
 	}

@@ -15,6 +15,7 @@ import com.gdoj.solution.service.SolutionService;
 import com.gdoj.solution.vo.Solution;
 import com.opensymphony.xwork2.ActionSupport;
 import com.util.Config;
+import com.util.OJSocket;
 
 public class ReJudgeAction extends ActionSupport{
 
@@ -107,6 +108,11 @@ public class ReJudgeAction extends ActionSupport{
 				i.setTime(0);
 				i.setMemory(0);
 				solutionService.save(i);
+				
+				String judger_ip = Config.getValue("OJ_JUDGER_IP");
+				Integer judger_port = Integer.valueOf(Config.getValue("OJ_JUDGER_PORT")).intValue();
+				OJSocket.JudgeRequest(judger_ip, judger_port, i.getSolution_id());
+				/*
 				String[] cmd = { Config.getValue("OJ_PATH") + "Client.exe",
 						Integer.toString(i.getSolution_id()),
 						Integer.toString(i.getLanguage()),
@@ -117,6 +123,7 @@ public class ReJudgeAction extends ActionSupport{
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				*/
 				Thread.sleep(1);
 			}
 		} catch (Exception e) {

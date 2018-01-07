@@ -107,23 +107,30 @@ public class ContestListAction extends ActionSupport{
 				if(c.getStart_time().getTime()>dt.getTime()){ //未开始
 					clb_.setStatus("PENDING");
 					clb_.setLeftTime(DateUtil.secondToString((c.getStart_time().getTime()-new Date().getTime())/1000));
+					clb_.setFriendlyLeftTime(getFriendlyTimeLeft((c.getStart_time().getTime()- new Date().getTime())/1000));
+					
 				}else if(c.getEnd_time().getTime()>dt.getTime()){//Running
 					clb_.setStatus("RUNNING");
 					clb_.setLeftTime(DateUtil.secondToString((c.getEnd_time().getTime()-new Date().getTime())/1000));
+					clb_.setFriendlyLeftTime(getFriendlyTimeLeft((c.getEnd_time().getTime()-new Date().getTime())/1000));
 				}else{ //ended
 					clb_.setStatus("ENDED");
 					clb_.setLeftTime("00:00:00");
+					clb_.setFriendlyLeftTime("00:00:00");
 				}
 				
 				if(c.getStart_reg().getTime()>dt.getTime()){ //注册时间未到
 					clb_.setRegStatus("PENDING");
 					clb_.setRegleftTime(DateUtil.secondToString((c.getStart_reg().getTime()-new Date().getTime())/1000));
+					clb_.setFriendlyRegleftTime(getFriendlyTimeLeft((c.getStart_reg().getTime()-new Date().getTime())/1000));
 				}else if(c.getEnd_reg().getTime()>dt.getTime()){ //注册时间ing
 					clb_.setRegStatus("RUNNING");
 					clb_.setRegleftTime(DateUtil.secondToString((c.getEnd_reg().getTime()-new Date().getTime())/1000));
+					clb_.setFriendlyRegleftTime(getFriendlyTimeLeft((c.getEnd_reg().getTime()-new Date().getTime())/1000));
 				}else{ //注册时间结束
 					clb_.setRegStatus("ENDED");	
 					clb_.setRegleftTime("00:00:00");
+					clb_.setFriendlyRegleftTime("00:00:00");
 				}					
 				
 				if(null!=username){
@@ -181,6 +188,19 @@ public class ContestListAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
+	public String getFriendlyTimeLeft(long timeLeft){
+		//System.out.println("timeLeft="+timeLeft);
+		if(timeLeft < 172800){ //两天内显示时间
+			return DateUtil.secondToString(timeLeft);
+		};
+		if(timeLeft >= 172800 && timeLeft < 2592000){ //86400 * 30
+			long day = timeLeft / 86400 ;	
+			return day +getText("days_after");		
+		}
+		if(timeLeft >= 2592000 && timeLeft < 31104000) //86400 * 30
+			return timeLeft / 2592000 +getText("months_after");
+		return timeLeft / 31104000 + getText("years_after");
+	}	
 
 	public ContestService getContestService() {
 		return contestService;

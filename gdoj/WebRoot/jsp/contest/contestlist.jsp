@@ -26,34 +26,11 @@ $(document).ready(function() {
 });
 </script> 
   </head>
-
   <body>  
-  	<jsp:include   page="/jsp/head.jsp"></jsp:include>
+  	<jsp:include page="/jsp/head.jsp"></jsp:include>
   	<div id="body">
-		 
-
-		<div id="sidebar"> 	
-            <div class="sidebox roundbox">
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>    
-	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
-	            	<div class="title-sidebox" style="width: 100%"><s:text name="sidebar.infobox"/></div>
-	            </div>  
-	            <div class="" style="margin: 6px;">
-	            	<b>How to participate in contest：</b>  <br/>
-	            	<span style="font-size:10px;">
-	            	1:Login Online Judge.<br/>
-	            	2:Click <b><span style="font-size:10px;color:blue">Register contest.</span></b><br/>
-	            	3:You will see <b><span style="font-size:10px;color:red">Register success</span></b><br/>
-	            	4:After Running, click contest title.<br/>
-
-	            	Any question,ask at <a href="topic">Topic</a>  
-	            	</span>			
-	            </div>
-
-	        </div>     
-
-	 		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
+	 <div id="sidebar"> 	
+          <jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
    	 </div> 
 	
      <div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
@@ -80,7 +57,7 @@ $(document).ready(function() {
 		               	 <th class="title left-item"><s:text name="contesttitle"/></th>
 		                 <th class="start"><s:text name="starttime"/></th>
 		                 <th class="during"><s:text name="during"/></th>
-		                 <th class="info"><s:text name="contest.status"/></th>
+		                 <th class="info" ><s:text name="contest.status"/></th>
 		                 <th class="reg"><s:text name="contest.registration"/></th>
 	                </tr>
 	                <s:if test="rpList.size==0">
@@ -91,21 +68,27 @@ $(document).ready(function() {
 	            		
 	            		<td class="title left-item">
 	            		<s:if test="status==\"ENDED\""><s:property value="contest.title"/></s:if>
-	            		<s:elseif test="status==\"RUNNING\"">
-		            	
+	            		<s:elseif test="status==\"RUNNING\"">		            	
 		            		<s:if test="#session.session_username!=null">
 		            				<s:if test="isRegister==\"Y\"">
 		            					<s:property value="contest.title"/><br/>
-		            					<span style="font-size:10px;"><a href="contest/<s:property value="contest.contest_id"/>">Enter &raquo;</a></span>
+		            					<span style="font-size:10px;"><a href="contest/<s:property value="contest.contest_id"/>"><s:text name="contest.enter"/> &raquo;</a></span>
 		            				</s:if>
 		            				<s:else>
 		            					<s:property value="contest.title"/><br/>
-		            					<span style="font-size:10px;color:grey">You must register contest first.</span>
+		            					<span style="font-size:10px;color:grey">
+		            					<s:if test="regStatus==\"ENDED\"">
+		            					<s:text name="contest.tip_miss_the_contest_reg"/>
+		            					</s:if>
+		            					<s:else>
+		            					<s:text name="contest.tip_must_register_first"/>
+		            					</s:else>
+		            					</span>
 		            				</s:else>
 		            		</s:if>
 		            		<s:else>
 		            			<s:property value="contest.title"/><br/>
-		            			<span style="font-size:10px;color:grey">You must register contest first.</span>
+		            			<span style="font-size:10px;color:grey"><s:text name="contest.tip_must_register_first"/></span>
 		            		</s:else>	
 	            		</s:elseif>
 	            		<s:else><s:property value="contest.title"/></s:else>
@@ -113,38 +96,35 @@ $(document).ready(function() {
 	            		<td class="start"><s:date  name="contest.start_time" nice="false" format="yyyy-MM-dd HH:mm:ss"/></td>
 	            		<td class="during"><s:property value="during"/></td>
 	            		<td class="info" title="From <s:date  name="contest.start_time" nice="false" format="yyyy-MM-dd HH:mm:ss"/> to <s:date  name="contest.end_time" nice="false" format="yyyy-MM-dd HH:mm:ss"/>">
-	            			
 	            			<s:if test="status==\"PENDING\"">
-	            				<!--<span style="color:green;"><b>Pending</b></span><br/>-->
-								Before start &nbsp;<span style="color:grey" class="countdown"><span title="<s:property value="leftTime"/>"><s:property value="leftTime"/></span></span>
+	            				<s:text name="contest.status_before_start"/> &nbsp;<span style="color:grey" class="countdown"><span title="<s:property value="leftTime"/>"><s:property value="friendlyLeftTime"/></span></span>
 							</s:if>
 	            			<s:elseif test="status==\"RUNNING\"">
-	            				<span style="color:red;"><b>Running</b></span><br/>
-	            				<span style=""><a href="contest/<s:property value="contest.contest_id"/>/standings">Current standings</a></span><br/>
-	            				<span style="color:grey" class="countdown"><span title="<s:property value="leftTime"/>"><s:property value="leftTime"/></span></span>		
+	            				<span style=""><b><a href="contest/<s:property value="contest.contest_id"/>/standings"><s:text name="contest.current_standing"/></a></b></span><br/>
+	            				<s:text name="contest.util_close"/> &nbsp;<span style="color:grey" class="countdown"><span title="<s:property value="leftTime"/>"><s:property value="friendlyLeftTime"/></span></span>		
 	            			</s:elseif>
-	            			<s:else><span style="color:grey;"><b>Ended</b></span></s:else>
+	            			<s:else><span style="color:grey;"><b><s:text name="contest.status_end"/></b></span></s:else>
 	            		</td>
 	            		<td class="reg" title="From <s:date  name="contest.start_reg" nice="false" format="yyyy-MM-dd HH:mm:ss"/> to <s:date  name="contest.end_reg" nice="false" format="yyyy-MM-dd HH:mm:ss"/>">      	
 	            		  	<span class="link-to-contest" style="">
 		            			<s:if test="regStatus==\"PENDING\"">
-		            			Before registration &nbsp;<span style="font-size:10px;color:grey" class="countdown"><span title="<s:property value="regleftTime"/>"><s:property value="regleftTime"/></span></span></s:if>
+		            			<s:text name="contest.reg_before_start"/> &nbsp;<span style="font-size:10px;color:grey" class="countdown"><span title="<s:property value="regleftTime"/>"><s:property value="friendlyRegleftTime"/></span></span></s:if>
 		            			<s:elseif test="regStatus==\"RUNNING\"">            			
 		            				<s:if test="#session.session_username!=null">
-			            				<s:if test="isRegister==\"Y\""><b><font style="color: red">Register success</font></b></s:if>
-			            				<s:else><b><a href="javascript:void(0)" class="reg <s:property value="contest.contest_id"/>" >Register contest&raquo;</a></b></s:else>
+			            				<s:if test="isRegister==\"Y\""><b><font style="color: red"><s:text name="contest.reg_success"/></font></b></s:if>
+			            				<s:else><b><a href="javascript:void(0)" class="reg <s:property value="contest.contest_id"/>" ><s:text name="contest.reg_contest"/>&raquo;</a></b></s:else>
 		            				</s:if>
 		            				<s:else>
-		            					<b><a href="javascript:void(0)" class="reg"> Register contest&raquo;</a></b>
+		            					<b><a href="javascript:void(0)" class="reg"> <s:text name="contest.reg_contest"/>&raquo;</a></b>
 		            				</s:else>
 		            					<a href="contestRegistrants/<s:property value="contest.contest_id"/>" title="The num of registrants"><s:property value="registrants"/></a>
 		            				<br/>
-		            				Registration running &nbsp;<span style="color:grey;" class="countdown"><span title="<s:property value="regleftTime"/>"><s:property value="regleftTime"/></span></span>
+		            				<s:text name="contest.util_close"/> &nbsp;<span style="color:grey;" class="countdown"><span title="<s:property value="regleftTime"/>"><s:property value="friendlyRegleftTime"/></span></span>
 	            				</s:elseif>
 	            				<s:else>
 	            					<a href="contestRegistrants/<s:property value="contest.contest_id"/>" title="The num of registrants"><s:property value="registrants"/></a>
 		            				<br/>
-		            				<font style="color:grey">Registration ended</font>
+		            				<font style="color:grey"><s:text name="contest.reg_end"/></font>
 		            			</s:else>
 	            			</span>
 	            		</td>
@@ -227,7 +207,7 @@ $(document).ready(function() {
 	            		</td>
 	            		<td class="start"><s:date  name="contest.start_time" nice="false" format="yyyy-MM-dd HH:mm:ss"/></td>
 	            		<td class="during"><s:property value="during"/></td>
-	            		<td class="standings"><a href="contest/<s:property value="contest.contest_id"/>/standings">Final standings</a> </td>
+	            		<td class="standings"><a href="contest/<s:property value="contest.contest_id"/>/standings"><s:text name="contest.final_standing"/></a> </td>
 	            		<td class="registrants"><a href="contestRegistrants/<s:property value="contest.contest_id"/>"><s:property value="registrants"/></a></td>
 	            	</tr>	
 	           		</s:iterator>   

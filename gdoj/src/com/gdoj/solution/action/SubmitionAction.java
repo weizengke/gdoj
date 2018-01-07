@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.gdoj.problem.service.ProblemService;
+import com.gdoj.problem.vo.Problem;
 import com.gdoj.solution.service.SolutionService;
 import com.gdoj.solution.vo.Solution;
 import com.gdoj.solution_source.service.Solution_sourceService;
@@ -13,6 +14,7 @@ import com.gdoj.solution_source.vo.Solution_source;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.util.Config;
+import com.util.OJSocket;
 
 public class SubmitionAction extends ActionSupport{
 
@@ -28,24 +30,29 @@ public class SubmitionAction extends ActionSupport{
 	private String source;
 	private Integer language;
 	private Integer problemId;
-	
-	
-	
+	private Problem problem;
+
 	public String submitSolution() throws Exception{
 		try {
 			//System.out.println(problemId+" "+language+" "+source);
+			problem = problemService.queryProblem(problemId);
+			if(null == problem){
+				this.addFieldError("tip", "No such problem.");
+				return INPUT;
+			}
+			
 			String username = (String)ActionContext.getContext().getSession().get("session_username");
 			 if(null==username){			
 				 this.addFieldError("tip", "Your must login first."); 	
 				 return INPUT;
 		    }	
-			 
+
 			Date dt_prevSubmit = (Date)ActionContext.getContext().getSession().get("session_submit");
 			Date dt = new Date(); 
 			
 			if(dt_prevSubmit!=null){
 				//System.out.println(dt.getTime()-dt_prevSubmit.getTime());
-				if(dt.getTime()-dt_prevSubmit.getTime()<3000){  //限制5s一次提交
+				if(dt.getTime()-dt_prevSubmit.getTime()<3000){  //限制3s一次提交
 					System.out.println(username+" submit twice at 3 second.");
 				//	this.addFieldError("tip", "");
 					return "success";
@@ -61,27 +68,16 @@ public class SubmitionAction extends ActionSupport{
 				this.addFieldError("tip", "Source must at most 65535 chars.");
 				return INPUT;
 			}
-			if(null==problemService.queryProblem(problemId)){
-				this.addFieldError("tip", "No such problem.");
-				return INPUT;
-			}
-			
-			
+	
 			Solution solution_ = new Solution();
-			
 			solution_.setUsername(username);
 			solution_.setProblem_id(problemId);
-			solution_.setLanguage(language);
-			
+			solution_.setLanguage(language);			
 			solution_.setSubmit_date(dt);
 			solution_.setCode_length(source.length());
 			
 			solution = solution_;
-			
 			solutionService.save(solution);		
-			
-			
-		//	System.out.println("sid="+solution.getSolution_id());
 			
 			if(null==solution.getSolution_id()){
 				//Skip the judge
@@ -93,16 +89,18 @@ public class SubmitionAction extends ActionSupport{
 			solutionSource.setSource(source);
 			solutionSourceService.save(solutionSource);
 			
+			String judger_ip = Config.getValue("OJ_JUDGER_IP");
+			Integer judger_port = Integer.valueOf(Config.getValue("OJ_JUDGER_PORT")).intValue();
+			OJSocket.JudgeRequest(judger_ip, judger_port, solution.getSolution_id());
+			
+			/*
 			String[] cmd={Config.getValue("OJ_PATH")+"Client.exe",Integer.toString(solution.getSolution_id()),Integer.toString(solution.getLanguage()),Config.getValue("OJ_INI_PATH")};  
 			try {			
 				Runtime.getRuntime().exec(cmd);	
 			} catch (IOException e) {	
 				e.printStackTrace();
 			}
-			
-			
-			
-			//JudgeQueue.addGCC(solution.getSolution_id());
+			*/
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -162,6 +160,16 @@ public class SubmitionAction extends ActionSupport{
 
 	public void setProblemService(ProblemService problemService) {
 		this.problemService = problemService;
+	}
+
+
+	public void setProblem(Problem problem) {
+		this.problem = problem;
+	}
+
+
+	public Problem getProblem() {
+		return problem;
 	}
 
 }

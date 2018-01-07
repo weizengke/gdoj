@@ -1,7 +1,12 @@
 <%@ page language="java" import="java.util.*,
 java.io.File,
 javax.xml.parsers.DocumentBuilder,
-javax.xml.parsers.DocumentBuilderFactory,org.w3c.dom.Document,org.w3c.dom.NodeList" pageEncoding="UTF-8"%>
+javax.xml.parsers.DocumentBuilderFactory,
+org.w3c.dom.Document,org.w3c.dom.NodeList,
+com.util.Config,
+com.gdoj.problem.vo.Problem,
+com.gdoj.bean.OJUtil"
+pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <%
 String path = request.getContextPath();
@@ -75,20 +80,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<s:form id="submit" method="post" action="submited.action" theme="simple">
 					<input type="hidden" name="contestId" value="<s:property value="contestId"/>"/>
 					<div class="info" style="width:560px;margin: 0px auto;padding:12px 12px 12px 12px;">
-						<b><span style="color:red"><s:fielderror></s:fielderror></span></b>
-						<b>Problem&nbsp;:</b>
-						<SELECT  style= "width:250px" name="num">
+						Problem:
+						<SELECT  style= "width:250px" name="numId">
 							<s:iterator value="problemList" status="st">
 								<option value="<s:property value="num"/>" <s:if test="numId==num">selected="selected"</s:if>><s:property value="num"/>-<s:property value="title"/> </option>
 							</s:iterator>	
 						</SELECT>
 						<br/>
-						<b>Language:</b>
+						Language:
 						<select id="select_lang"  style= "width:250px" name="language">
 							<%
 			   try {
-			   		long lasting = System.currentTimeMillis();
-					File f = new File("D:\\OJ\\conf\\Language.xml");
+			   		String numId = request.getParameter("numId");
+			   		Integer contestId = Integer.valueOf(request.getParameter("contestId"));
+			   		Problem problem = OJUtil.queryProblemByContest(numId, contestId);
+			   		String szOjName = "GUET";
+			   		if (null != problem)
+			   		{
+			   			szOjName = problem.getOj_name();
+			   		}
+					
+			   		String szLangPath = Config.getValue("OJ_LANG_PATH");
+			   		if (1 == problem.getIsvirtual() && szOjName.equals("HDU"))
+			   		{
+			   			szLangPath = Config.getValue("OJ_LANG_PATH_HDU");
+			   		}
+			   		System.out.println("num:" + numId + " contestId:"+ contestId +" szOjName:" + szOjName + " szLangPath:" + szLangPath);
+			   		
+			   		File f = new File(szLangPath);
 					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder builder = factory.newDocumentBuilder();
 					Document doc = builder.parse(f);
@@ -99,9 +118,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						LanguageId=doc.getElementsByTagName("ID").item(i).getFirstChild().getNodeValue();
 						Language=doc.getElementsByTagName("LANG").item(i).getFirstChild().getNodeValue();
 						request.setAttribute("LanguageId",LanguageId); 
-						//System.out.print("Language:"+Language);
-						//System.out.println("运行时间：" + (System.currentTimeMillis() - lasting)+ "毫秒");
-					
 	   		 		%>		   		 			
 						<s:property value="LanguageId"/><option value="<%=LanguageId%>" <s:if test="language==#request.LanguageId">selected="selected"</s:if>><%=Language %></option>
 					<%
@@ -116,14 +132,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 													<option value="8" <s:if test="language==8">selected="selected"</s:if>>Pascal</option>
 				<% } %>		
 						</select>
-					<h5>
-						Source:
-					</h5>
+						<br>
+						Source code:
 						<textarea id="source" name="source" rows="25" style="width: 100%" ><s:property value="source"/></textarea>	
+						<span style="color:red"><s:fielderror></s:fielderror></span>
 					</div>
 					<div style="text-align: center;margin: 12px;">	
 			    		<input id="submitsolution" type="Submit" value="Submit Solution"/>
 			    	</div>
+		<script language="javascript" type="text/javascript" src="js/editarea/edit_area/edit_area_full.js"></script>
+		<script language="javascript" type="text/javascript">
+		editAreaLoader.init({
+			id : "source"		// textarea id
+			,start_highlight: true
+			,allow_toggle: true
+			,language: "en"
+			,syntax: "cpp"	
+			,toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help"
+			,syntax_selection_allow: "c,cpp,pas,java,python,ruby"
+			,show_line_colors: true
+			,replace_tab_by_spaces: 4
+		});
+		</script>	
+		<script>				
+		$('#submit').submit(function(){
+		    $('input[type=submit]', this).attr('disabled', 'disabled');
+		});
+		</script>
 				</s:form>	
 		   </div>	  	  	 
 	  </div>    

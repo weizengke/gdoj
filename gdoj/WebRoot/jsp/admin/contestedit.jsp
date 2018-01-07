@@ -252,7 +252,7 @@ $(document).ready(function() {
     dateFormat: 'yy-mm-dd',  
     changeMonth: true,
 	changeYear: true,
-    yearRange: "-100:0",
+    yearRange: "-100:2",
     showOn: 'both',
     buttonImageOnly: true,
     buttonImage: 'img/dateIcon.gif'
@@ -261,7 +261,7 @@ $(document).ready(function() {
     dateFormat: 'yy-mm-dd',  
     changeMonth: true,
 	changeYear: true,
-    yearRange: "-100:0",
+    yearRange: "-100:2",
     showOn: 'both',
     buttonImageOnly: true,
     buttonImage: 'img/dateIcon.gif'
@@ -270,7 +270,7 @@ $(document).ready(function() {
     dateFormat: 'yy-mm-dd',  
     changeMonth: true,
 	changeYear: true,
-    yearRange: "-100:0",
+    yearRange: "-100:2",
     showOn: 'both',
     buttonImageOnly: true,
     buttonImage: 'img/dateIcon.gif'
@@ -279,7 +279,7 @@ $(document).ready(function() {
     dateFormat: 'yy-mm-dd',  
     changeMonth: true,
 	changeYear: true,
-    yearRange: "-100:0",
+    yearRange: "-100:2",
     showOn: 'both',
     buttonImageOnly: true,
     buttonImage: 'img/dateIcon.gif'

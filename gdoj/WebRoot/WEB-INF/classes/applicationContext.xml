@@ -70,6 +70,7 @@
 	</bean>
 	<bean name="beforSubmitBean" class="com.gdoj.common.action.SubmitAction" scope="prototype">	
 		<property name="userService" ref="userService" />
+		<property name="problemService" ref="problemService" />
 	</bean>
 		<bean name="contestBeforeSubmitBean" class="com.gdoj.common.action.ContestSubmitAction" scope="prototype">
 		<property name="contestService" ref="contestService" />

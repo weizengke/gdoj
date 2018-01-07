@@ -32,15 +32,8 @@ SyntaxHighlighter.all();
   <body>
     <jsp:include   page="/jsp/head.jsp"></jsp:include> 
   <div id="body">	
-	<div id="ads-box" class="round_0123" style=" margin: 12px auto;display: none;">
-		<div style="padding: 0 10px;min-height: 80px;background-color: #EEE0E5;">
-			Here is the ADS.
-		</div>
-	</div>
-
 	<div id="sidebar"> 	    
  	<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-
    	</div> 
     <div id="content" class="content-with-sidebar round0123"  >     
 	   <div id="nav-content" >

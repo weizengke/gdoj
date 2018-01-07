@@ -1,5 +1,6 @@
 package com.gdoj.bean;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class QuartzOnlineUsersJob {
 			Map<String, OnlineUserBean> mou = new HashMap<String, OnlineUserBean>();
 			mou = OnlineUsers.getOnlineUsers();
 			
-	    	System.out.println("QuartzOnlineUsersJob start... size="+mou.size());
+			//System.out.println(new Date()+":"+" Generate OnlineUsers. size="+mou.size());
 			
 			Set set = mou.keySet();
 	        Iterator it=set.iterator();
@@ -29,16 +30,14 @@ public class QuartzOnlineUsersJob {
 	           String username = (String) it.next();
 	           User u = new User();
 	           
-	           System.out.println(username);
+	           //System.out.println(username);
 	           if(username==null){
-					System.out.println("null of name " + username);
 					it.remove();
 	        	    continue;
 	           }
 	           
 	           u = userService.queryUser(username);
 	           if(u==null){
-					System.out.println("null of user " + username);
 					it.remove();
 	        	    continue;
 	           }

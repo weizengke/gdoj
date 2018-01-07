@@ -16,6 +16,7 @@ import com.gdoj.solution_source.vo.Solution_source;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.util.Config;
+import com.util.OJSocket;
 
 public class ContestSubmitionAction extends ActionSupport{
 
@@ -31,15 +32,17 @@ public class ContestSubmitionAction extends ActionSupport{
 	private Solution solution;
 	private String source;
 	private Integer language;
-	private String num;
+	private String numId;
 	private Integer contestId;
+	private List<CProblem> problemList;
 	
-	
-	
-
 	public String submitSolution() throws Exception{
 		try {
 			//System.out.println(num+" "+language+" "+source);
+			List<CProblem> problemList_ = new ArrayList<CProblem>();
+			problemList_ = cproblemService.queryProblems(contestId);			
+			problemList = problemList_;
+			
 			String username = (String)ActionContext.getContext().getSession().get("session_username");
 			 if(null==username){			
 				 this.addFieldError("tip", "Your must login first."); 	
@@ -68,23 +71,20 @@ public class ContestSubmitionAction extends ActionSupport{
 			}
 			
 			 CProblem problem = new CProblem();
-			 problem = cproblemService.queryProblemByNum(num, contestId);
+			 problem = cproblemService.queryProblemByNum(numId, contestId);
 			if(null==problem){
 				this.addFieldError("tip", "No such problem.");
 				return INPUT;
 			}
 			
 			Solution solution_ = new Solution();
-			
 			solution_.setUsername(username);
 			solution_.setContest_id(contestId);
 			solution_.setProblem_id(problem.getProblem_id());
 			solution_.setLanguage(language);
 			solution_.setSubmit_date(new Date());
 			solution_.setCode_length(source.length());
-			
 			solution = solution_;
-			
 			solutionService.save(solution);		
 			
 			
@@ -95,18 +95,23 @@ public class ContestSubmitionAction extends ActionSupport{
 				this.addFieldError("tip", "Submit failed,please retry.");
 				return INPUT;
 			}
+			
 			Solution_source solutionSource = new Solution_source();
 			solutionSource.setSolution_id(solution.getSolution_id());
 			solutionSource.setSource(source);
 			solutionSourceService.save(solutionSource);
 			
+			String judger_ip = Config.getValue("OJ_JUDGER_IP");
+			Integer judger_port = Integer.valueOf(Config.getValue("OJ_JUDGER_PORT")).intValue();
+			OJSocket.JudgeRequest(judger_ip, judger_port, solution.getSolution_id());
+			/*
 			String[] cmd={Config.getValue("OJ_PATH")+"Client.exe",Integer.toString(solution.getSolution_id()),
 					Integer.toString(solution.getLanguage()),Config.getValue("OJ_INI_PATH")};   
 			try {			
 				Runtime.getRuntime().exec(cmd);	
 			} catch (IOException e) {	
 				e.printStackTrace();
-			}
+			}*/
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -135,17 +140,6 @@ public class ContestSubmitionAction extends ActionSupport{
 	public void setCproblemService(CProblemService cproblemService) {
 		this.cproblemService = cproblemService;
 	}
-
-
-	public String getNum() {
-		return num;
-	}
-
-
-	public void setNum(String num) {
-		this.num = num;
-	}
-
 
 	public Integer getContestId() {
 		return contestId;
@@ -191,6 +185,26 @@ public class ContestSubmitionAction extends ActionSupport{
 
 	public void setSolutionService(SolutionService solutionService) {
 		this.solutionService = solutionService;
+	}
+
+
+	public void setProblemList(List<CProblem> problemList) {
+		this.problemList = problemList;
+	}
+
+
+	public List<CProblem> getProblemList() {
+		return problemList;
+	}
+
+
+	public void setNumId(String numId) {
+		this.numId = numId;
+	}
+
+
+	public String getNumId() {
+		return numId;
 	}
 
 }

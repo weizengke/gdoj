@@ -483,6 +483,7 @@ public class MessageAction extends ActionSupport {
 					mb_.setAuthor(messageList.get(i).getCreate_user());
 					mb_.setContent(messageList.get(i).getContent());
 					mb_.setIn_date(messageList.get(i).getIn_date());
+					mb_.setFriendly_Date(getFriendlyDate(mb_.getIn_date()));
 					mb_.setMessageId(messageList.get(i).getMessage_id());
 					mb_.setParentId(messageList.get(i).getParent_id());
 					mb_.setRootId(messageList.get(i).getRoot_id());

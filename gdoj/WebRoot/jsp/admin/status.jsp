@@ -219,6 +219,7 @@ $(document).ready(function(){
 
 <script>
  $(document).ready(function() {	 
+ /*
  		$("a.viewSource").click(function() {
        		//alert("a");
        		  $(".pop-div p.pop-div-note").html("<img src='img/loader.gif'>");
@@ -226,10 +227,10 @@ $(document).ready(function(){
 			$(".pop-div .pop-div-source").html("");			
        		 var solutionId = $(this).attr("solutionId");
        		 $(".pop-div").fadeIn(); 
-		 //alert(solutionId);
+		     //alert(solutionId);
        		 var opt="";
        		 $.getJSON("admin/json-view-source.action",{solutionId: solutionId},function(json){ 	
-		        //  alert(json);
+		          alert(json);
 		            if (json.success != true) {
 		            	//alert(json["error"]);
 		            	$(".pop-div p.pop-div-note").html("<b>"+json["error"]+"</b>");
@@ -294,6 +295,7 @@ $(document).ready(function(){
        		 }); 
        		 return false;
         });
+        */
         
 	    $("a.viewCompileInfo").click(function() {
        		//alert("a");

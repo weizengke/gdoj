@@ -57,13 +57,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					   <th class="id left-item"><s:text name="problemid"/></th>
 					   <th class="title"><s:text name="problem"/></th>
 					   <th class="solved">
-					   <s:if test="order=='BY_SOLVED_ASC'"><a href="problemset?ORDER=BY_SOLVED_DESC" style="color: #000;text-decoration: none;">					
+					   <s:if test="order=='BY_SOLVED_ASC'"><a href="problemset?order=BY_SOLVED_DESC" style="color: #000;text-decoration: none;">					
 					   	 <s:text name="solved"/><img alt="Sort desc." title="Sort desc." src="img/order/tablesorter-desc.gif" style="vertical-align: middle;">   
 					   </a></s:if>
-					   <s:elseif test="order=='BY_SOLVED_DESC'"><a href="problemset?ORDER=BY_SOLVED_ASC" style="color: #000;text-decoration: none;">
+					   <s:elseif test="order=='BY_SOLVED_DESC'"><a href="problemset?order=BY_SOLVED_ASC" style="color: #000;text-decoration: none;">
 					  	 <s:text name="solved"/><img alt="Sort asc." title="Sort asc." src="img/order/tablesorter-asc.gif" style="vertical-align: middle;">   
 					   </a></s:elseif>
-					   <s:else><a href="problemset?ORDER=BY_SOLVED_DESC" style="color: #000;text-decoration: none;">
+					   <s:else><a href="problemset?order=BY_SOLVED_DESC" style="color: #000;text-decoration: none;">
 						  <s:text name="solved"/><img alt="Sort desc." title="Sort desc." src="img/order/tablesorter-bg.gif" style="vertical-align: middle;"> 
 					   </a>
 					   </s:else>
@@ -90,8 +90,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            		<a href="problemset/status/problem/<s:property value="problem_id"/>/page/1" title="users solved this problem">
 	            		<s:property value="solved" default="0"/></a>&nbsp;<span style="font-size:11px;color:grey;font-family:verdana,Serif,Arial;" title="submissions"><sub>/&nbsp;<s:property value="submit" default="0"/></sub></span>
 	            		</td>
-	            		<td class="ratio <s:if test="problemStatusList[#st.index]==1">problem-ac</s:if><s:elseif test="problemStatusList[#st.index]==2">problem-failed</s:elseif>" >
-	            			<a title="submit your code?" href="problemset/submit/<s:property value="problem_id"/>" style=""><s:text name="submit"/></a>
+	            		<td class="ratio" >
+	            			<a href="problemset/submit/<s:property value="problem_id"/>" style=""> 
+	            			<s:if test="problemStatusList[#st.index]==1">
+	            			<img title="<s:text name="submit"/>" src="img/submit-green-22.png" style="vertical-align: middle;">
+	            			</s:if><s:else>
+	            			<img title="<s:text name="submit"/>" src="img/submit-22.png" style="vertical-align: middle;">
+	            			</s:else>
+	            			</a>
 	            			</td>
 	            	</tr>	
 	           		</s:iterator>   
@@ -102,17 +108,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class=left></div>
 			<div class="right">
 					<s:if test="page>1">
-						<a href="problemset/page/<s:property value="page-1"/>?ORDER=<s:property value="order"/>" style="color:#000;text-decoration: none;">  &larr; </a>
+						<a href="problemset/page/<s:property value="page-1"/>?order=<s:property value="order"/>" style="color:#000;text-decoration: none;">  &larr; </a>
 					</s:if>	
 					<s:iterator value="pageList" status="st_page">				
 						<s:if test="pageList[#st_page.index]==0">...</s:if>
-						<s:else><a href="problemset/page/<s:property/>?ORDER=<s:property value="order"/>" style="color:#000;text-decoration: none;">
+						<s:else><a href="problemset/page/<s:property/>?order=<s:property value="order"/>" style="color:#000;text-decoration: none;">
 							<s:if test="page==pageList[#st_page.index]"><b><s:property/></b></s:if>
 							<s:else><s:property/></s:else>
 						</a></s:else>
 					</s:iterator>	
 					<s:if test="page < pageCount">		
-						<a href="problemset/page/<s:property value="page+1"/>?ORDER=<s:property value="order"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
+						<a href="problemset/page/<s:property value="page+1"/>?order=<s:property value="order"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
 					</s:if>						
 		   </div>
 		</div>  	    	  

@@ -132,7 +132,15 @@ $(document).ready(function(){
 				            		<td class="solved">
 				            		<a href="contest/<s:property value="contest.contest_id"/>/status/problem/<s:property value="num"/>/page/1" title="users solved this problem"><s:property value="solved" default="0"/></a><span style="font-size:11px;color:grey;font-family:verdana,Serif,Arial;" title="submissions"><sub>/<s:property value="submit" default="0"/></sub> </span>
 				            		</td>
-				            		<td class="ratio <s:if test="problemStatusList[#st.index]==1">problem-ac</s:if><s:elseif test="problemStatusList[#st.index]==2">problem-failed</s:elseif>" ><a title="submit your code?" href="contest/<s:property value="contestId"/>/submit/<s:property value="num"/>" style=""><s:text name="submit"/></a></td>
+				            		<td class="ratio" >
+				            		<a href="contest/<s:property value="contestId"/>/submit/<s:property value="num"/>" style="">
+			            			<s:if test="problemStatusList[#st.index]==1">
+			            			<img title="<s:text name="submit"/>" src="img/submit-green-22.png" style="vertical-align: middle;">
+			            			</s:if><s:else>
+			            			<img title="<s:text name="submit"/>" src="img/submit-22.png" style="vertical-align: middle;">
+			            			</s:else>
+			            			</a>
+				            		</td>
 				            	</tr>	
 				           		</s:iterator>   
 							</table>

@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head lang="en">
     <base href="<%=basePath%>">
-    <title>Register - Online Judge</title>
+    <title><s:text name="register"/> - Online Judge</title>
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="expires" content="-1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
