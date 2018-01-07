@@ -13,9 +13,6 @@ OJ
 gdoj 
 为Online Judge Web Platform 源码
 
-lib  
-为gdoj web发布所需的jar包
-
 sql
 为gdoj数据库结构文件
 
