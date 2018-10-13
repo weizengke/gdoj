@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
    <sx:head extraLocales="en-us,nl-nl,de-de" />
     <base href="<%=basePath%>">
-    <title>Modify Info.</title>
+    <title>Setings</title>
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="expires" content="-1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -96,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			                  </tr>  
 			                  <tr>
 				                  <td class="field-name">Old Password</td>
-				                  <td> <input  id="old_password" name="old_password" style="width: 250px;" maxlength="30" type="password" placeholder="Input your password" value=""/></td> 
+				                  <td> <input  id="old_password" name="old_password" style="width: 250px;" maxlength="30" type="password" placeholder="Input your password" value="" required="required"/></td> 
 			                  </tr>
 			                   <tr class="subscription-row">
 				                  <td >&nbsp;</td>

@@ -3,6 +3,8 @@ package com.gdoj.common.action;
 
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
+
 import org.apache.struts2.ServletActionContext;
 
 import com.gdoj.user.service.UserService;
@@ -74,6 +76,14 @@ public class JsonLoginAction extends ActionSupport {
 				
 				ActionContext.getContext().getSession().put("session_username",user_.getUsername());
 				ServletActionContext.getResponse().getWriter().print(1);
+
+				Cookie cookie = new Cookie("cookieOnlineJudgeUsername", username);
+				cookie.setMaxAge(60*60*24*30); //设置cookie有效期为30天
+				Cookie cookie_ = new Cookie("cookieOnlineJudgePassword", password);
+				cookie_.setMaxAge(60*60*24*30);
+				ServletActionContext.getResponse().addCookie(cookie);
+				ServletActionContext.getResponse().addCookie(cookie_);
+				
 				success = true;
 				
 				return ;

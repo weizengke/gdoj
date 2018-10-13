@@ -2,6 +2,9 @@ package com.gdoj.common.action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.util.OnlineUsers;
+import javax.servlet.http.Cookie;
+
+import org.apache.struts2.ServletActionContext;
 
 public class LogoutAction extends ActionSupport {
 
@@ -24,6 +27,13 @@ public class LogoutAction extends ActionSupport {
 				ActionContext actionContext = ActionContext.getContext();
 				
 				actionContext.getSession().clear();
+				
+				Cookie cookie = new Cookie("cookieOnlineJudgeUsername", null);
+				cookie.setMaxAge(0);
+				Cookie cookie_ = new Cookie("cookieOnlineJudgePassword", null);
+				cookie_.setMaxAge(0);
+				ServletActionContext.getResponse().addCookie(cookie);
+				ServletActionContext.getResponse().addCookie(cookie_);
 				
 				ActionContext.getContext().getSession().put("session_url",url);  
 				return SUCCESS;

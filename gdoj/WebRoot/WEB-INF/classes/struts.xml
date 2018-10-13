@@ -28,13 +28,13 @@
 			<interceptor name="isHead" class="com.gdoj.common.interceptor.IsHeadInterceptor"/>
 		</interceptors>
 		<global-results>
-			<result name="home">/index.jsp</result>
+			<result name="home">/jsp/index.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>	
 			<result name="contestPending">/jsp/error.jsp</result>
 		</global-results> 
 		<action name="home">	
-		<result name="success">/index.jsp</result>
+		<result name="success">/jsp/index.jsp</result>
 		</action>
 		<!-- 使用通配符号定义Action的name -->
 		<action name="*">
@@ -111,7 +111,7 @@
 			<interceptor-ref name="isLogin"></interceptor-ref>
 		</action>
 		<action name="userList" class="listUserBean">
-			<result name="success">index.jsp</result>
+			<result name="success">/jsp/index.jsp</result>
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 			<interceptor-ref name="isLogin"></interceptor-ref>
 		</action>
@@ -190,7 +190,7 @@
 			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
 		</interceptors>
 		<global-results>
-			<result name="home">/index.jsp</result>
+			<result name="home">/jsp/index.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>	
 		</global-results> 
@@ -218,7 +218,7 @@
 			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
 		</interceptors>
 		<global-results>
-			<result name="home">/index.jsp</result>
+			<result name="home">/jsp/index.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>	
 		</global-results> 
@@ -257,7 +257,7 @@
 			<interceptor name="isContestRegister" class="IsContestRegisterInterceptorBean"/>
 		</interceptors>
 		<global-results>
-			<result name="home">/index.jsp</result>
+			<result name="home">/jsp/index.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>	
 			<result name="contestPending">/jsp/error.jsp</result>
@@ -315,7 +315,7 @@
 			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
 		</interceptors>
 		<global-results>
-			<result name="home">/index.jsp</result>
+			<result name="home">/jsp/index.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>	
 		</global-results> 
@@ -346,7 +346,7 @@
 			<interceptor name="isHead" class="com.gdoj.common.interceptor.IsHeadInterceptor"/>
 		</interceptors>
 		<global-results>
-			<result name="home">/index.jsp</result>
+			<result name="home">/jsp/index.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>	
 		</global-results> 
@@ -627,7 +627,7 @@
 			<interceptor name="isHead" class="com.gdoj.common.interceptor.IsHeadInterceptor"/>
 		</interceptors>
       	<global-results>
-			<result name="home">/index.jsp</result>
+			<result name="home">/jsp/index.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>	
 		</global-results>

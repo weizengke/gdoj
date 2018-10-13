@@ -436,25 +436,21 @@ function ReplyInline(messageId,rootId){
         var moduleId =	$(this).find("input[name=moduleId]").val();
         var parentId =	$(this).find("input[name=parentId]").val();
         var rootId =  $(this).find("input[name=rootId]").val();
- 		
         var content = $(this).find("textarea[name=content]").val();  
-        
-        $('input[type=submit]', this).attr('disabled', 'disabled');
-          
+
         postNewCommentReply = function() {
             $.post(
                 "postmessage",
                 {type:"new",moduleId: moduleId, parentId: parentId, rootId: rootId, content: content},
                 function(data) {    
                    if (data.success != true) {
-                    //alert(data["error"]);
                     $(".inline-fielderror").html(data["error"]);
                     $('#inline-reply-content').focus();	
                     return;
                   }	
                   
-                  //window.location.href="topic/"+rootId;
-   					location.reload();
+                  $('input[type=submit]', this).attr('disabled', 'disabled');
+   				  location.reload();
                 },
                 "json"
             );
@@ -478,27 +474,22 @@ $(document).ready(function() {
         var moduleId =	$(this).find("input[name=moduleId]").val();
         var parentId =	$(this).find("input[name=parentId]").val();
         var rootId =  $(this).find("input[name=rootId]").val();
- 		
         var content = $(this).find("textarea[name=content]").val();  
-        
-         $('input[type=submit]', this).attr('disabled', 'disabled');
-          
+
         postNewCommentReply = function() {
             $.post(
                 "postmessage",
                 {type:"new",moduleId: moduleId, parentId: parentId, rootId: rootId, content: content},
                 function(data) {    
                    if (data.success != true) {
-                    //alert(data["error"]);
                     $(".fielderror").html(data["error"]);
                      $("#reply-content").focus();	
                     return;
                   }	
+                  
+                  $('input[type=submit]', this).attr('disabled', 'disabled');
                   $('#btn_comment').attr('disabled', 'disabled');
                   location.reload();
-                  
-                 // window.location.href="topic/"+rootId;
-   				//	$('ul#ul-comments').append("Hello solo");
                 },
                 "json"
             );

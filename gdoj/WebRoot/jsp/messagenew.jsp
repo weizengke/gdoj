@@ -351,10 +351,7 @@ $(document).ready(function() {
 $(document).ready(function() {
 		
     var commentReplyFormSubmitListener = function() {
-
     	//KE.sync('topic_content');    	
-    	//$('input[type=submit]', this).attr('disabled', 'disabled');
-
         var id = $(this).attr("id");
         var moduleId =	$(this).find("input[name=moduleId]").val();
         var parentId =	$(this).find("input[name=parentId]").val();

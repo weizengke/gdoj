@@ -102,16 +102,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            			<s:property value="%{getText('verdict'+solutionList[#st.index].verdict)}"/>	
 	            			<s:if test="solutionList[#st.index].verdict==5"></s:if>
 	            			<s:elseif test="solutionList[#st.index].verdict==4">
-<s:if test="testcase>0">
-<span>on test <s:property value="testcase" default="1"/></span>
-</s:if>
-
-</s:elseif>
-	            			<s:elseif test="solutionList[#st.index].verdict>5">
-<s:if test="testcase>0">
-<span>on test <s:property value="testcase" default="1"/></span>
-</s:if>
-</s:elseif>	            			
+							<s:if test="testcase>0">
+							<span>on test <s:property value="testcase" default="1"/></span>
+							</s:if>
+							
+							</s:elseif>
+							<s:elseif test="solutionList[#st.index].verdict>5">
+							<s:if test="testcase>0">
+							<span>on test <s:property value="testcase" default="1"/></span>
+							</s:if>
+							</s:elseif>	            			
 	            		</s:else>
 	            		
 	            		</td>  
@@ -155,7 +155,6 @@ function load(){
                         data: "ids="+a.join(','),
                         dataType: 'json',
                         success: function(data){
-                       // alert(data.success);
                               	   for(var i = 0; i<data.status.length; i++){
                                         //alert(data.status[i].solutionId+data.status[i].status_description);
                                			$("#status_" + data.status[i].solutionId).attr('status', data.status[i].verdictId);

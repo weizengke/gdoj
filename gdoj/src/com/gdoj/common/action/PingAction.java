@@ -34,8 +34,12 @@ public class PingAction extends ActionSupport {
 				success = false;
 				error = "You have logout.";
 			}
-			OnlineUsers.onlineUser(username);
-			success = true;
+			else
+			{
+				OnlineUsers.onlineUser(username);
+				success = true;
+			}
+			
 
 		} catch (Exception e) {
 			// TODO: handle exception

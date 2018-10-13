@@ -18,7 +18,7 @@ public class OnlineUsers {
 	 *   新增用户，若存在增更新lastAccessTime
 	 */
 	public static boolean onlineUser(String username) {
-		System.out.println(new Date()+":"+username+" ping or online");
+		//System.out.println(new Date()+":"+username+" ping or online");
 		if (username == null){
 			return false;
 		}
@@ -67,7 +67,7 @@ public class OnlineUsers {
 	 * 从在线用户map中移除
 	 */
 	public static boolean removeUser(String username) {
-		System.out.println(new Date()+":"+username+" has been removed"); 
+		//System.out.println(new Date()+":"+username+" has been removed"); 
 		
 		if (username == null){
 			return false;

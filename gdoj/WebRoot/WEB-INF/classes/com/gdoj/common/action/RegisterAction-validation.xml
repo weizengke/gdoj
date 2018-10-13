@@ -4,7 +4,7 @@
 <validators>
 	<field name="username">
 		<field-validator type="requiredstring">
-			<message>Username shouldn't be empty.</message>
+			<message>username shouldn't be empty.</message>
 		</field-validator>
 		 <field-validator type="regex">  
                  <param name="expression"><![CDATA[(^[_A-Za-z0-9]+[a-zA-Z0-9_.]{3,19}$)]]></param>  
@@ -26,7 +26,7 @@
          <field-validator type="stringlength">
             <param name="minLength">6</param>
             <param name="maxLength">20</param>
-            <message>password should be between ${minLength} and ${maxLength}</message>
+            <message>password's length should be between ${minLength} and ${maxLength}</message>
         </field-validator>
     </field>
     
@@ -38,7 +38,7 @@
         <field-validator type="stringlength">
             <param name="minLength">6</param>
             <param name="maxLength">20</param>
-            <message>repassword should be between ${minLength} and ${maxLength}</message>
+            <message>repassword's length should be between ${minLength} and ${maxLength}</message>
         </field-validator>
         <field-validator type="fieldexpression">
 		<param name="expression">

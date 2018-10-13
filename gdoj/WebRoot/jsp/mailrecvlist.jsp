@@ -35,7 +35,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
      <div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
      	<div id="nav-content" >
-     	
      	<a href="mails" class="current"><s:text name="mails.recv"/></a>
      	<a href="mails/send"><s:text name="mails.send"/></a> 
      	<a href="mails/new"><s:text name="mails.new"/></a>   	

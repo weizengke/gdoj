@@ -54,12 +54,10 @@
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
-
-
 	 <listener>
 		<listener-class>com.gdoj.listener.OnlineHttpSessionListener</listener-class>
 	</listener>
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>/jsp/index.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>

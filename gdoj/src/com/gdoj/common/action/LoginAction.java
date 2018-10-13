@@ -2,6 +2,8 @@ package com.gdoj.common.action;
 
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
+
 import org.apache.struts2.ServletActionContext;
 
 import com.gdoj.user.service.UserService;
@@ -20,6 +22,8 @@ public class LoginAction extends ActionSupport {
 	private String handle;
 	private String password;
 	private String url;
+	private String remember;
+	
 	public UserService getUserService() {
 		return userService;
 	}
@@ -47,31 +51,32 @@ public class LoginAction extends ActionSupport {
 	}
 	public String execute()throws Exception {
 		try {
-			
-			//System.out.println(username+ " " +password);
 			if(false==userService.isUsernameExist(handle)){
 				System.out.println(new Date()+":"+handle + " is not exist.");
 				this.addFieldError("handle", "username is not exist.");
 				return INPUT;
 			}
+			
 			User user_ = new User();
 			user_ = userService.checkLogin(handle, password);
 			if (null != user_) {
 				ActionContext.getContext().getSession().put("session_username",user_.getUsername());
-			//	ServletActionContext.getResponse().getWriter().print(1);
-				
 				OnlineUsers.onlineUser(user_.getUsername());
-			
 				user_.setLastlogin(new Date());
 				userService.save(user_);
 				
-			//	for(String s:OnlineUserList.list()){
-			//		System.out.println(s);
-			//	}
+				if (null != remember)
+				{
+					Cookie cookie = new Cookie("cookieOnlineJudgeUsername", handle);
+					cookie.setMaxAge(60*60*24*30); //设置cookie有效期为30天
+					Cookie cookie_ = new Cookie("cookieOnlineJudgePassword", password);
+					cookie_.setMaxAge(60*60*24*30);
+					ServletActionContext.getResponse().addCookie(cookie);
+					ServletActionContext.getResponse().addCookie(cookie_);					
+				}
 				
 				return SUCCESS;
 			}else{
-			//	ServletActionContext.getResponse().getWriter().print(0);
 				System.out.println(new Date()+":"+handle+" login ,but password is invalid.");
 				this.addFieldError("password", "password is invalid.");
 				return INPUT;
@@ -81,5 +86,11 @@ public class LoginAction extends ActionSupport {
 			
 			return ERROR;
 		}
+	}
+	public void setRemember(String remember) {
+		this.remember = remember;
+	}
+	public String getRemember() {
+		return remember;
 	}
 }

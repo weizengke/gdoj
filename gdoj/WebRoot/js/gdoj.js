@@ -2373,8 +2373,6 @@ function OnlineJudge(){
         window.setTimeout(callback, 0);
     };
 
-    
-    
     this.setCookie = function(name, value) {
         document.cookie = name + "=" + escape(value);
     };
@@ -2392,6 +2390,7 @@ function OnlineJudge(){
             return unescape(document.cookie.substring(from + prefix.length, to));
         }
     };
+    
 }
 OnlineJudge = new OnlineJudge();
 ;

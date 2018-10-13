@@ -19,26 +19,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
 </head>
-  
   <body>
   <jsp:include   page="/jsp/head.jsp"/> 
   <div id="body">   
-     <!--  
-     <div class="login">
-        <form  action="login" method="post">
-               <div class="account-input">
-                   <input type="text" name="handle" id="handle" placeholder="<s:text name="login.username"/>" ></input>
-               </div>
-               <div class="account-input">
-                   <input type="password" name="password" id="password" placeholder="<s:text name="login.password"/>"></input>
-               </div>
-               <button type="submit"><s:text name="login"/></button>
-               <div style="text-align: right;">
-               	<a href="registration"><s:text name="login.register"/></a> | <a href="password-recovery"><s:text name="login.recovery"/></a>
-               </div> 
-        </form>
-    </div>
-  	-->
     <div style="position: relative;">
       <div id="content" >
 		 <div>
@@ -70,10 +53,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				                  <td><div class="shiftUp"><span class="fielderror"><s:fielderror ><s:param>password</s:param></s:fielderror></span></div></td> 
 			                  </tr>     
 			                    <tr>
+				                    <td>&nbsp;</td>
+				                    <td valign="middle">
+				                        <input id="remember" style="top:0.25em;" type="checkbox"  checked="checked" name="remember"/><s:text name="login.remember"/>
+				                    </td>
+			                	</tr>	
+								 <tr>
 			                        <td colspan="2">
 			                            <div style="text-align: center;"><input id="sub" style="width: 86px;" type="Submit" value="<s:text name="login"/>"/> </div>        
 			                    	</td>
-			                    </tr>
+			                    </tr>			                						                   
 			                    <tr>
 			                        <td colspan="2">
 			                            <div style="text-align: right; margin-bottom: -16px;"><a href="registration"><s:text name="login.register"/></a> | <a href="password-recovery"><s:text name="login.recovery"/></a></div>        

@@ -1,8 +1,11 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
  <%@ taglib prefix="s" uri="/struts-tags" %>
  <div id="footer">
     Copyright &copy; 2011-2018 <a href="http://debugforces.com" style="text-decoration: none;" target="_blank">weizengke</a>. All Rights Reserved.<br>
-	The Programming Contest Web 1.2 platform & Judge Kernel V100R001C00B060 version.
+	The Programming Contest Web 1.2 platform & Judge Kernel V100R001C00B100 version.<br>
+	<a href="admin" title="administrator">Admin</a>&nbsp;|
+	<a href="#" class="locale-zh" title="Chinese">中文</a>&nbsp;|
+	<a href="#" class="locale-en" title="English">English</a><br><br>
 </div>
 <script type="text/javascript">
 $(document).ready(function() {	

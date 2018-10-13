@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	</div>
 	    <div class="content" style="">	    	
 			<s:form id="submit" method="post" action="submited.action" theme="simple">
-				<div class="info" style="width:560px;margin: 0px auto;padding:12px 12px 12px 12px;">
+				<div class="info" style="width:610px;margin: 0px auto;padding:12px 12px 12px 12px;">
 					<input type="hidden" name="problemId" style="width: 100px;" value="<s:property value="problemId"/>">
 					Problem:&nbsp;<s:property value="problem.problem_id"/> - <s:property value="problem.title"/>
 					<br/>
@@ -90,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 												<option value="8" <s:if test="language==8">selected="selected"</s:if>>Pascal</option>
 			<% } %>		
 					</select>
-					</br>
+					<br>
 					Source code:				
 					
 					<textarea id="source" name="source" rows="25" style="width: 100%" ><s:property value="source"/></textarea>	
@@ -119,6 +119,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    $('input[type=submit]', this).attr('disabled', 'disabled');
 		});
 		</script>		     	  	  	    
+		</div>
 	</div>   
     <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>

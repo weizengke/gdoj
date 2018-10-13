@@ -230,3 +230,12 @@ $(document).ready(function() {
             );
 });
 </script>
+<script src='https://gitee.com/jungle/online-judge/widget_preview'></script>
+<style>
+.pro_name a{color: #4183c4;font-size:11px;}
+.osc_git_title{background-color: #fff;font-size:11px;}
+.osc_git_box{background-color: #fff;font-size:11px;}
+.osc_git_box{border-color: #e1e1e1;font-size:11px;}
+.osc_git_info{color: #666;font-size:11px;}
+.osc_git_main a{color: #9B9B9B;font-size:11px;}
+</style>

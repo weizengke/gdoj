@@ -14,9 +14,7 @@ public class QuartzOnlineUsersJob {
 	
 	public void work()  
     {  
-	    try {
-
-	    	
+	    try {	    	
 	    	UserService userService = (UserService)MyApplicationContextUtil.getContext().getBean("userService");
 			
 			Map<String, OnlineUserBean> mou = new HashMap<String, OnlineUserBean>();

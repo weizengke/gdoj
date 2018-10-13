@@ -9,20 +9,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title><s:text name="news"/> - Online Judge</title>
+    <title>News - Online Judge</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta http-equiv="keywords" content="ACM,OJ,OnlineJudge,JAVA,C++,Program Contest">
 	<meta http-equiv="description" content="Online Judge System for ACM">
-	<link href="css/styles.css" type="text/css" rel="stylesheet">
-	
+	<link href="css/styles.css" type="text/css" rel="stylesheet">	
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
   </head>
 
   <body>  
   	<jsp:include   page="/jsp/head.jsp"></jsp:include>
-  	<div id="body">
-		 
+  	<div id="body">		 
 		<div id="sidebar"> 	          
 		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
    	 	</div> <!-- End sidebar -->

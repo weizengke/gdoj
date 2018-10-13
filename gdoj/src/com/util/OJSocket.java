@@ -7,13 +7,21 @@ public class OJSocket {
     public static void SendMsg2Judger(String ip, int port, String cmdBuff) {  
 		Socket socket;
 		try {			
-			socket = new Socket(ip,port);
-			PrintWriter pw = null;  
-			pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter( socket.getOutputStream())));  
-			pw.write(cmdBuff);
-			pw.close();
-			socket.close();		
-			System.out.print("SendMsg2Judger to ip:" + ip + " port:"+ port +" cmdBuff:"+cmdBuff+".\n");
+			/* Magic:0xabcddcba
+			 * TLV:  type=0x0001; length=strlen(cmdBuff); value=cmdBuff
+			 * */
+
+			String reqStr = String.format("%s%s%04x%s", "abcddcba", "0001", cmdBuff.length(), cmdBuff);	
+			
+			socket = new Socket(ip, port);
+			OutputStream outPutStream = socket.getOutputStream();
+			outPutStream.write(reqStr.getBytes());
+			outPutStream.flush();
+			
+			socket.close();
+			
+			System.out.print("SendMsg2Judger to ip:" + ip + " port:"+ port +" cmdBuff:"+reqStr+".\n");
+			
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			System.out.print("SendMsg2Judger to ip:" + ip + " port:"+ port +" cmdBuff:"+cmdBuff+" , but failed.\n");
