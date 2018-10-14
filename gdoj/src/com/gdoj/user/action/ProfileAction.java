@@ -137,7 +137,7 @@ public class ProfileAction extends ActionSupport {
 			rank = userService.getUserRank(user);
 			
 			/* problem solved */
-			String sql = "select DISTINCT s.problem_id from Solution s where s.verdict=5 and s.username='"+user.getUsername()+"' order by s.problem_id ASC;";
+			String sql = "select DISTINCT s.problem_id from solution s where s.verdict=5 and s.username='"+user.getUsername()+"' order by s.problem_id ASC;";
 			List<Object> solvedProblemIdList = new ArrayList<Object>();
 			solvedProblemIdList = solutionService.query(sql);
 			problemSolvedList = new ArrayList<Problem>();
@@ -151,7 +151,7 @@ public class ProfileAction extends ActionSupport {
 			}
 			
 			/* problem try */
-			sql="select distinct s.problem_id from Solution s where "+
+			sql="select distinct s.problem_id from solution s where "+
 			"s.username='"+user.getUsername()+"' group by s.problem_id " +
 			"having SUM(s.verdict=5)<1 order by s.problem_id ASC;";
 			

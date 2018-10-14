@@ -37,7 +37,7 @@ public class Upload {
 			if(!dir.exists() ) {
 				dir.mkdirs();
 			}
-			FileOutputStream fos = new FileOutputStream(path+"\\" + fileName);
+			FileOutputStream fos = new FileOutputStream(path+"/" + fileName);
 			FileInputStream fis = new FileInputStream(file);
 			byte[] buffer = new byte[1024];
 			int len = 0;

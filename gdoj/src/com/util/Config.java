@@ -3,6 +3,7 @@
  */
 package com.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import org.apache.log4j.Logger;
 public class Config {
 
 	private final static Logger log = Logger.getLogger(Config.class);
-	private static final String PATH = "/config.properties";
+	private static final String PATH = "config.properties";
 	private static Properties properties = null;
 	
 	public static String getValue(String key) {
@@ -31,10 +32,14 @@ public class Config {
 		/**
 		 * set value matches the key.
 		 */
-		 String root =  Thread.currentThread().getContextClassLoader().getResource("").toString();
-	    	root = root.replaceAll("file:/", "").replaceAll("%20", " ");
+		 String root =  Thread.currentThread().getContextClassLoader().getResource("/").getPath();
+	     
+		 
 		 load();
-		 OutputStream fos = new FileOutputStream(root+PATH);
+		 
+		 System.out.println(root);
+		 
+		 OutputStream fos = new FileOutputStream(PATH);
 		 properties.setProperty(key,value);
 		 properties.store(fos,"");
          fos.close(); //------------------------------------important
@@ -45,9 +50,9 @@ public class Config {
 		properties = new Properties();
 		
 		try {
-			 String root =  Thread.currentThread().getContextClassLoader().getResource("").toString();
-		    	root = root.replaceAll("file:/", "").replaceAll("%20", " ");
-			InputStream is = new FileInputStream(root+PATH);			
+			String root =  Thread.currentThread().getContextClassLoader().getResource("/").getPath();
+			
+			InputStream is = new FileInputStream(root + PATH);			
 			properties.load(is);
 			is.close();// ¹Ø±ÕÁ÷ 
 		} catch (Exception e) {

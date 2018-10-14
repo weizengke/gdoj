@@ -1,5 +1,9 @@
 package com.gdoj.news.action;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.gdoj.contest.vo.Contest;
 import com.gdoj.news.service.NewsService;
 import com.gdoj.news.vo.News;
@@ -49,6 +53,11 @@ public class NewsAction extends ActionSupport{
 			news_.setCreate_user(username);
 			news_.setOrderNum(orderNum);
 			news_.setDefunct(defunct);
+			
+			Date dt = new Date();
+			SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+			news_.setDate(Timestamp.valueOf(simpleDate.format(dt)));
+			
 			newsService.save(news_);
 		} catch (Exception e) {
 			// TODO: handle exception

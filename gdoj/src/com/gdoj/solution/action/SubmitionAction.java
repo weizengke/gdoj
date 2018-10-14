@@ -1,6 +1,8 @@
 package com.gdoj.solution.action;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -72,8 +74,10 @@ public class SubmitionAction extends ActionSupport{
 			Solution solution_ = new Solution();
 			solution_.setUsername(username);
 			solution_.setProblem_id(problemId);
-			solution_.setLanguage(language);			
-			solution_.setSubmit_date(dt);
+			solution_.setLanguage(language);
+			
+			SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+			solution_.setSubmit_date(Timestamp.valueOf(simpleDate.format(dt)));
 			solution_.setCode_length(source.length());
 			
 			solution = solution_;

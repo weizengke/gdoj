@@ -30,9 +30,9 @@ public class QuartzJob {
 	    
 	    try {
 	    	//System.out.println(Thread.currentThread().getContextClassLoader().getResource("").toExternalForm());  
-	    	String root =  Thread.currentThread().getContextClassLoader().getResource("").toString();
+	    	String root =  Thread.currentThread().getContextClassLoader().getResource("/").getPath();
 	    	
-	    	root = root.replaceAll("file:/", "").replaceAll("%20", " ").replaceAll("/classes/", "");
+	    	root = root.replaceAll("/classes/", "");
 	    	
 	    	//System.out.println(root);
 			List<User> users = new ArrayList<User>();
@@ -54,7 +54,7 @@ public class QuartzJob {
 			 * 
 			 * */
 			
-			root = root.replaceAll("file:/", "").replaceAll("%20", " ").replaceAll("WEB-INF", "");
+			root = root.replaceAll("WEB-INF", "");
 			
 	        try { 
 	        	URL url = new URL(Config.getValue("OTHEROJ")); 

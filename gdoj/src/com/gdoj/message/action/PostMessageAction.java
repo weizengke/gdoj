@@ -1,6 +1,8 @@
 package com.gdoj.message.action;
 
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -197,7 +199,10 @@ public class PostMessageAction extends ActionSupport {
 				
 				message_.setCreate_user(createUser);
 			//	Date dt = new Date();
-				message_.setIn_date(dt);
+				
+				SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+				message_.setIn_date(Timestamp.valueOf(simpleDate.format(dt)));
+				
 				message = message_;
 				messageService.saveMessage(message);
 				if(rootId.equals(0)){//是楼主，设置rootID为自己

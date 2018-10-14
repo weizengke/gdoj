@@ -1,5 +1,7 @@
 package com.gdoj.news.action;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.struts2.json.annotations.JSON;
@@ -72,6 +74,10 @@ public class PostNewsAction extends ActionSupport{
 				news_.setCreate_user(username);
 				news_.setOrderNum(orderNum);
 				news_.setDefunct(defunct);
+
+				SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+				news_.setDate(Timestamp.valueOf(simpleDate.format(dt)));
+				
 				newsService.save(news_);
 			}else{  //ÐÞ¸Ä
 				String sql = "select n from News n where n.news_id="+newsId;

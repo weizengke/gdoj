@@ -48,10 +48,10 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDAO {
 		Session session = HibernateSessionFactory.getSession();
 		session.beginTransaction();
 		//以最新评论或发表为序
-		String sql = "from Message as m group by m.root_id  order by m.orderNum DESC,max(m.message_id) DESC";
+		//String sql = "from Message as m group by m.root_id  order by m.orderNum DESC,max(m.message_id) DESC";
 		
 		//以楼主时间排序
-		//String sql = "from Message as m where m.message_id=m.root_id and m.defunct='N' order by m.orderNum ASC,m.message_id DESC";
+		String sql = "from Message as m where m.message_id=m.root_id and m.defunct='N' order by m.orderNum DESC,m.message_id DESC";
 		
 		Integer from = (pageNow - 1) * pageSize;
 		Query q = (Query) session.createQuery(sql);

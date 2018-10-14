@@ -22,16 +22,16 @@ import freemarker.template.TemplateException;
 public class MyFreeMarker {
 
 	public static void generator(String templatesPath,String ftlName,String desName,String objName,Map objMap) throws IOException, TemplateException{		
-		File file_ = new File(templatesPath+"\\templates");
+		File file_ = new File(templatesPath+"/templates");
 		if(false==file_.exists()){
-			System.out.println(templatesPath+"\\templates"+" is not existed");
+			System.out.println(templatesPath+"/templates"+" is not existed");
 			return;
 		}
 		
 		Configuration cfg = new Configuration();
 		cfg = new Configuration();
 		try {
-			cfg.setDirectoryForTemplateLoading(new File(templatesPath+"\\templates"));
+			cfg.setDirectoryForTemplateLoading(new File(templatesPath+"/templates"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,7 +41,7 @@ public class MyFreeMarker {
 		
 		//this.getClass().getClassLoader().getResource("/").getPath();
 		
-		Writer out = new OutputStreamWriter(new FileOutputStream(templatesPath+"\\templates\\"+desName), "GBK");
+		Writer out = new OutputStreamWriter(new FileOutputStream(templatesPath+"/templates/"+desName), "GBK");
 		t.process(objMap, out);
 	}
 	public static void main(String[] args) throws Exception {

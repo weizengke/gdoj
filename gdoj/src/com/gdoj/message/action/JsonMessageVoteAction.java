@@ -1,5 +1,7 @@
 package com.gdoj.message.action;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.struts2.json.annotations.JSON;
@@ -51,7 +53,11 @@ public class JsonMessageVoteAction extends ActionSupport {
 			vote_.setMessage_id(messageId);
 			vote_.setUsername(username);
 			vote_.setVote(vote__);
-			vote_.setVote_date(new Date());
+			
+			Date dt = new Date();
+			SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+			vote_.setVote_date(Timestamp.valueOf(simpleDate.format(dt)));
+			
 			voteService.save(vote_);
 			
 			message.setVotes(message.getVotes() + vote__);

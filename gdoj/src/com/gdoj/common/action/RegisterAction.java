@@ -1,5 +1,7 @@
 package com.gdoj.common.action;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.gdoj.user.service.UserService;
@@ -128,9 +130,12 @@ public class RegisterAction extends ActionSupport{
 			user_.setPassword(password);
 			user_.setEmail(email);
 			Date dt = new Date();
-			user_.setBirthday(dt);
-			user_.setRegdate(dt);
-			user_.setLastlogin(dt);
+			
+			SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+			user_.setBirthday(Timestamp.valueOf(simpleDate.format(dt)));
+			user_.setRegdate(Timestamp.valueOf(simpleDate.format(dt)));
+			user_.setLastlogin(Timestamp.valueOf(simpleDate.format(dt)));
+			
 			userService.save(user_);
 			
 			ActionContext.getContext().getSession().put("session_username",username);

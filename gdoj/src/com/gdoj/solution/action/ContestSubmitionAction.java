@@ -1,6 +1,8 @@
 package com.gdoj.solution.action;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -82,13 +84,13 @@ public class ContestSubmitionAction extends ActionSupport{
 			solution_.setContest_id(contestId);
 			solution_.setProblem_id(problem.getProblem_id());
 			solution_.setLanguage(language);
-			solution_.setSubmit_date(new Date());
+			
+			SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+			solution_.setSubmit_date(Timestamp.valueOf(simpleDate.format(dt)));
+
 			solution_.setCode_length(source.length());
 			solution = solution_;
 			solutionService.save(solution);		
-			
-			
-			//System.out.println("sid="+solution.getSolution_id());
 			
 			if(null==solution.getSolution_id()){
 				//Skip the judge
