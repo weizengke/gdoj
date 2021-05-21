@@ -1,11 +1,11 @@
 gdoj
 ====
 
-演示地址：http://debugforces.com/
+演示地址：http://happyoj.com
 
 The best windows online judge platform for ACM ,  enjoy it !
 
-【如果您使用了我们的产品，请您在 http://debugforces.com 留言哦，您的支持是我们不断进步的动力】
+【如果您使用了我们的产品，请您在 http://happyoj.com  留言哦，您的支持是我们不断进步的动力】
 
 OJ
 为定期从Jungle项目 https://github.com/weizengke/jungle 发布Judge Kernel(只发布Win32内核，Win64请自行前往Jungle主线获取)，源码请前往Jungle主线
