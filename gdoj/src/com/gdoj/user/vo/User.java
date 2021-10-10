@@ -2,6 +2,8 @@ package com.gdoj.user.vo;
 
 import java.util.Date;
 
+import org.apache.struts2.json.annotations.JSON;
+
 public class User implements java.io.Serializable {
 	/**
 	 * 
@@ -26,7 +28,8 @@ public class User implements java.io.Serializable {
 	private Integer submit;
 	private Integer rating;
 	private String avatar;
-	
+	private Integer rate;
+
 	public User() {
 		this.avatar = "N";
 		this.defunct = "N";
@@ -35,16 +38,16 @@ public class User implements java.io.Serializable {
 		this.solved = 0;
 		this.submit = 0;
 		this.rating = 0;
+		this.rate = 0;
 	}
-	
+	@JSON(deserialize=false,serialize=false)
 	public String getAvatar() {
 		return avatar;
 	}
-
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-
+	@JSON(deserialize=false,serialize=false)
 	public Integer getId() {
 		return id;
 	}
@@ -57,6 +60,7 @@ public class User implements java.io.Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	@JSON(deserialize=false,serialize=false)
 	public String getPassword() {
 		return password;
 	}
@@ -69,6 +73,7 @@ public class User implements java.io.Serializable {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+	@JSON(deserialize=false,serialize=false)
 	public String getEmail() {
 		return email;
 	}
@@ -87,12 +92,14 @@ public class User implements java.io.Serializable {
 	public void setMotto(String motto) {
 		this.motto = motto;
 	}
+	@JSON(deserialize=false,serialize=false)
 	public String getDefunct() {
 		return defunct;
 	}
 	public void setDefunct(String defunct) {
 		this.defunct = defunct;
 	}
+	@JSON(deserialize=false,serialize=false)
 	public String getIp() {
 		return ip;
 	}
@@ -105,6 +112,7 @@ public class User implements java.io.Serializable {
 	public void setOpensource(String opensource) {
 		this.opensource = opensource;
 	}
+	@JSON(deserialize=false,serialize=false)
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -141,7 +149,7 @@ public class User implements java.io.Serializable {
 	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
-
+	
 	public Date getLastlogin() {
 		return lastlogin;
 	}
@@ -157,5 +165,13 @@ public class User implements java.io.Serializable {
 	public void setLastaccesstime(Date lastaccesstime) {
 		this.lastaccesstime = lastaccesstime;
 	}
-	
+
+	public void setRate(Integer rate) {
+		this.rate = rate;
+	}
+
+	public Integer getRate() {
+		return rate;
+	}
+
 }

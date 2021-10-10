@@ -44,7 +44,7 @@ public class JsonCompileInfoAction extends ActionSupport{
 				return ERROR;
 			}	
 			
-			errorInfo = compileInfo_.getError().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
+			errorInfo = compileInfo_.getError();
 			
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -119,7 +119,6 @@ public class AdminAction extends ActionSupport{
 	public String switchs(){
 		opensource = getPrivilege("OPENSOURCE")==true?"YES":"NO";
 		topic_switch = getPrivilege("OPENBBS")==true?"YES":"NO";
-		
 		return "switchs";
 	}
 	

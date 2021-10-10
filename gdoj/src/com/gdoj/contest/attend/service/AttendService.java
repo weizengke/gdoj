@@ -11,7 +11,7 @@ public interface AttendService {
 	public List<Attend> queryContestAttends(Integer from,Integer pageSize,Integer contestId,Integer type);
 	public Integer countContestAttends(Integer contestId);
 	public Attend queryUserAttend(Integer contestId,String username);
-
+	public List<Attend> getUserAttends(String username);
 	public Integer countUserAttends(String username);
 	public Integer getUserRank(Attend attend,Integer type);
 }

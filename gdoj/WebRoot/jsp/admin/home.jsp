@@ -1,4 +1,4 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <%
 String path = request.getContextPath();
@@ -18,53 +18,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
-
-
 </head>
   
-  <body>
-    <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">	
-
-	<div id="sidebar"> 	      
+<body>
+  <jsp:include   page="/jsp/head.jsp"></jsp:include> 
+	<div class="container">
+      <div class="content">       
+    	<div class="sidebar">       
  	<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-   	</div> 
-   	
-    <div id="content" class="content-with-sidebar round0123"  >     
-	   <div id="nav-content" >
-     	<a href="admin">Admin</a>
-   		<a href="admin/news">News</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/problemset/status">Status</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     		<a href="admin/privilege">Privilege</a>		
-     	</div>
-     	
+   	</div> 	   	
+    	<div class="content-with-sidebar round0123"  >
+	   <jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
 	    <div class="topic">	
-	     	<div>	
-				  <div class="comment " style="position: relative;padding: 6px;">
-				  <form action="admin/homemaker.action" method="post">	     																								  			
-								Home Page:<br>
-								<textarea class="message-content" id="home-content" name="content" rows="20" ><s:property value="content"/></textarea>	
-							    <br>
-							    Sidebar:<br>
-							    <textarea class="message-content" id="sidebar-content" name="sidebar_content" rows="20" ><s:property value="sidebar_content"/></textarea>	               	
-		                    	<div style="text-align: center;margin-top: 12px;">
-								<input class="" type="submit" value="Post" >
-								<input class="" type="reset" value="Reset" >
-								</div>
-
-					</form>     
-	    		</div> 	
-	    	</div>
-	    </div>
-	</div>  
-
+			  <div class="comment " style="position: relative;padding: 6px;">
+			  <form action="admin/homemaker.action" method="post">	     																								  			
+					Home Page:<br>
+					<textarea class="message-content" id="home-content" name="content" rows="20" ><s:property value="content"/></textarea>	
+				    <br>
+				    Sidebar:<br>
+				    <textarea class="message-content" id="sidebar-content" name="sidebar_content" rows="20" ><s:property value="sidebar_content"/></textarea>	               	
+                   	<div style="text-align: center;margin-top: 12px;">
+					<input class="button_submit" type="submit" value="<s:text name="topic.btn_post"/>" >
+					</div>
+				</form>     
+    		</div> 	
+    	</div>
+	</div>
+		  <div class="clear"></div>
 <script type='text/javascript' src='js/ke/kindeditor-min.js' charset='utf-8'></script>
-
 <style>
-
 .ke-icon-code {
 	background-image: url(img/code.gif);
 	background-position: 0px 0px;
@@ -189,7 +171,6 @@ KE.plugin['quote'] = {
 //-->
 
 </script>
-
 <script type='text/javascript'>
 
 
@@ -231,10 +212,8 @@ $(document).ready(function(){
 	});
 });
 
-
-
 </script>
-  
+  	</div>
       <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
    </div>
   </body>

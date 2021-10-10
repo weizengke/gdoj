@@ -49,6 +49,8 @@
 				<value>com/gdoj/tagsview/vo/Tagsview.hbm.xml</value>
 				<value>com/gdoj/privilege/vo/Privilege.hbm.xml</value>
 				<value>com/gdoj/news/vo/News.hbm.xml</value>
+				<value>com/gdoj/rating/vo/Rating.hbm.xml</value>
+				<value>com/gdoj/oauth/vo/OAuth.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -83,8 +85,7 @@
 		<property name="messageService" ref="messageService" />
 	</bean>
 	<!-- User -->
-	<bean id="userService"
-		class="com.gdoj.user.service.UserServiceImpl">
+	<bean id="userService" class="com.gdoj.user.service.UserServiceImpl">
 		<property name="userDao" ref="userDao" />
 	</bean>
 	<bean id="userDao" class="com.gdoj.user.dao.UserDaoImpl">
@@ -101,8 +102,12 @@
 	</bean>
 	<bean name="settingsBean" class="com.gdoj.user.action.SettingsUserAction" scope="prototype">
 		<property name="userService" ref="userService" />
+		<property name="oauthService" ref="oauthService" />
 	</bean>
 	<bean name="modifyUserBean" class="com.gdoj.user.action.ModifyUserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean name="OAuthBean" class="com.gdoj.common.action.OAuthAction" scope="prototype">
 		<property name="userService" ref="userService" />
 	</bean>
 	<bean name="loginBean" class="com.gdoj.common.action.LoginAction" scope="prototype">
@@ -121,6 +126,9 @@
 		<property name="userService" ref="userService" />
 		<property name="solutionService" ref="solutionService" />
 		<property name="problemService" ref="problemService" />
+		<property name="ratingService" ref="ratingService" />
+		<property name="attendService" ref="attendService" />
+		<property name="contestService" ref="contestService" />
 	</bean>
 	<!--End User -->
 	
@@ -135,6 +143,25 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<!-- End Vote -->
+	
+	<!-- Rating -->
+	<bean id="ratingService" class="com.gdoj.rating.service.RatingServiceImpl">
+		<property name="ratingDao" ref="ratingDao" />
+	</bean>
+	<bean id="ratingDao" class="com.gdoj.rating.dao.RatingDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	<bean name="jsonRatingBean" class="com.gdoj.rating.action.JsonRatingAction" scope="prototype">
+		<property name="ratingService" ref="ratingService" />
+		<property name="attendService" ref="attendService" />
+		<property name="contestService" ref="contestService" />		
+	</bean>
+	<bean name="ratingBean" class="com.gdoj.rating.action.RatingAction" scope="prototype">
+		<property name="ratingService" ref="ratingService" />
+		<property name="attendService" ref="attendService" />
+		<property name="contestService" ref="contestService" />		
+	</bean>
+	
 	<!-- Message -->
 	<bean id="messageService" class="com.gdoj.message.service.MessageServiceImpl">
 		<property name="messageDao" ref="messageDao" />
@@ -228,6 +255,7 @@
 		<property name="problemService" ref="problemService" />
 		<property name="solutionSourceService" ref="solutionSourceService" />
 	</bean>
+
 	<bean name="contestSolutionListBean" class="com.gdoj.solution.action.ContestSolutionListAction" scope="prototype">
 		<property name="solutionService" ref="solutionService" />
 		<property name="cproblemService" ref="cproblemService" />
@@ -385,6 +413,7 @@
 		<property name="attendService" ref="attendService" />
 		<property name="contestService" ref="contestService" />
 		<property name="userService" ref="userService" />
+		<property name="ratingService" ref="ratingService" />
 	</bean>
 
 	<!-- admin -->
@@ -393,10 +422,13 @@
 	</bean>
 	<bean name="adminProblemListBean" class="com.gdoj.admin.action.ProblemListAction" scope="prototype">
 		<property name="problemService" ref="problemService" />
+		<property name="tagsviewService" ref="tagsviewService" />
+		<property name="tagsService" ref="tagsService" />
 	</bean>
 	<bean name="adminContestListBean" class="com.gdoj.admin.action.ContestListAction" scope="prototype">
 		<property name="contestService" ref="contestService" />
 		<property name="attendService" ref="attendService" />
+		<property name="userService" ref="userService" />
 	</bean>
 		<bean name="adminContestShowBean" class="com.gdoj.admin.action.ContestShowAction" scope="prototype">
 		<property name="contestService" ref="contestService" />
@@ -405,6 +437,8 @@
 	</bean>
 		<bean name="adminProblemShowBean" class="com.gdoj.admin.action.ProblemShowAction" scope="prototype">
 		<property name="problemService" ref="problemService" />
+		<property name="tagsviewService" ref="tagsviewService" />
+		<property name="tagsService" ref="tagsService" />
 	</bean>
 	<bean name="rejudgeBean" class="com.gdoj.admin.action.ReJudgeAction" scope="prototype">
 		<property name="solutionService" ref="solutionService" />
@@ -503,14 +537,35 @@
 	<bean name="newsListBean" class="com.gdoj.news.action.NewsListAction" scope="prototype">
 		<property name="newsService" ref="newsService" />
 	</bean>
-	
+
+
+	<!-- OAuth -->
+	<bean id="oauthService" class="com.gdoj.oauth.service.OAuthServiceImpl">
+		<property name="oauthDao" ref="oauthDao" />
+	</bean>
+	<bean id="oauthDao" class="com.gdoj.oauth.dao.OAuthDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean name="oauthBean" class="com.gdoj.oauth.action.OAuthAction" scope="prototype">
+		<property name="oauthService" ref="oauthService" />
+		<property name="userService" ref="userService" />
+	</bean>
+
 	<bean name="userTipBean" class="com.gdoj.common.action.UserInfoTipAction" scope="prototype">
 		<property name="messageService" ref="messageService" />
 		<property name="userService" ref="userService" />
 	</bean>
-	
-	
-	
+
+	<bean name="jsonSubmitBean" class="com.gdoj.common.action.JsonSubmitAction" scope="prototype">
+		<property name="problemService" ref="problemService" />
+		<property name="cproblemService" ref="cproblemService" />
+		<property name="solutionService" ref="solutionService" />
+		<property name="solutionSourceService" ref="solutionSourceService" />
+		<property name="contestService" ref="contestService" />
+	</bean>
+
+	<bean name="jsonCheckBean" class="com.gdoj.common.action.JsonCheckAction" scope="prototype">
+	</bean>		
 	
 	<!-- 要调用的工作类 -->  
         <bean id="quartzJob" class="com.gdoj.bean.QuartzJob"></bean>  

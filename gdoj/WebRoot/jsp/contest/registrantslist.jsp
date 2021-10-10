@@ -28,72 +28,77 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   <body>  
   <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">
-	
-
-     <div id="content" > 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >
- 
-     	</div>
+  <div class="container">
+     <div class="content" > 	 <!-- class="content-with-sidebar" -->
      	 <div style="width: 100%;position: relative;text-align: center;">
-	        <h4>
-				<s:property value="contest.title"/>
-			</h4>
-			Contest Registrants
+	        <h4><s:property value="contest.title"/></h4>
+			<s:text name="registrants"/>
 	    </div>  
-	    <div class="datatable" style="">	
-	    		<div class="lt">&nbsp;</div>
-	            <div class="rt">&nbsp;</div> 
-	            <div class="lb">&nbsp;</div>
-	            <div class="rb">&nbsp;</div>         
-	    	<div style="padding: 4px 0 0 6px;position: relative;">
-				<div class="left"><s:text name="registrants"/></div>
-				<div class="right"></div>
-			</div> 		
-			<br/>
-			<div class="innertable" style="">
-				<div class="ilt">&nbsp;</div>
-           		<div class="irt">&nbsp;</div>
-				<table class="standings">
+	    <div class="roundbox" style="">
+			<div>
+				<table class="standings rtable">
 					 <tr class="header">
 		               	 <th  class="id left-item">#</th>
 		               	 <th  class="coder"><s:text name="author"/></th>
-		               	 <th  class="solved"><s:text name="solved"/></th>
-		                 <th  class="rating" ><s:text name="submit"/></th>
+		                 <th  class="solved2" ><s:text name="rating"/></th>
 	                </tr>
-	                <s:if test="userList.size==0">
+	                <s:if test="ratingList.size==0">
 	                 <tr ><td class="left-item dark" colspan="32" style="text-align: left;">There is no records.</td></tr>
 	                </s:if>
-				    <s:iterator value="userList" status="st">
+				    <s:iterator value="ratingList" status="st">
 				    	<tr style="height: 42px;" class="<s:if test="#st.odd">dark</s:if> <s:if test="#session.session_username==username">my</s:if>">	
 							<td class="id left-item"><s:property value="pageSize*(page-1)+#st.index+1"/></td>
-							<td class="coder"><b><a href="profile/<s:property value="username"/>" class="user-tip" user="<s:property value="username"/>"><s:property value="username"/></a></b><s:if test="#session.session_username==username">&nbsp;<a href="contest/<s:property value="contestId"/>/UnRegisterContest" title ="UnRegister this contest?"><img src="img/delete.gif"></img></a></s:if></td>
-							<td class="solved"><s:property value="solved"/></td>
-							<td class="rating"><s:property value="submit"/></td>
+							<td class="coder">
+								<div style="float:left;">
+								<b>
+									<a href="profile/<s:property value="username"/>" class="rated-user user-rate-<s:property value="rate"/> user-tip" user="<s:property value="username"/>">
+										<s:property value="username"/>
+									</a>
+								</b>
+								<s:if test="#session.session_username==username">
+									&nbsp;<a href="contest/<s:property value="contestId"/>/UnRegisterContest" title ="UnRegister this contest?">
+									<img src="img/delete.gif"></img>
+									</a>
+								</s:if>
+								</div>
+								<div style="float:right;font-size:12px;text-align:right;color: grey;">
+									<span title="<s:property value="school" default=""/>"><s:property value="nickname" default=""/></span>
+								</div>
+							</td>
+							<td class="solved2">
+							<s:property value="rating-delta"/>
+							<s:if test="delta==0">
+							</s:if><s:elseif test="delta<0">
+		            		<span style="color:red">- <s:property value="0-delta"/> </span>
+		            		</s:elseif><s:else>
+		            		<span style="color:green">+ <s:property value="delta"/> </span>
+		            		</s:else>
+		            		</td>
 						</tr>	
 				   </s:iterator>
 				</table>
-		    </div>			  	 
-	   </div> 
-	   <div style="margin-right: 12px;">
-			<div class="left"></div>
-			<div class="right">
+		    </div>
+			<div style="margin:6px 12px;font-size:15px;">
+				<div class="left"></div>
+				<div class="right">
 					<s:if test="page>1">
 						<a href="contestRegistrants/<s:property value="contestId"/>/page/<s:property value="page-1"/>" style="color:#000;text-decoration: none;">  &larr; </a>
-					</s:if>	
-					<s:iterator value="pageList" status="st_page">				
+					</s:if>
+					<s:iterator value="pageList" status="st_page">
 						<a href="contestRegistrants/<s:property value="contestId"/>/page/<s:property/>" style="color:#000;text-decoration: none;">
 							<s:if test="page==pageList[#st_page.index]"><b><s:property/></b></s:if>
 							<s:else><s:property/></s:else>
-						</a>	
-					</s:iterator>	
-					<s:if test="page < pageList.size">		
-						<a href="contestRegistrants/<s:property value="contestId"/>/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
-					</s:if>						
+						</a>
+					</s:iterator>
+					<s:if test="page < pageList.size">
+						<a href="contestRegistrants/<s:property value="contestId"/>/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>
+					</s:if>
+				</div>
 			</div>
-		</div>          
-	</div>   
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+		</div>
+		 <div class="clear"></div>
+	</div>
+	  <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>
 </html>

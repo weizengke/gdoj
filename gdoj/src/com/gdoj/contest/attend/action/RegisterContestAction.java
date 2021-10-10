@@ -64,13 +64,10 @@ public class RegisterContestAction extends ActionSupport {
 				return SUCCESS;
 			}
 		
-			
-			
-			
 			Attend attend_ = new Attend();
 			attend_.setUsername(username);
 			attend_.setContest_id(contestId);
-			System.out.println("ssssss");
+			
 			attendService.save(attend_);
 			
 			

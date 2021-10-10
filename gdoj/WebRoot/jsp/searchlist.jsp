@@ -33,9 +33,9 @@ $(document).ready(function() {
 
   <body>  
   	<jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  	<div id="body">
-		
-		 <div id="search_main">		 
+  	<div class="container">
+        <div class="content"> 
+		 	<div id="search_main">		 
 			   <p id="s_type">
 			    <u rel="all" <s:if test="type==\"all\"">class="curr"</s:if><s:elseif test="type==null">class="curr"</s:elseif>><s:text name="all"/></u>
 			    <u rel="user" <s:if test="type==\"user\"">class="curr"</s:if>><s:text name="user"/></u>
@@ -71,9 +71,8 @@ $(document).ready(function() {
 			          <a style="font-size: 1.55937239010046em; padding: 10px 5px;" href="search?word=vc">vc</a>
 			    </p>
   			</div> -->	
-	   </div>				
-	       
-      <div id="content" style="width: 780px;margin: 0 auto;"> 	 <!-- class="content-with-sidebar" -->
+	   </div>
+      		<div id="content" style="width: 780px;margin: 0 auto;"> 	 <!-- class="content-with-sidebar" -->
      	<div id="nav-content" >  
 	     	
      	</div>	
@@ -84,20 +83,12 @@ $(document).ready(function() {
 	    </div>
      	<s:if test="userList.size!=0">	
      	<!-- Users -->
-     	 <div class="datatable">	
-	    	<div class="lt">&nbsp;</div>
-	        <div class="rt">&nbsp;</div>
-	        <div class="lb">&nbsp;</div>
-	        <div class="rb">&nbsp;</div>
-	    	<div style="padding: 4px 0 0 6px;position: relative;">
-				<div class="left"><s:text name="users"/> (<s:property value="userList.size"/>)</div>
-				<div class="right"></div>
-			</div> 		
-			<br/>   
-			<div class="innertable ">
-				<div class="ilt">&nbsp;</div>
-           		<div class="irt">&nbsp;</div>
-				<table class="standings">
+     	 <div class="roundbox">
+	    	<div class="roundbox-title">
+				<s:text name="users"/> (<s:property value="userList.size"/>)
+			</div>
+			<div class=" ">
+				<table class="standings rtable">
 					 <tr class="header" style="">  
 		               	 <th  class="rank left-item">#</th>
 		               	 <th  class="coder">
@@ -120,7 +111,7 @@ $(document).ready(function() {
 	            		<td class="rank left-item"><s:property value="#st.index+1"/></td>
 	            		<td class="coder">
 	            			<div style="float:left;">
-	            			<b><a href="profile/<s:property value="username"/>"><s:property value="username"/></a></b>
+	            			<b><a href="profile/<s:property value="username"/>" class="rated-user user-rate-<s:property value="rate" default="0"/> user-tip" user="<s:property value="username"/>"><s:property value="username"/></a></b>
 	            			</div>
 	            			<div style="float:right;font-size:11px;padding-top:1px;text-align:right;color: grey;">
 	            			<s:property value="nickname"/>
@@ -143,20 +134,12 @@ $(document).ready(function() {
        <s:if test="problemList.size!=0">
      	
      	<!-- Problem -->
-	    <div class="datatable">	
-	    	<div class="lt">&nbsp;</div>
-	        <div class="rt">&nbsp;</div>
-	        <div class="lb">&nbsp;</div>
-	        <div class="rb">&nbsp;</div>
-	    	<div style="padding: 4px 0 0 6px;position: relative;">
-				<div class="left"><s:text name="problem"/> (<s:property value="problemList.size"/>)</div>
-				<div class="right"></div>
-			</div> 		
-			<br/>
-			<div class="innertable" style="position: relative;margin:0.3em 3px 0 3px;">
-				<div class="ilt">&nbsp;</div>
-           		<div class="irt">&nbsp;</div>	
-				<table class="problem">
+		   <div class="roundbox">
+			   <div class="roundbox-title">
+				<s:text name="problem"/> (<s:property value="problemList.size"/>)
+				</div>
+				<div >
+				<table class="problem rtable">
 					 <tr class="header">
 					   <th class="id left-item">#</th>
 					   <th class="problem"><s:text name="problem"/></th>
@@ -182,7 +165,7 @@ $(document).ready(function() {
 	            		<s:property value="solved" default="0"/>
 	            		</a>
 	            		</td>
-	            		<td class="ratio <s:if test="problemStatusList[#st.index]==1">problem-ac</s:if><s:elseif test="problemStatusList[#st.index]==2">problem-failed</s:elseif>" ><a title="submit your code?" href="problemset/submit/<s:property value="problem_id"/>" style="color: grey;"><s:text name="submit"/></a></td>
+	            		<td class="ratio <s:if test="problemStatusList[#st.index]==1">problem-ac</s:if><s:elseif test="problemStatusList[#st.index]==2">problem-failed</s:elseif>" ><a title="submit your code?" href="problemset/problem/<s:property value="problem_id"/>" style="color: grey;"><s:text name="submit"/></a></td>
 	            	</tr>	
 	           		</s:iterator>   
 				</table>
@@ -193,20 +176,12 @@ $(document).ready(function() {
 	       
 	   <s:if test="messageList.size!=0">	 
 	   <!-- Topic -->
-  	   <div class="datatable">	
-	    	<div class="lt">&nbsp;</div>
-	        <div class="rt">&nbsp;</div>
-	        <div class="lb">&nbsp;</div>
-	        <div class="rb">&nbsp;</div>
-	    	<div style="padding: 4px 0 0 6px;position: relative;">
-				<div class="left"><s:text name="topic.topics"/> (<s:property value="messageList.size"/>)</div>
-				<div class="right"></div>
-			</div> 		
-			<br/>
-			<div class="innertable" style="position: relative;margin:0.3em 3px 0 3px;">
-				<div class="ilt">&nbsp;</div>
-           		<div class="irt">&nbsp;</div>	
-				<table class="topics">
+		   <div class="roundbox">
+			   <div class="roundbox-title">
+				<s:text name="topic.topics"/> (<s:property value="messageList.size"/>)
+				</div>
+				<div>
+				<table class="topics rtable">
 					 <tr class="header">					 
 					   <th class="id left-item">#</th>
 					   <th class="title"><s:text name="topic.title"/></th>					 				 
@@ -239,8 +214,10 @@ $(document).ready(function() {
 		    </div>	 	 
 	   </div>    
 	  </s:if>
-	</div>   
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+	  </div>
+			<div class="clear"></div>
+		</div>
+		<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>
 </html>

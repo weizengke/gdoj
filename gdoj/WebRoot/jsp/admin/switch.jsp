@@ -23,20 +23,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   <jsp:include  page="../head.jsp" ></jsp:include> 
- 
-  <div id="body">
-   	<div id="content">
-   		<div id="nav-content" >	
-   		<a href="admin">Admin</a>
-   		<a href="admin/news">News</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/problemset/status">Status</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     	<a href="admin/privilege">Privilege</a>	
-    	</div>
-
-    	<div style="margin: 12px;">
+   	<div class="container">
+        <div class="content">  
+			<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include>
+			<div style="margin: 12px;">
 	 	<strong>权限控制</strong><br/>
 	 	开放源码&nbsp;<select id=OPENSOURCE name="OPENSOURCE" style="width:68px;" onchange="change('OPENSOURCE')">						
 					<option value="YES" <s:if test="opensource==\"YES\"">selected</s:if>>开启</option>
@@ -59,7 +49,8 @@ function change(privilege){
 }
 </script>		
 	 	</div>
-   	</div>
+			<div class="clear"></div>
+   		</div>
     <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>

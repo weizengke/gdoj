@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.gdoj.bean.OJUtil;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.gdoj.bean.StatusBean;
@@ -45,7 +46,7 @@ public class JsonStatusAction extends ActionSupport{
 	}
 	private boolean success;
 	private String error;
-	
+
 	public String queryStatus() throws Exception{
 		
 		try {
@@ -59,14 +60,12 @@ public class JsonStatusAction extends ActionSupport{
 				solution_ = solutionService.querySolution(Integer.parseInt(i));
 				if (solution_ != null) {
 					status_.setSolutionId(solution_.getSolution_id());
-					status_.setStatus_description(getText("verdict"
-							+ solution_.getVerdict()));
+					status_.setStatus_description(OJUtil.getVerdictName(solution_.getVerdict(), solution_.getTestcase()));
 					status_.setTestCase(solution_.getTestcase());
 					status_.setContestId(solution_.getContest_id());
 					status_.setVerdictId(solution_.getVerdict());
 					status_.setMemory(solution_.getMemory());
 					status_.setTime(solution_.getTime());
-					
 					status.add(status_);
 				}
 			}

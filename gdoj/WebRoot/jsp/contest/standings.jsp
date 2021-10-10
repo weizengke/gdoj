@@ -28,62 +28,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   <body>  
   <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">
-	
-
-     <div id="content" > 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >
- 
-     	</div>
+  <div class="container">
+     <div class="content" >
      	 <div class="data-title" style="width: 100%;position: relative;text-align: center;">
-	        <h3>
-				<s:property value="contest.title"/>
-			</h3>
-				<div id="contest_status" class="">
-					<s:if test="timeLeft==0" ><span class="ended">Final Standings</span></s:if>
-					<s:elseif test="timeLeft>0">
-					<span class="running">Current Standings</span>
-					</s:elseif>
-					<s:else><span class="pending">Contest Pending</span></s:else>
+	        <h3><s:property value="contest.title"/></h3>
+			<div id="contest_status" class="">
+				<s:if test="timeLeft==0" ><span class="ended">Final Standings</span></s:if>
+				<s:elseif test="timeLeft>0">
+				<span class="running">Current Standings</span>
+				</s:elseif>
+				<s:else><span class="pending">Contest Pending</span></s:else>
 <s:if test="timeLeft>0" >
 <br/><span id="clock" class="" style=""></span>
 <script language="javascript">
-		var time = <s:property value="timeLeft"/>;
-		$("#clock").html(OnlineJudge.formatSeconds(time));
-		function clock(){
-			if(time>0){
-				 $("#clock").html(OnlineJudge.formatSeconds(time));
-				 time--;
-				 if(time==0){
-				 	$("#contest_status").html("Final Standing"); 	
-				 	$("#contest_status").attr('class', 'ended'); 
-				 }
-				 setTimeout(clock, 1000);
-			}
+	var time = <s:property value="timeLeft"/>;
+	$("#clock").html(OnlineJudge.formatSeconds(time));
+	function clock(){
+		if(time>0){
+			 $("#clock").html(OnlineJudge.formatSeconds(time));
+			 time--;
+			 if(time==0){
+				$("#contest_status").html("Final Standing");
+				$("#contest_status").attr('class', 'ended');
+			 }
+			 setTimeout(clock, 1000);
 		}
-		
+	}
+
 $(document).ready(function(){
-		clock();
+	clock();
 })
-		
+
 </script>
 </s:if>					
-				   </div>
+			   </div>
 	    </div>  
-	    <div class="datatable" style="">	
-	    		<div class="lt">&nbsp;</div>
-	            <div class="rt">&nbsp;</div> 
-	            <div class="lb">&nbsp;</div>
-	            <div class="rb">&nbsp;</div>         
-	    	<div style="padding: 4px 0 0 6px;position: relative;">
+	    <div class="roundbox">
+	    	<div class="roundbox-title">
 				<div class="left"><s:text name="standings"/></div>
 				<div class="right"><span style="font-size:10px;color:grey;"><s:text name="contestcellnote"/>
 				</span></div>
 			</div> 		
-			<div class="innertable" style="">
-				<div class="ilt">&nbsp;</div>
-           		<div class="irt">&nbsp;</div>
-				<table class="standings">
+			<div class="" style="">
+				<table class="standings rtable">
 					 <tr class="header">
 		               	 <th  class="rank left-item">#</th>
 		               	 <th  class="coder"><s:text name="author"/></th>
@@ -103,9 +90,9 @@ $(document).ready(function(){
 				    <s:iterator value="attendList" status="st">
 				    	<tr style="height: 42px;" username="<s:property value="username"/>" class="<s:if test="#st.odd">dark</s:if> <s:if test="#session.session_username==username">my</s:if>">	
 							<td class="rank left-item"><s:property value="rankList[#st.index]"/></td>
-							<td class="coder source" >
+							<td class="coder view-submit-log" contestId="<s:property value="contestId"/>">
 							  <div style="float:left;">
-								<b><a href="profile/<s:property value="username"/>" target="_blank" class="user-tip" user="<s:property value="username"/>"><s:property value="username"/></a></b>
+								<b><a href="profile/<s:property value="username"/>" target="_blank" class="user-rate-<s:property value="userList[#st.index].rate"/> user-tip" user="<s:property value="username"/>"><s:property value="username"/></a></b>
 							  </div>
 							  <div style="float:right;font-size:12px;text-align:right;color: grey;">
 							    <span title="<s:property value="userList[#st.index].school" default=""/>"><s:property value="userList[#st.index].nickname" default=""/></span>
@@ -118,14 +105,14 @@ $(document).ready(function(){
 							<s:iterator  value="acTimeList.get(username)" status="acst" var="actime">
 						
 							 <s:if test="acTimeIntList.get(username)[#acst.index]>0">
-							 	 <td  class="problem source"  problemId="<s:property value="cproblemList[#acst.index].num" />">
+							 	 <td  class="problem view-submit-log" contestId="<s:property value="contestId"/>" problemId="<s:property value="cproblemList[#acst.index].num" />">
 							 	 	<b><span style="color:#32CD32">+<s:if test="wrongSubmits.get(username)[#acst.index]>0"><span title="<s:property value="wrongSubmits.get(username)[#acst.index]" /> wrong try"><s:property value="wrongSubmits.get(username)[#acst.index]" /></span></s:if></span></b>
 									 <br/><span style="font-size:10px;"><s:property value="actime" /></span>						 
 								</td>
 							 </s:if>
 							 <s:else>
 							 		<s:if test="wrongSubmits.get(username)[#acst.index]>0">
-										<td  class="problem source" problemId="<s:property value="cproblemList[#acst.index].num" />">
+										<td  class="problem view-submit-log" contestId="<s:property value="contestId"/>" problemId="<s:property value="cproblemList[#acst.index].num" />">
 										<span style="color:grey" title="<s:property value="wrongSubmits.get(username)[#acst.index]" /> wrong try">-<s:property value="wrongSubmits.get(username)[#acst.index]" /></span>
 										</td>
 									</s:if>
@@ -135,102 +122,29 @@ $(document).ready(function(){
 						</tr>	
 				   </s:iterator>
 				</table>
-		    </div>			  	 
-	   </div> 
-<script type="text/javascript">
- $(document).ready(function() {	 
-	    $(".source").bind("dblclick", function() {
-       		
-       		  $(".pop-div p.pop-div-note").html("<img src='img/loader.gif'>");
-			$(".pop-div .pop-div-source").html("");			
-       		 var username = $(this).parent().attr("username");
-       		 var problemId = $(this).attr("problemId");
-       		 var contestId= <s:property value="contestId" />;
-       		 $(".pop-div").fadeIn(); 
-		
-       		 
-       		 $.getJSON("jsonSolutions.action",{contestId: contestId,problemId:problemId,username:username},function(json){ 	
-		            if (json.success != true) {
-		            	//alert(json["error"]);
-		            	$(".pop-div p.pop-div-note").html("<b>"+json["error"]+"</b>");
-		            	return false;
-		            }
-		         $(".pop-div p.pop-div-note").html("");
-		          var opt="<pre class='submissions'>";  
-		   
-		            $.each(json.solutions, function(i, event) {         	
-		            	opt+="&nbsp;"+json.solutions[i].contestTimes+" &nbsp;&nbsp;";
-		            	
-		            	if(problemId!=""){
-		            		opt+="<a href='contest/"+contestId+"/problem/"+json.solutions[i].problemNum+"' target='_blank'>"+json.solutions[i].problemNum+"</a>&nbsp;&nbsp; ";
-		            	}
-		            	
-		            	opt+="<span style=\"color:";
-		            	
-		            	if(json.solutions[i].status_description=="Accepted"){
-		            	 	opt+="green;font-weight:bold;\">";
-		            	}else if(json.solutions[i].status_description=="Compilation Error"){
-		            		opt+="#000;\">";
-		            	}
-		            	else{
-		            	 	opt+="#00A;\">";
-		            	}
-		            	opt+=json.solutions[i].status_description+"&nbsp;&nbsp;</span>  &rarr; ";
-		            	opt+="<a solutionId=\""+event.solutionId+"\" class=\"viewSource\" href=\"view-source/"+event.solutionId+"\" target=\"_blank\">#"+event.solutionId+"</a><br/>";
-		           		
-		            });
-		            opt+="</pre><br>";
-		            //alert(opt);
-       				 $(".pop-div .pop-div-source").html(opt);
-	 
-       		 }); 
-        });
-        
-        
-        
-});
-</script>
-	   <div class="pop-div"  >
-	     <span style="position:relative;float:right;"><a  class="close" href="javascript:void(0)"><img src="img/closelabel.png"/></a></span>
-	  	 <br/>
-	  	 <div class="pop-inner-div" >	  	 	    
-	  	 <p class="pop-div-note"></p>	 
-		 <div class="pop-div-source"></div>
-		 </div>
-		 <script type="text/javascript">
-			 $(document).ready(function() {	 
-			 	$("a.close").click(function(){
-				    $(".pop-div .pop-div-source").html(""); 
-			 		 $(".pop-div").fadeOut(); 
-			 	});
-
-			 });
-		 </script>
-	   </div>
-  
-	   <div style="margin-right: 12px;">
-			<div class="left"></div>
-			<div class="right">
+		    </div>
+			<div style="margin:6px 12px;font-size:15px;">
+				<div class="left"></div>
+				<div class="right">
 					<s:if test="page>1">
 						<a href="contest/<s:property value="contestId"/>/standings/page/<s:property value="page-1"/>" style="color:#000;text-decoration: none;">  &larr; </a>
-					</s:if>	
-					<s:iterator value="pageList" status="st_page">				
+					</s:if>
+					<s:iterator value="pageList" status="st_page">
 						<a href="contest/<s:property value="contestId"/>/standings/page/<s:property/>" style="color:#000;text-decoration: none;">
 							<s:if test="page==pageList[#st_page.index]"><b><s:property/></b></s:if>
 							<s:else><s:property/></s:else>
-						</a>	
-					</s:iterator>	
-					<s:if test="page < pageList.size">		
-						<a href="contest/<s:property value="contestId"/>/standings/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
-					</s:if>						
+						</a>
+					</s:iterator>
+					<s:if test="page < pageList.size">
+						<a href="contest/<s:property value="contestId"/>/standings/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>
+					</s:if>
+				</div>
 			</div>
-		</div>          
-	</div>   
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
-   
-<!-- JiaThis Button BEGIN -->
-<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?uid=1339907478548202&type=left&amp;move=0" charset="utf-8"></script>
-<!-- JiaThis Button END -->
+	   </div>
+		 <div class="clear"></div>
+	</div>
+	  <jsp:include page="/jsp/status-pop.jsp"></jsp:include>
+	  <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>
 </html>

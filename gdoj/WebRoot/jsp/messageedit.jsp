@@ -26,9 +26,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scripts/clipboard.swf';
 SyntaxHighlighter.all();
 </script>
-
-
-
  	<link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <style>
 	.ui-autocomplete-loading { background: white url('img/ui-anim_basic_16x16.gif') right center no-repeat; }
@@ -49,73 +46,66 @@ SyntaxHighlighter.all();
 	* html .ui-autocomplete {
 		height: 200px;
 	}	
-	</style>
- 
-</head>
-  
+	</style> 
+</head>  
   <body>
     <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">	
-
-
-	<div id="sidebar"> 	
-            
- 	<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-
-   	</div> 
-    <div id="content" class="content-with-sidebar round0123"  >     
-	   <div id="nav-content" >
-     		<a class="current" href="topic"><s:text name="topic"/></a>
-			<a href="topic/new" ><s:text name="topic.new"/></a>  	
-     	</div>
-	    <div class="topic">	
-	     	<div>	
-				  <div class="comment round_0123 highlight message-edit-box message-edit-box-pro" style="position: relative;padding: 6px;">
-				  <form action="" method="post">	     																								
-				  			<input type="hidden" name="messageId" value="<s:property value="message.message_id"/>" >						
-							<div style="text-align:left;margin-bottom: 6px;">
-							Title:
-							<input class="message-title" id="message-title" name="title1" maxlength="50" value="<s:property value="message.title"/>">
+    <div class="container">
+	  <div class="content">
+		<div class="sidebar"> 
+ 			<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
+   		</div> 
+    	<div class="content-with-sidebar round0123"  >     
+		    <div id="nav-content" >
+	     		<a class="current" href="topic"><s:text name="topic"/></a>
+				<a href="topic/new" ><s:text name="topic.new"/></a>  	
+	     	</div>
+		    <div class="topic">	
+		     	<div>	
+					  <div class="comment message-edit-box message-edit-box-pro" style="position: relative;padding: 6px;">
+					  <form action="" method="post">	     																								
+					  			<input type="hidden" name="messageId" value="<s:property value="message.message_id"/>" >						
+								<div style="text-align:left;margin-bottom: 6px;">
+								<input class="message-title" id="message-title" name="title1" maxlength="50" value="<s:property value="message.title"/>">
+								
+								<textarea class="message-content" id="edit-topic-content" name="content" rows="20" ><s:property value="message.content"/></textarea>	
+					
+								
+			<!--  					<div class="add-tags" style="text-align:left;">
+							<div style="float: left;width:420px;border-right:4px solid #B9B9B9;padding-right:1em;">
+	                        <ul style="text-align: left;">     
+	                               <li>
+		                               <s:if test="tagCount==0"><input  name="tag" style="width: 7em;"  value=""/></s:if>         
+		                               <s:iterator value="tagsList" status="st"> 
+												<input  name="tag" style="width: 7em;"  value="<s:property />"/>									
+										</s:iterator> 
+									</li>                              
+		                            <li style="text-align:right;">
+		                                <small><a class="add-tags-row" href="javascript:void(0)">Add tag</a></small>
+		                            </li>
+	                         </ul>
+	                         </div>
+	                         <div style=";text-align: left;margin-left:1em;vertical-align:top;font-size:smaller;">
+	                         	<span style="">Enter a letter,we may suggest some tags.At most 5 tags is allowed. Use English. All tags will be converted to lower case. Tag examples: "dfs", "gcj".
+	                         	</span>
+	                         </div>	
+	                    	</div>	-->	
+								<div style="text-align:center;"></div>
+									<div style="margin-top: 12px;">
+									<input class="button_submit" type="Submit" value="<s:text name="topic.btn_post"/>">
+									<span class="fielderror"></span>
+								</div>
+						</div>
 							
-							<textarea class="message-content" id="edit-topic-content" name="content" rows="20" ><s:property value="message.content"/></textarea>	
-				
-							
-		<!--  					<div class="add-tags" style="text-align:left;">
-						<div style="float: left;width:420px;border-right:4px solid #B9B9B9;padding-right:1em;">
-                        <ul style="text-align: left;">     
-                               <li>
-	                               <s:if test="tagCount==0"><input  name="tag" style="width: 7em;"  value=""/></s:if>         
-	                               <s:iterator value="tagsList" status="st"> 
-											<input  name="tag" style="width: 7em;"  value="<s:property />"/>									
-									</s:iterator> 
-								</li>                              
-	                            <li style="text-align:right;">
-	                                <small><a class="add-tags-row" href="javascript:void(0)">Add tag</a></small>
-	                            </li>
-                         </ul>
-                         </div>
-                         <div style=";text-align: left;margin-left:1em;vertical-align:top;font-size:smaller;">
-                         	<span style="">Enter a letter,we may suggest some tags.At most 5 tags is allowed. Use English. All tags will be converted to lower case. Tag examples: "dfs", "gcj".
-                         	</span>
-                         </div>	
-                    	</div>	-->	
-							<div style="text-align:center;"><span class="fielderror"></span></div>
-							<div style=" text-align: center;margin-top: 12px;">
-							<input  type="Submit" value="Post">
-							<input  type="reset" value="Reset" >
-						<!-- 	<p class="test">Test</p> -->
-							</div>
-					</div>
-						
-					</form>     
-	    		</div> 	
-	    	</div>
-	    </div>
-	</div>  
-	
-
+						</form>     
+		    		</div> 	
+		    	</div>
+		    </div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
 <script type='text/javascript' src='js/ke/kindeditor-min.js' charset='utf-8'></script>
-
 <style>
 
 .ke-icon-code {
@@ -394,7 +384,6 @@ $(document).ready(function() {
 		
 });
 </script>  
-      <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
    </div>
   </body>
 </html>

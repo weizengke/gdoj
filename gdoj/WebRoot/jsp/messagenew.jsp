@@ -18,16 +18,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
-  	<script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shCore.css"/>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shThemeDefault.css"/>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shCore.js"></script>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shBrushes.js"></script>
-<script type="text/javascript">
-SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scripts/clipboard.swf';
-SyntaxHighlighter.all();
-</script> 
-
+	<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shCore.css"/>
+	<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shThemeDefault.css"/>
+	<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shCore.js"></script>
+	<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shBrushes.js"></script>
+	<script type="text/javascript">
+	SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scripts/clipboard.swf';
+	SyntaxHighlighter.all();
+	</script> 
  	<link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <style>
 	.ui-autocomplete-loading { background: white url('img/ui-anim_basic_16x16.gif') right center no-repeat; }
@@ -48,72 +46,48 @@ SyntaxHighlighter.all();
 	* html .ui-autocomplete {
 		height: 200px;
 	}	
+
 	</style>
 
 </head>
   <body>
     <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">	
-	
-
-	<div id="sidebar"> 	 
- 	<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-
-   	</div> 
-    <div id="content" class="content-with-sidebar round0123"  >     
-	    <div id="nav-content" >	
-			<a href="topic"><s:text name="topic"/></a>
-			
-			<a class="current" href="topic/new" title=<s:text name="topic.new"/> ><s:text name="topic.new"/></a>
-     	</div>
-	    <div class="topic">	
-	     	<div>	
-				  <div class="comment round_0123 highlight message-edit-box message-edit-box-pro" style="position: relative;padding: 6px;">
-				  <form action="" method="post">	     																								
-				  			<input type="hidden" name="moduleId" value="0" >
-							<input type="hidden" name="parentId" value="0">
-							<input type="hidden" name="rootId" value="0">							
-							<div style="text-align:left;margin-bottom: 6px;">
-							Title:
-							<input class="message-title" id="message-title" name="title1" maxlength="50">
-							
+  	<div class="container">
+  	  <div class="content">
+		<div class="sidebar">       
+	 	<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
+	   	</div> 
+    	<div class="content-with-sidebar round0123"  >  
+		    <div id="nav-content" >	
+				<a href="topic"><s:text name="topic"/></a>
+				<a class="current" href="topic/new" title=<s:text name="topic.new"/> ><s:text name="topic.new"/></a>
+	     	</div>
+	    	<div class="topic">	
+	     		<div>	
+				  <div class="comment round_0123 message-edit-box message-edit-box-pro" style="position: relative;padding: 6px;">
+				    <form action="" method="post">	     																								
+			  			<input type="hidden" name="moduleId" value="0" >
+						<input type="hidden" name="parentId" value="0">
+						<input type="hidden" name="rootId" value="0">							
+						<div style="text-align:left;margin-bottom: 6px;">
+							<input class="message-title" id="message-title" name="title1" placeholder="<s:text name="topic.input_title"/>" maxlength="254">
 							<textarea class="message-content" id="topic_content" name="content" rows="20" ></textarea>	
-						<!--  	Tags:
-							<div class="add-tags" style="text-align:left;">
-								<div style="float: left;width:420px;border-right:4px solid #B9B9B9;padding-right:1em;">
-		                        <ul style="text-align: left;">     
-		                               <li>
-			                               <input  name="tag" style="width: 7em;"  value=""/>     
-			                               <input  name="tag" style="width: 7em;"  value=""/>     
-			                               <input  name="tag" style="width: 7em;"  value=""/>     
-										</li>                    
-			                            <li style="text-align:right;">
-			                                <small><a class="add-tags-row" href="javascript:void(0)">Add more tags</a></small>
-			                            </li>
-		                         </ul>
-		                         </div>
-		                         <div style=";text-align: left;margin-left:6px;vertical-align:top;font-size:smaller;">
-		                         	<span style="">Enter a letter,we may suggest some tags.At most 5 tags is allowed. Use English. All tags will be converted to lower case. Tag examples: "dfs", "gcj".
-		                         	</span>
-		                         </div>	
-		                    	</div>	-->
-		                    	<div style="text-align:center;"><span class="fielderror"></span></div>
-		                    	<div style="text-align: center;margin-top: 12px;">
-								<input class="" type="submit" value="Post" >
-								<input class="" type="reset" value="Reset" >
-								</div>
-							</div>
-					</form>     
-	    		</div> 	
+						</div>
+                    	<div style="margin-top: 12px;">
+							<input class="button_submit" type="submit" value="<s:text name="topic.btn_post"/>" >
+							<span class="fielderror"></span>
+						</div>
+					 </form>     
+		    		</div> 	
+		    	</div>
 	    	</div>
-	    </div>
-	</div>  
-	
+		</div>
+		<div class="clear"></div>
+	</div>
+	<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
 
 <script type='text/javascript' src='js/ke/kindeditor-min.js' charset='utf-8'></script>
-
 <style>
-
 .ke-icon-code {
 	background-image: url(img/code.gif);
 	background-position: 0px 0px;
@@ -233,8 +207,6 @@ KE.plugin['quote'] = {
 };
 });
 
-
-
 //-->
 
 </script>
@@ -242,7 +214,6 @@ KE.plugin['quote'] = {
 <script type='text/javascript'>
 
 <!--
-
 $(document).ready(function(){
 	KE.show({
 		id : 'topic_content',
@@ -253,11 +224,10 @@ $(document).ready(function(){
 		syncType : 'auto',
 		urlType : 'domain',
 		cssPath : 'css/ke-oj.css',
-	
 		items : [ 'bold', 'italic', 'underline', 'strikethrough', 'removeformat','|','textcolor', 'bgcolor',  
 				 'title', 'fontname', 'fontsize',  '|', 
 				 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-				 'link', 'unlink', 'emoticons','code', 'image', 'flash', 'quote', '|','selectall','source' ,'about'
+				 'link', 'unlink', 'code', 'image', 'quote', '|', 'source' ,'about'
 				 ]
 	});
 });
@@ -400,8 +370,6 @@ $(document).ready(function() {
 		
 });
 </script>  
-	
-      <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
    </div>
   </body>
 </html>

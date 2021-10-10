@@ -22,9 +22,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   <body>  
   	<jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body"> 
-     <div id="content" class=""> 	 <!-- class="content-with-sidebar" -->
-	    <div class="content" style="border-left:4px solid #B9B9B9;padding:3px 3px 3px 0px;">   	
+  	<div class="container">
+        <div class="content"> 
+	    <div style="border-left:4px solid #B9B9B9;padding:3px 3px 3px 0px;">   	
 	  		<div style="width: 980px;  margin: 0 auto">
 		 		<center>
 		 		Type&nbsp;<select id=type name="type" style="width:68px;" onchange="changeType()">						

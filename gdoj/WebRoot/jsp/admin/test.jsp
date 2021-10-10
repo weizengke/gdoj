@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-  
   <script>
   $(document).ready(function() {
     $("input#autocomplete").autocomplete({
@@ -12,7 +10,7 @@
   </script>
 </head>
 <body style="font-size:62.5%;">
-  <jsp:include  page="../head.jsp" ></jsp:include>
+  <jsp:include  page="/jsp/head.jsp" ></jsp:include> 
 <input id="autocomplete" />
 
 </body>

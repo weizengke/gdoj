@@ -42,7 +42,7 @@ public class ShowFileContentAction extends ActionSupport {
 				}
 
 			try {
-				this.content = StreamHandler.read(file).replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
+				this.content = StreamHandler.readEx(file).replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
 			} catch (NullPointerException npe) {
 				this.content = "File Not Found, Please Check First!";
 				return SUCCESS;

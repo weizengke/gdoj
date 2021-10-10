@@ -5,6 +5,15 @@ import java.awt.image.BufferedImage;
 import java.io.*; 
 import javax.imageio.*; 
 import com.sun.image.codec.jpeg.JPEGImageEncoder; 
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class CompressImage 
 { 
 /** 
@@ -16,18 +25,16 @@ public class CompressImage
 * 的图形最长的边是64像素，如果是长度比宽度大，那么，生成的长度是64，而宽度就是原始的宽度的等比例缩小的尺寸。 
 */ 
 	
-	
-	public static void Generate(String oldPath,String newDir,String newMainName,int maxBorder) 
-	{ 
+	public static void Generate(String oldPath,String newDir,String newMainName,int maxBorder) { 
 		File souFile=new File(oldPath); 
 	// String a=souFile.getAbsolutePath(); 
 	// int a1=1; 
 		try { 
 			String newPath; 
 			if (newDir.equals("")) 
-				newPath = newMainName + ".jpg"; 
+				newPath = newMainName; 
 			else 
-				newPath =newDir + "\\" + newMainName + ".jpg"; 
+				newPath =newDir + "\\" + newMainName; 
 			FileOutputStream desFile = new FileOutputStream(new File(newPath)); 
 			BufferedImage souImage = ImageIO.read(souFile); 
 			int oldWidth = souImage.getWidth(); 
@@ -61,6 +68,7 @@ public class CompressImage
 			e.printStackTrace(); 
 		} 
 	} 
+
 	public static void main(String[] args)
     {
 		Generate("D:\\Tomcat5\\webapps\\gdoj\\image\\userphoto\\ACSolo\\ACSolo.jpg","D:\\Tomcat5\\webapps\\gdoj\\image\\userphoto\\ACSolo",

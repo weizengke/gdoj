@@ -14,8 +14,9 @@
 	
 	<!-- 设置为开发模式 -->
     <constant name="struts.devMode" value="true" />
-    
-    
+
+	<constant name="struts.action.excludePattern" value="/ws/.*,ws://.*"></constant>
+
     <package name="gdoj" extends="struts-default" >
 		<interceptors>  
 			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
@@ -35,6 +36,9 @@
 		</global-results> 
 		<action name="home">	
 		<result name="success">/jsp/index.jsp</result>
+		</action>
+		<action name="yourip">	
+		<result name="success">/jsp/yourip.jsp</result>
 		</action>
 		<!-- 使用通配符号定义Action的name -->
 		<action name="*">
@@ -104,19 +108,27 @@
 			<result name="success" type="redirect">redirect.action</result>
 		</action>
 		<action name="loginEx" class="jsonLoginBean" method="loginEx">		
-		</action> 
+		</action>
+		<action name="openAuth" class="oauthBean" method="oauth">
+			<result name="input">/jsp/login.jsp</result>
+			<result name="success" type="redirect">redirect.action</result>
+		</action>
+		<action name="unbindOAuth" class="oauthBean" method="oauthUnbind">
+			<result name="login">/jsp/login.jsp</result>
+			<result name="success" type="redirect">redirect.action</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="isLogin"></interceptor-ref>
+		</action>
 		<action name="logout" class="com.gdoj.common.action.LogoutAction">		
 			<result name="success" type="redirect">redirect.action</result>
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 			<interceptor-ref name="isLogin"></interceptor-ref>
 		</action>
-		<action name="userList" class="listUserBean">
-			<result name="success">/jsp/index.jsp</result>
-			<interceptor-ref name="defaultStack"></interceptor-ref>
-			<interceptor-ref name="isLogin"></interceptor-ref>
-		</action>
 		<action name="profile" class="profileBean" method="queryUser">
 			<result name="success">/jsp/profile.jsp</result>
+		</action>
+		<action name="mycontest" class="ratingBean" method="queryUserRatingList">
+			<result name="success">/jsp/user-contests.jsp</result>
 		</action>
 		<action name="settings" class="settingsBean" method="settings">	   
 			<result name="success">/jsp/modifyuser.jsp</result>
@@ -130,7 +142,6 @@
 			<interceptor-ref name="isLogin"></interceptor-ref>
 		</action>
 		<action name="userInfo" class="userTipBean" method="userInfo">
-			
 		</action>
 		<action name="showImage" class="com.gdoj.common.action.ShowImageAction" method="showImage">
 			
@@ -182,12 +193,15 @@
 			<interceptor-ref name="isLogin"></interceptor-ref>
 			<interceptor-ref name="isAdmin2"></interceptor-ref>
 		</action>
+		<action name="jsonSubmit" class="jsonSubmitBean" method="Submit">		
+		</action> 
 	</package>
 	<package name="topic" extends="struts-default" namespace="/topic">
 		<interceptors>  
 			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
 			<interceptor name="isEnter" class="com.gdoj.common.interceptor.EnterInterceptor"/>
 			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
+			<interceptor name="isOpenBBS" class="com.gdoj.common.interceptor.BBSInterceptor"/>
 		</interceptors>
 		<global-results>
 			<result name="home">/jsp/index.jsp</result>
@@ -201,16 +215,16 @@
 		<action name="edit" class="MessagesBean" method="editMessage">
 			<result name="success">/jsp/messageedit.jsp</result>		
 			<interceptor-ref name="defaultStack"></interceptor-ref>
-			<interceptor-ref name="isLogin"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>	
+			<interceptor-ref name="isOpenBBS"></interceptor-ref>			
 		</action>				
 		<action name="new">
 			<result name="success">/jsp/messagenew.jsp</result>	
 			<interceptor-ref name="defaultStack"></interceptor-ref>
-			<interceptor-ref name="isLogin"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>
+			<interceptor-ref name="isOpenBBS"></interceptor-ref>				
 		</action>
-
 	</package>
-
 	<package name="problemset" extends="struts-default" namespace="/problemset">
 		<interceptors>  
 			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
@@ -232,20 +246,6 @@
 		<action name="status" class="solutionListBean" method="queryStatusList">
 			<result name="success">/jsp/status.jsp</result>	
 		</action>
-		<action name="submit" class="beforSubmitBean" >		
-			<interceptor-ref name="defaultStack"></interceptor-ref>			
-			<interceptor-ref name="isLogin"></interceptor-ref>
-			<result name="success">/jsp/submitsolution.jsp</result>	
-		</action>
-		<action name="submited" class="submitBean" method="submitSolution">
-			<result name="input">/jsp/submitsolution.jsp</result>
-			<result name="success" type="redirect">/problemset/status</result>
-		</action>
-		<action name="statistic" class="solutionStatisticBean" method="queryProblemStatistic">
-			<result name="success">/jsp/statistic.jsp</result>	
-		</action>
-
-				
 	</package>	
 		
 	<package name="contest" extends="struts-default" namespace="/contest">
@@ -287,21 +287,6 @@
 			<interceptor-ref name="isContestStart"></interceptor-ref>
 <!--			<interceptor-ref name="isContestRegister"></interceptor-ref>-->
 		</action>
-		<action name="submit" class="com.gdoj.common.action.ContestSubmitAction">		
-			<interceptor-ref name="defaultStack"></interceptor-ref>			
-			<interceptor-ref name="isLogin"></interceptor-ref>
-			<interceptor-ref name="isContestStart"></interceptor-ref>
-			<interceptor-ref name="isContestRegister"></interceptor-ref>
-			<result name="success">/jsp/contest/submit.jsp</result>	
-		</action>
-		<action name="submited" class="contestSubmitBean" method="submitSolution">
-			<result name="input">/jsp/contest/submit.jsp</result>
-			<result name="success" type="redirect">/contest/${contestId}/status</result>
-			<interceptor-ref name="defaultStack"></interceptor-ref>
-			<interceptor-ref name="isLogin"></interceptor-ref>
-			<interceptor-ref name="isContestStart"></interceptor-ref>
-			<interceptor-ref name="isContestRegister"></interceptor-ref>	
-		</action>
 		<action name="recent">
 			<result name="success">/jsp/contest/other_oj.jsp</result>	
 		</action>	
@@ -313,6 +298,7 @@
 			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
 			<interceptor name="isEnter" class="com.gdoj.common.interceptor.EnterInterceptor"/>
 			<interceptor name="token" class="org.apache.struts2.interceptor.TokenInterceptor"/>
+			<interceptor name="isOpenBBS" class="com.gdoj.common.interceptor.BBSInterceptor"/>
 		</interceptors>
 		<global-results>
 			<result name="home">/jsp/index.jsp</result>
@@ -327,12 +313,13 @@
 		<action name="send" class="MailBean" method="querySendMails">
 			<result name="success">/jsp/mailsendlist.jsp</result>	
 			<interceptor-ref name="defaultStack"></interceptor-ref>
-			<interceptor-ref name="isLogin"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>		
 		</action>
 		<action name="new" class="newMailBean" method="newMail">
 			<result name="success">/jsp/mailnew.jsp</result>	
 			<interceptor-ref name="defaultStack"></interceptor-ref>
-			<interceptor-ref name="isLogin"></interceptor-ref>			
+			<interceptor-ref name="isLogin"></interceptor-ref>	
+			<interceptor-ref name="isOpenBBS"></interceptor-ref>		
 		</action>
 	</package>
 	
@@ -625,6 +612,8 @@
 			<interceptor name="isAdmin" class="com.gdoj.common.interceptor.IsNoEditAdminInterceptor"/>
 			<interceptor name="isAdmin2" class="com.gdoj.common.interceptor.IsAdminInterceptor"/>
 			<interceptor name="isHead" class="com.gdoj.common.interceptor.IsHeadInterceptor"/>
+			<interceptor name="isOpenSource" class="com.gdoj.common.interceptor.SourceInterceptor"/>
+			<interceptor name="isOpenBBS" class="com.gdoj.common.interceptor.BBSInterceptor"/>
 		</interceptors>
       	<global-results>
 			<result name="home">/jsp/index.jsp</result>
@@ -655,6 +644,14 @@
 			<result type="json"/>    	
 			   	 <param name="excludeProperties"></param> 			
 		</action>  		
+		<action name="jsonSubmit" class="jsonSubmitBean" method="Submit">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 			
+		</action> 		
+		<action name="jsonTestCheck" class="jsonCheckBean" method="Check">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 			
+		</action> 
 		<action name="ajaxStatus" class="jsonStatusBean" method="queryStatus">	
 			<result type="json"/>    	
 			   	 <param name="excludeProperties"></param> 			
@@ -676,7 +673,7 @@
 
 		<action name="viewsource" class="jsonSolutionSourceBean" method="solutionSource">
 			<result type="json"/>    	
-			   	 <param name="excludeProperties"></param> 	
+			   	 <param name="excludeProperties"></param>
 		</action>
 		<action name="viewcompileinfo" class="jsonCompileInfoBean" method="getCompileError">
 			<result type="json"/>   
@@ -711,6 +708,10 @@
 			<result type="json"/>    	
 			   	 <param name="excludeProperties"></param> 
 		</action>
+		<action name="jsonRatings" class="jsonRatingBean" method="queryUserRatingList">	
+			<result type="json"/>    	
+			   	 <param name="excludeProperties"></param> 			
+		</action> 	
     </package>  
 	
 	

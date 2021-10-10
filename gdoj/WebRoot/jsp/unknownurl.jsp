@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>Online Judge</title>
+    <title>404 - Online Judge</title>
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="expires" content="-1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -18,17 +18,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
   	<script type="text/javascript" src="js/jquery-1.3.2.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
-  	<script type="text/javascript">
-	</script>
 </head>
-  
   <body>
-  <jsp:include   page="head.jsp"></jsp:include> 
-  <div id="body">
-     <div id="content" class="content-with-sidebar round0123" style="position: relative">
-	  <b>Sorry, no such URL you visited...</b>
-	</div>   
-      <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
-  </div>
+    <s:include value="head.jsp"/>
+  	<div class="container">
+       <div class="content"> 
+	   	  <div style="margin: 0 auto;" align="center">
+		    <img src="img/404.png" /><br/>
+		    <b><span style="color:red">Not found this page.</span></b>
+	     </div>	  
+	   </div>   
+       <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+    </div>
   </body>
 </html>

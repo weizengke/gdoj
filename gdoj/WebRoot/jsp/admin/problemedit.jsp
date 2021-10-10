@@ -52,26 +52,16 @@ SyntaxHighlighter.all();
 
   <body>  
   <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">
-	
-   <div id="sidebar"> 	      
- 		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-   	</div> 	
-
-     <div id="content"  class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >	
-     		<a href="admin">Admin</a>
-   		<a href="admin/news">News</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/problemset/status">Status</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     		<a href="admin/privilege">Privilege</a>		
-     	</div>
-	    <div class="content round_0123" style="background-color:#EEE0E5;position: relative;padding: 6px;">	    	
-			<div class="datatable round_0123" style="background-color:#FFF;word-wrap:break-word;">		    
-			    <s:form id="problemUpdate" method="post" action="problemUpdate.action" theme="simple">
-					<div style="padding:6px;">
+  	<div class="container">
+        <div class="content">       
+	     	<div class="sidebar">       
+		 		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
+		   	</div>
+    	 	<div class="content-with-sidebar  round0123">
+			<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
+	    	<div class="content round_0123" style="">		    
+			    	<s:form id="problemUpdate" method="post" action="problemUpdate.action" theme="simple">
+					<div style="">
 					<div style="text-align:center;" ><span class="fielderror"><s:property value="tip"/></span></div>
 					<center>
 					
@@ -116,11 +106,11 @@ SyntaxHighlighter.all();
 					<h5>
 						Sample Input:
 					</h5>
-						<textarea class="" id="ke-editor4" name="problem.sample_input" rows="5" style="width: 100%" ><s:property value="problem.sample_input"/></textarea>
+						<textarea class="" id="" name="problem.sample_input" rows="5" style="width: 100%" ><s:property value="problem.sample_input"/></textarea>
 					<h5>
 						Sample Output:
 					</h5>
-						<textarea class="" id="ke-editor5" name="problem.sample_output" rows="5" style="width: 100%" ><s:property value="problem.sample_output"/></textarea>
+						<textarea class="" id="" name="problem.sample_output" rows="5" style="width: 100%" ><s:property value="problem.sample_output"/></textarea>
 					<h5>
 						Hint:
 					</h5>
@@ -136,41 +126,106 @@ SyntaxHighlighter.all();
 					<h5>
 						Tag:
 					</h5>
-					<input  id="tag" name="problem.tag" style="width: 100%;"  value="<s:property value="problem.tag"/>"/> 				
-					
-					<div class="add-tags" style="text-align:left;">
-						<div style="float: left;width:350px;border-right:4px solid #B9B9B9;padding-right:1em;">
-                        <ul style="text-align: left;">     
-                               <li>
-	                               <s:if test="tagCount==0"><input  name="tag1" style="width: 7em;"  value=""/></s:if>         
-	                               <s:iterator value="tags" status="st"> 
-											<input  name=tag<s:property value="#st.index+1"/> style="width: 7em;"  value="<s:property />"/>									
-									</s:iterator> 
-								</li>                              
-	                            <li style="text-align:right;">
-	                                <small><a class="add-tags-row" href="javascript:void(0)">Add tag</a></small>
-	                            </li>
-                         </ul>
-                         </div>
-                         <div style=";text-align: left;margin-left:1em;vertical-align:top;font-size:smaller;">
-                         	<span style="">Enter a letter,we may suggest some tags.At most 5 tags is allowed. Use English. All tags will be converted to lower case. Tag examples: "dfs", "gcj".
-                         	</span>
-                         </div>	
-                    </div>	
+					<div>
+						<div class="tags-autocomplete-select">
+							<input type="hidden" id="submit-tags" class="problem-tag" name="tagList" value="<s:property value="tagList"/>"/>
+							<i class="icon"></i>
+							<input type="text" id="input-tags" autocomplete="off" class="input-tags"/>
+							<div class="tags-autocomplete-select-menu"></div>
+							<script type='text/javascript'>
+								$(document).ready(function(){
+									var cache = {};
+									function showSelectTags(tags) {
+										$(".tags-autocomplete-select-menu").html("");
+										$(".tags-autocomplete-select-menu").fadeIn();
+										var opt = "";
+										$.each(tags, function(i, event) {
+											/* 过滤已经插入的tag */
+											var tagList = $('#submit-tags').val().split(",");
+											if (tagList.indexOf(tags[i]) == -1) {
+												opt += "<div class=\"tags-autocomplete-select-item\" data-value=\""+ tags[i] +"\">" + tags[i] +"</div>";
+											}
+										});
+										$(".tags-autocomplete-select-menu").html(opt);
+									}
+									function searchTags(word) {
+										if ( word in cache ) {
+											showSelectTags(cache[ word ]);
+										} else {
+											$.getJSON("ajaxTags",{q: word},function(json) {
+												if (json.success != true) {
+													cache[ word ] = json.tags;
+													showSelectTags(json.tags);
+												}
+											});
+										}
+									}
+									function insertShowTags(tags) {
+										$.each(tags, function(i, event) {
+											if (tags[i].length != 0) {
+												var opt = "<a class=\"label-item\">" + tags[i] + "<i class=\"icon-delete\"></i></a>";
+												$("#input-tags").before(opt);
+											}
+										});
+									}
+									function initShowTags() {
+										var tags = $('#submit-tags').val().split(",");
+										insertShowTags(tags);
+									}
+									initShowTags();
+
+									$("#input-tags").focus(function(){
+										searchTags($(this).val().replace(/(^\s*)|(\s*$)/g, ""))
+									});
+									$("#input-tags").blur(function(){
+										$(".tags-autocomplete-select-menu").fadeOut();
+									});
+									$("#input-tags").bind('input propertychange',function(e){
+										searchTags($(this).val().replace(/(^\s*)|(\s*$)/g, ""))
+									})
+									$(document).on("click",".tags-autocomplete-select-item",function() {
+										/* 插入新的tag */
+										var insertTag = $(this).attr("data-value");
+										var tags = [];
+										tags.push(insertTag);
+										insertShowTags(tags);
+
+										/* 清空输入框内容 */
+										$("#input-tags").val("");
+
+										/* 插入tag到隐藏的input框 */
+										updateSubmitTags();
+									});
+									$(document).on("click",".icon-delete",function() {
+										$(this).parent().remove();
+										updateSubmitTags()
+									});
+
+									function updateSubmitTags() {
+										var tagsList = "";
+										$("a.label-item").each(function(){
+											console.log($(this).text());
+											if (tagsList.length == 0) {
+												tagsList = $(this).text();
+											} else {
+												tagsList += "," + $(this).text();
+											}
+										});
+										$('#submit-tags').val(tagsList);
+									}
+								});
+							</script>
+						</div>
+					</div>
+
                     <br/>
-                   
-							<div style="text-align: center;margin-top: 12px;">	
-				    <input id="add" type="Submit" value="Save Problem"/>
+					<div style="text-align: center;margin-top: 12px;">
+				    	<input id="add" class="register-box-submit" type="Submit" value="Save Problem"/>
 					</div>				
 				</div>
-			   
 			    </s:form>
-			    
-
 <script type='text/javascript' src='js/ke/kindeditor-min.js' charset='utf-8'></script>
-
 <style>
-
 .ke-icon-code {
 	background-image: url(img/code.gif);
 	background-position: 0px 0px;
@@ -297,9 +352,7 @@ KE.plugin['quote'] = {
 </script>
 
 <script type='text/javascript'>
-
 <!--
-
 $(document).ready(function(){
 	KE.show({
 		id : 'ke-editor1',
@@ -310,7 +363,7 @@ $(document).ready(function(){
 				 'bold', 'italic', 'underline', 'strikethrough','subscript','superscript', 'removeformat','|','textcolor', 'bgcolor',  
 				 'title', 'fontname', 'fontsize',  '|', 
 				 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-				 'link', 'unlink', 'emoticons','code', 'image', 'quote', '|','source' ,'about'
+				 'link', 'unlink', 'code', 'image', 'quote', '|','source' ,'about'
 				 ]
 	});
 	KE.show({
@@ -378,97 +431,15 @@ $(document).ready(function(){
 //-->
 
 </script>
-		
-			    
-<script src="js/jquery-ui.min.js"></script>	
- <script type="text/javascript">
-$(document).ready(function() {
-        
-        var cache = {},
-		lastXhr;
-        
-    $("a.add-tags-row").click(function() {
-        var currentLi = $(this).parent().parent();
-        var li = $("<li></li>");
-        var count = $("div.add-tags input").size();        
-        if(count<5){
-        	 var input1 = $("<input  style=\"width: 7em;\" name=\"tag" + ++count + "\"/>");     
-       		 input1.appendTo(li);
-        	$("<span>&nbsp;</span>").appendTo(li);
-        	li.insertBefore(currentLi);
-        	for(;count<5;){
-        	  var input2 = $("<input  style=\"width: 7em;\" name=\"tag" + ++count + "\"/>");     
-       		  input2.appendTo(li);
-        	 $("<span>&nbsp;</span>").appendTo(li);
-        	 li.insertBefore(currentLi);
-       	  }
-       	  input1.focus();
-        }else{
-        	alert("You can add at most 5 tags."); 
-        }
-        
-        $( "input" ,li).autocomplete({
-		    delay: 300,	
-		    width:100,
-			minLength: 1,
-			selectFirst: false,
-			matchSubset:true,  
-            matchContains: true,   
-			source: function( request, response ) {				
-				var term = request.term;		
-				if ( term in cache ) {
-					response( cache[ term ] );
-					return;
-				}
-
-				lastXhr = $.getJSON( "ajaxTags", {q:request.term} , function( data, status, xhr ) {
-					cache[ term ] = data.tags;
-					if ( xhr === lastXhr ) {
-						response( data.tags );
-					}
-				});
-			}
-		});
-		return false;
-    });
-    
-
-		$( ".add-tags input" ).autocomplete({
-		    delay: 300,	
-		    width:100,
-			minLength: 1,
-			selectFirst: false,
-			matchSubset:true,  
-            matchContains: true,   
-			source: function( request, response ) {				
-				var term = request.term;		
-				if ( term in cache ) {
-					response( cache[ term ] );
-					return;
-				}
-
-				lastXhr = $.getJSON( "ajaxTags", {q:request.term} , function( data, status, xhr ) {
-					cache[ term ] = data.tags;
-					if ( xhr === lastXhr ) {
-						response( data.tags );
-					}
-				});
-			}
-		});
-    
-});
-
-</script>
-
-			    </div>		
-			<div style="margin-right: 12px;text-decoration: none;">
-					<div class="left"></div>
-					<div class="right">
-					</div>
-		  </div>       	  	 
-	   </div>    
-	</div>   
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+				<div style="margin-right: 12px;text-decoration: none;">
+						<div class="left"></div>
+						<div class="right"></div>
+				</div>
+		   </div>
+		 </div>
+			<div class="clear"></div>
+  		 </div>
+     <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>
 </html>

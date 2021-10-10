@@ -30,52 +30,28 @@ SyntaxHighlighter.all();
 
   <body>  
   	<jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  	<div id="body">
-		<div id="sidebar"> 	
-            <div class="sidebox roundbox">
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>
-	       		    
-	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
-	            	<div class="title-sidebox" style="width: 100%">Tools Box</div>
-	            </div>  
-	            <div class="" style="margin: 6px;">
-	            	大量ReJudge需谨慎！<br/>		
-	            	<b><a href="admin/newproblem.action"><s:text name="problemadd"/></a></b>
-	            </div>
-	           
-	        </div>    
-	        
-	        <br clear="all"/>
-   	 </div> 
-	
-     <div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >	
-     		<a href="admin">Admin</a>
-   		<a href="admin/news">News</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/problemset/status">Status</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     		<a href="admin/privilege">Privilege</a>		
-     	</div>
-	    <div class="datatable">	
-	    	<div class="lt">&nbsp;</div>
-	        <div class="rt">&nbsp;</div>
-	        <div class="lb">&nbsp;</div>
-	        <div class="rb">&nbsp;</div>
-	    	<div style="padding: 4px 0 0 6px;position: relative;">
-				<div class="left"><s:text name="problems"/></div>
-				<div class="right"></div>
-			</div> 		
-			<br/>
-			<div class="innertable" style="position: relative;margin:0.3em 3px 0 3px;">
-				<div class="ilt">&nbsp;</div>
-           		<div class="irt">&nbsp;</div>	
-				<table class="problem">
+  	<div class="container">
+        <div class="content">       
+			<div class="sidebar">
+			<div class="sidebox roundbox">
+			<div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
+				<div class="title-sidebox" style="width: 100%">Tools Box</div>
+			</div>
+			<div class="" style="margin: 6px;">
+				大量ReJudge需谨慎！<br/>
+				<b><a href="admin/newproblem.action"><s:text name="problemadd"/></a></b>
+			</div>
+
+			</div>
+   	 	</div>
+     	<div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
+     	<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
+	    <div class="roundbox">
+			<div >
+				<table class="problem rtable">
 					 <tr class="header">
 					   <th class="id left-item"><s:text name="problemid"/></th>
-					   <th class="problem"><s:text name="problem"/></th>
+					   <th class="title"><s:text name="problem"/></th>
 					   <th class="ratio"></th>
 	                </tr>
 	                <s:if test="problemList.size==0">
@@ -84,20 +60,39 @@ SyntaxHighlighter.all();
 					<s:iterator value="problemList" status="st">	
 	            	<tr <s:if test="#st.odd">class="dark"</s:if>>
 	            		<td class="id left-item"><a href="admin/problemset/problem/<s:property value="problem_id"/>" target="_blank"><s:property value="problem_id"/></a></td>
-	            		<td class="problem">
+	            		<td class="title">
 	            			<div style="float:left;">
 	            			<a href="admin/problemset/problem/<s:property value="problem_id"/>" target="_blank"><s:property value="title"/></a>
 	            			</div>
-	            			 <div style="float:right;font-size:11px;padding-top:1px;text-align:right;color: grey;">
-	            				<s:property value="tag"/>
-	            			</div>
+							<div class="tags" style="float:right;text-align:right;padding: 0px;">
+								<s:iterator  value="tagsList.get(problem_id)" status="tagsst" var="tagname">
+									<a href="search?word=<s:property />&type=problem" rel="tag" ><s:property /></a>
+								</s:iterator>
+							</div>
 	            		</td>   		
 	            		<td class="ratio"><a href="admin/problemEdit.action?problemId=<s:property value="problem_id"/>">Edit</a>|<a href="admin/problemset/data/<s:property value="problem_id"/>">Data</a>|<a href="admin/rejudge/problem/<s:property value="problem_id"/>" class="re-judge">ReJudge</a></td>
 	            	</tr>	
 	           		</s:iterator>   
 				</table>
-		    </div>	 	 
-	   </div>    
+		    </div>
+			<div style="margin:6px;">
+				<div class=left></div>
+				<div class="right">
+					<s:if test="page>1">
+						<a href="admin/problemset/page/<s:property value="page-1"/>" style="color:#000;text-decoration: none;">  &larr; </a>
+					</s:if>
+					<s:iterator value="pageList" status="st_page">
+						<a href="admin/problemset/page/<s:property/>" style="color:#000;text-decoration: none;">
+							<s:if test="page==pageList[#st_page.index]"><b><s:property/></b></s:if>
+							<s:else><s:property/></s:else>
+						</a>
+					</s:iterator>
+					<s:if test="page < solutionList.size">
+						<a href="admin/problemset/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>
+					</s:if>
+				</div>
+			</div>
+		</div>
 	   
 	   <script type="text/javascript">
 $(document).ready(function() {
@@ -108,24 +103,10 @@ $(document).ready(function() {
 	}); 
 });
 </script> 
-	    <div style="margin:0 12px;">	
-			<div class=left></div>
-			<div class="right">
-					<s:if test="page>1">
-						<a href="admin/problemset/page/<s:property value="page-1"/>" style="color:#000;text-decoration: none;">  &larr; </a>
-					</s:if>	
-					<s:iterator value="pageList" status="st_page">				
-						<a href="admin/problemset/page/<s:property/>" style="color:#000;text-decoration: none;">
-							<s:if test="page==pageList[#st_page.index]"><b><s:property/></b></s:if>
-							<s:else><s:property/></s:else>
-						</a>	
-					</s:iterator>	
-					<s:if test="page < solutionList.size">		
-						<a href="admin/problemset/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
-					</s:if>						
-		   </div>
-		</div>  	    	  
-	</div>   
+
+	</div>
+		<div class="clear"></div>
+	</div>  
     <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>

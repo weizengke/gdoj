@@ -14,6 +14,7 @@ import java.util.Map;
 import org.apache.struts2.components.URL;
 
 import com.gdoj.bean.LatestTopicBean;
+import com.util.Config;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -40,8 +41,11 @@ public class MyFreeMarker {
 		Template t = cfg.getTemplate(ftlName);
 		
 		//this.getClass().getClassLoader().getResource("/").getPath();
-		
-		Writer out = new OutputStreamWriter(new FileOutputStream(templatesPath+"/templates/"+desName), "GBK");
+		String encode = Config.getValue("ENCODE");
+		if (encode == null) {
+			encode = "UTF-8";
+		}
+		Writer out = new OutputStreamWriter(new FileOutputStream(templatesPath+"/templates/"+desName), encode);
 		t.process(objMap, out);
 	}
 	public static void main(String[] args) throws Exception {

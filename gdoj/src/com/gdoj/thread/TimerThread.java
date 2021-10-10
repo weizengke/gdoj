@@ -27,7 +27,12 @@ public class TimerThread extends Thread {
 		
 
 			List<User> users = new ArrayList<User>();
-			users = TopUsersBean.getTopUsers();
+			try {
+				users = TopUsersBean.getTopUsers();
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 			Map map = new HashMap();
 			map.put("topusers", users);
 			

@@ -3,6 +3,8 @@ package com.gdoj.mail.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.gdoj.user.vo.User;
+
 public class Mail implements Serializable {
 
 	/**
@@ -19,6 +21,9 @@ public class Mail implements Serializable {
 	private Integer reply;
 	private Date create_date;
 	private String defunct;
+	
+	private User sendUser;
+	private User recvUser;
 	
 	public Mail() {
 		super();
@@ -79,6 +84,18 @@ public class Mail implements Serializable {
 	}
 	public void setDefunct(String defunct) {
 		this.defunct = defunct;
+	}
+	public void setSendUser(User sendUser) {
+		this.sendUser = sendUser;
+	}
+	public User getSendUser() {
+		return sendUser;
+	}
+	public void setRecvUser(User recvUser) {
+		this.recvUser = recvUser;
+	}
+	public User getRecvUser() {
+		return recvUser;
 	}
 	
 	

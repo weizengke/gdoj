@@ -31,34 +31,33 @@ SyntaxHighlighter.all();
   
   <body>
     <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">	
-
-
-	<div id="sidebar"> 	    
- 	<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-
-   	</div> 
-    <div id="content" class="content-with-sidebar round0123"  >     
-	   <div id="nav-content" >
-   			<a href="news"><s:text name="news"/></a>
-     	</div>
-	    <div class="topic">
-			<div class="title">
-			   	<p><s:property value="news.title"/></p>
-			</div>
-		    <div class="info">		       
-			 	<b>Post by <b><a href="profile/<s:property value="news.create_user"/>" class="user-tip" user="<s:property value="news.create_user"/>"><s:property value="news.create_user"/></a></b> at <s:date name="news.date" nice="false" format="yyyy-MM-dd HH:mm:ss"/></b>
-			</div>
-			<div class="content">   
-		       	<blockquote>
-		      	<p><s:property value="news.content" escape="false"/></p>		      				   
-		        </blockquote>
-		     </div>
-		    
-	    </div>
-	</div>  
-
-      <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
-   </div>
+    <div class="container">
+	  <div class="content">
+		<div class="sidebar"> 	    
+ 			<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
+		</div> 
+	    <div class="content-with-sidebar round0123"  >     
+		   <div id="nav-content" >
+	   			<a href="news"><s:text name="news"/></a>
+	     	</div>
+		    <div class="topic">
+				<div class="title">
+				   	<p><s:property value="news.title"/></p>
+				</div>
+			    <div class="info">		       
+				 	<b>Post by <b><a href="profile/<s:property value="news.create_user"/>" class="user-tip" user="<s:property value="news.create_user"/>"><s:property value="news.create_user"/></a></b> at <s:date name="news.date" nice="false" format="yyyy-MM-dd HH:mm:ss"/></b>
+				</div>
+				<div class="content">   
+			       	<blockquote>
+			      	<p><s:property value="news.content" escape="false"/></p>		      				   
+			        </blockquote>
+			     </div>
+			    
+		    </div>
+		</div>
+		  <div class="clear"></div>
+	</div>
+		<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+	</div>
   </body>
 </html>

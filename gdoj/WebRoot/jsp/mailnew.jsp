@@ -56,41 +56,43 @@ SyntaxHighlighter.all();
   
   <body>
     <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">	
-	<div id="sidebar"> 	      
- 	<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-   	</div> 
-    <div id="content" class="content-with-sidebar round0123"  >     
-	   <div id="nav-content" >
-     	<a href="mails"><s:text name="mails.recv"/></a>
-     	<a href="mails/send"><s:text name="mails.send"/></a>  
-		<a class="current" href="mails/new"><s:text name="mails.new"/></a> 	
-     	</div>
-	    <div class="topic">	
-	     	<div>	
-				  <div class="comment round_0123 highlight mail-edit-box mail-edit-box-pro" style="position: relative;padding: 6px;">
-				  <form action="" method="post">	     																								
-				  			<input  type="hidden" name="reply" value="0">							
-							<div style="text-align:left;margin-bottom: 6px;">
-							Send To:<br/>
-							<span><input class="send-to-user" name="sendto" maxlength="30" placeholder="Receiver's username" value="<s:property value="username"/>">
-							</span><br/>
-							Title:
-							<input class="message-title" id="message-title" name="title1" maxlength="100">							
-							<textarea class="message-content" id="meal-content" name="content" rows="20" ></textarea>	
-							</div>
-							<div style="text-align:center;" ><span class="fielderror"></span></div>
-							<div style="text-align: center;margin-top: 12px;">
-							<input class="" type="Submit" value="Post">
-							<input class="" type="reset" value="Reset" >
-							</div>
-					</form>     
-	    		</div> 	
-	    	</div>
-	    </div>
-	</div>  
-	
-	
+    <div class="container">
+	  	<div class="content">
+			<div class="sidebar">
+			<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include>
+			</div>
+			<div class="content-with-sidebar round0123"  >
+			   <div id="nav-content" >
+				<a href="mails"><s:text name="mails.recv"/></a>
+				<a href="mails/send"><s:text name="mails.send"/></a>
+				<a class="current" href="mails/new"><s:text name="mails.new"/></a>
+				</div>
+			<div class="topic">
+				<div>
+					  <div class="comment round_0123 mail-edit-box mail-edit-box-pro" style="position: relative;padding: 6px;">
+						  <form action="" method="post">
+							  <input  type="hidden" name="reply" value="0">
+								<div style="text-align:left;margin-bottom: 6px;">
+									<div>
+										<input class="send-to-user" name="sendto" placeholder="<s:text name="mails.input_username"/>" value="<s:property value="username"/>">
+									</div>
+									<div>
+										<input class="message-title" id="message-title" placeholder="<s:text name="mails.input_title"/>" name="title1" maxlength="100">
+									</div>
+									<textarea class="message-content" id="meal-content" name="content" rows="20" ></textarea>
+								</div>
+								<div style="margin-top: 12px;">
+									<input class="button_submit" type="Submit" value="<s:text name="mails.btn_send"/>" >
+									<span class="fielderror"></span>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
 <script src="js/jquery-ui.min.js"></script>	
 	<script>
 	$(function() {
@@ -106,13 +108,11 @@ SyntaxHighlighter.all();
 			source: function( request, response ) {				
 				var term = request.term;		
 				if ( term in cache ) {
-					//alert(term);
 					response( cache[ term ] );
 					return;
 				}
 
 				lastXhr = $.getJSON( "ajaxUsers", {q:request.term} , function( data, status, xhr ) {
-					//alert(data.users[0]);
 					cache[ term ] = data.users;
 					if ( xhr === lastXhr ) {
 						response( data.users );
@@ -123,12 +123,9 @@ SyntaxHighlighter.all();
 	});
 </script>	
 	
-	
-	
 <script type='text/javascript' src='js/ke/kindeditor-min.js' charset='utf-8'></script>
 
 <style>
-
 .ke-icon-code {
 	background-image: url(img/code.gif);
 	background-position: 0px 0px;
@@ -143,121 +140,106 @@ SyntaxHighlighter.all();
 }
 </style>
 <script type='text/javascript'>
-<!--
 $(document).ready(function(){
-KE.lang['code'] = "插入程序代码或脚本";
-KE.plugin['code'] = {
-	click : function(id) {
-		KE.util.selection(id);
-		var dialog = new KE.dialog({
-			id : id,
-			cmd : 'code',
-			file : 'code/insert_code.html',
-			width : 530,
-			height : 300,
-			title : KE.lang['code'],
-			yesButton : KE.lang['yes'],
-			noButton : KE.lang['no']
-		});
-		dialog.show();
-	},
-	check : function(id) {
-		var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
-		var lang = KE.$('ic_lang', dialogDoc).value;
-		var source = KE.$('ic_source', dialogDoc).value;
-		if(lang == ''){
-			alert('编程语言必须选择');
-			return false;
+	KE.lang['code'] = "插入程序代码或脚本";
+	KE.plugin['code'] = {
+		click : function(id) {
+			KE.util.selection(id);
+			var dialog = new KE.dialog({
+				id : id,
+				cmd : 'code',
+				file : 'code/insert_code.html',
+				width : 530,
+				height : 300,
+				title : KE.lang['code'],
+				yesButton : KE.lang['yes'],
+				noButton : KE.lang['no']
+			});
+			dialog.show();
+		},
+		check : function(id) {
+			var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
+			var lang = KE.$('ic_lang', dialogDoc).value;
+			var source = KE.$('ic_source', dialogDoc).value;
+			if(lang == ''){
+				alert('编程语言必须选择');
+				return false;
+			}
+			if(source == ''){
+				alert('请输入程序代码或者脚本');
+				return false;
+			}
+			return true;
+		},
+		insert : function(id, lang,source) {
+			var html = '<pre class="brush:' + lang + '; toolbar: true; auto-links: false;">';
+			html += html_encode(source);
+			html += '</pre><p> </p>';	
+			KE.util.insertHtml(id, html);
+			KE.layout.hide(id);
+			KE.util.focus(id);
+		},
+		exec : function(id) {
+			KE.util.select(id);
+			var iframeDoc = KE.g[id].iframeDoc;
+			var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
+			if (!this.check(id)) return false;
+			var lang = KE.$('ic_lang', dialogDoc).value;
+			var source = KE.$('ic_source', dialogDoc).value;
+			this.insert(id, lang, source);
 		}
-		if(source == ''){
-			alert('请输入程序代码或者脚本');
-			return false;
+	
+	};
+	
+	KE.lang['quote'] = "引用某段文字";
+	KE.plugin['quote'] = {
+		click : function(id) {
+			KE.util.selection(id);
+			var dialog = new KE.dialog({
+				id : id,
+				cmd : 'quote',
+				file : 'quote/insert_quote.html',
+				width : 530,
+				height : 300,
+				title : KE.lang['quote'],
+				yesButton : KE.lang['yes'],
+				noButton : KE.lang['no']
+			});
+			dialog.show();
+		},
+		check : function(id) {
+			var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
+			var source = KE.$('ic_source', dialogDoc).value;
+			
+			if(source == ''){
+				alert('请输入要引用的文字内容');
+				return false;
+			}
+			
+			return true;
+		},
+		exec : function(id) {
+			KE.util.select(id);
+			var iframeDoc = KE.g[id].iframeDoc;
+			var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
+			if (!this.check(id)) return false;
+			var source = KE.$('ic_source', dialogDoc).value;
+			this.insert(id, source);
+		},
+		insert : function(id, source) {
+			var html = '<blockquote>';
+			html += html_encode(source);
+			html += '</blockquote><br/>';
+			KE.util.insertHtml(id, html);
+			KE.layout.hide(id);
+			KE.util.focus(id);
 		}
-		return true;
-	},
-	insert : function(id, lang,source) {
-		var html = '<pre class="brush:' + lang + '; toolbar: true; auto-links: false;">';
-		html += html_encode(source);
-		html += '</pre><p> </p>';	
-		KE.util.insertHtml(id, html);
-		KE.layout.hide(id);
-		KE.util.focus(id);
-	},
-	exec : function(id) {
-		KE.util.select(id);
-		var iframeDoc = KE.g[id].iframeDoc;
-		var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
-		if (!this.check(id)) return false;
-		var lang = KE.$('ic_lang', dialogDoc).value;
-		var source = KE.$('ic_source', dialogDoc).value;
-		this.insert(id, lang, source);
-	}
-
-};
-
-
-KE.lang['quote'] = "引用某段文字";
-KE.plugin['quote'] = {
-	click : function(id) {
-		/*
-		KE.util.selection(id);
-		val html = KE.selectedHtml(id);
-		alert(html);
-		insert(id, html);
-		*/
-		KE.util.selection(id);
-		var dialog = new KE.dialog({
-			id : id,
-			cmd : 'quote',
-			file : 'quote/insert_quote.html',
-			width : 530,
-			height : 300,
-			title : KE.lang['quote'],
-			yesButton : KE.lang['yes'],
-			noButton : KE.lang['no']
-		});
-		dialog.show();
-	},
-	check : function(id) {
-		var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
-		var source = KE.$('ic_source', dialogDoc).value;
-		
-		if(source == ''){
-			alert('请输入要引用的文字内容');
-			return false;
-		}
-		
-		return true;
-	},
-	exec : function(id) {
-		KE.util.select(id);
-		var iframeDoc = KE.g[id].iframeDoc;
-		var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
-		if (!this.check(id)) return false;
-		var source = KE.$('ic_source', dialogDoc).value;
-		this.insert(id, source);
-	},
-	insert : function(id, source) {
-		var html = '<blockquote>';
-		html += html_encode(source);
-		html += '</blockquote><br/>';
-		KE.util.insertHtml(id, html);
-		KE.layout.hide(id);
-		KE.util.focus(id);
-	}
-};
+	};
 });
-
-
-
-//-->
 
 </script>
 
 <script type='text/javascript'>
-
-<!--
-
 $(document).ready(function(){
 	KE.show({
 		id : 'meal-content',
@@ -272,27 +254,20 @@ $(document).ready(function(){
 		items : [ 'bold', 'italic', 'underline', 'strikethrough', 'removeformat','|','textcolor', 'bgcolor',  
 				 'title', 'fontname', 'fontsize',  '|', 
 				 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-				 'link', 'unlink', 'emoticons','code', 'image', 'flash', 'quote', '|','selectall','source' ,'about'
+				 'link', 'unlink', 'code', 'image', 'quote', '|', 'source' ,'about'
 				 ]
 	});
 });
-
-//-->
-
 </script>
-	
-	
+
 <script type="text/javascript">
 $(document).ready(function() {  
-
-		var mailReplyFormSubmitListener = function() {
-		
+	var mailReplyFormSubmitListener = function() {
 		var id = $(this).attr("id");
 		var sendto = $(this).find("input[name=sendto]").val();
         var reply =	$(this).find("input[name=reply]").val();     
      	var title = $(this).find("input[name=title1]").val();
-        var content = $(this).find("textarea[name=content]").val();    
-
+        var content = $(this).find("textarea[name=content]").val();
         postNewMailReply = function() {
             $.post(
                 "postmail",
@@ -310,18 +285,16 @@ $(document).ready(function() {
         };
         postNewMailReply();
         return false;
-    	}
-		
-		var init = function() {
-			
-			 var e = $(".mail-edit-box");   
-	         $(".mail-edit-box").find("form").submit(mailReplyFormSubmitListener);         
-		}
-		init();
-   
+   	}
+	
+	var init = function() {
+		 var e = $(".mail-edit-box");   
+         $(".mail-edit-box").find("form").submit(mailReplyFormSubmitListener);         
+	}
+	init();
+  
 });
-</script>   
-      <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+</script>  
    </div>
   </body>
 </html>

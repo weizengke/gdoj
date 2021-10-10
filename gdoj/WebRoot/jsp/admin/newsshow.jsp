@@ -28,14 +28,12 @@ SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scr
 SyntaxHighlighter.all();
 </script>
 </head>
-  
   <body>
     <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">	
-
-
-	<div id="sidebar"> 	    
-		<div class="sidebox roundbox">
+  	<div class="container">
+        <div class="content">       
+	     	<div class="sidebar"> 	         
+			<div class="sidebox roundbox">
             	<div class="roundbox-lt">&nbsp;</div>
 	       		<div class="roundbox-rt">&nbsp;</div>
 	       		    
@@ -49,9 +47,8 @@ SyntaxHighlighter.all();
  		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
 
    	</div> 
-    <div id="content" class="content-with-sidebar round0123"  >     
+    		<div class="content-with-sidebar round0123"  >
 	   <div id="nav-content" >
-     		
      	</div>
 	    <div class="topic">
 			<div class="title">
@@ -67,9 +64,10 @@ SyntaxHighlighter.all();
 		     </div>
 		    
 	    </div>
-	</div>  
-
-      <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+	</div>
+			<div class="clear"></div>
+		</div>
+      	<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
    </div>
   </body>
 </html>

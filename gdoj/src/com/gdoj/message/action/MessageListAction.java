@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.util.DateUtil;
 import org.apache.struts2.ServletActionContext;
 
 import com.gdoj.bean.LatestTopicBean;
@@ -50,7 +51,7 @@ public class MessageListAction extends ActionSupport{
 			pageSize=20;
 		}
 		intRowCount = messageService.countRootMessages();
-		pageCount = ((intRowCount + pageSize - 1) / pageSize);//¼ÆËã³ö×ÜÒ³Êý
+		pageCount = ((intRowCount + pageSize - 1) / pageSize);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½
 		if (page< 1) {
 			page = 1;
 		}
@@ -71,7 +72,7 @@ public class MessageListAction extends ActionSupport{
 			mb_.setViews(m_.getViews());
 			mb_.setVotes(m_.getVotes());
 			mb_.setIn_date(m_.getIn_date());
-			mb_.setFriendly_Date(getFriendlyDate(m_.getIn_date()));
+			mb_.setFriendly_Date(DateUtil.toFriendlyDate(m_.getIn_date()));
 			String bufString = new String();
 		 	bufString = Html2Text.RemoveHtml(((m_.getContent().length()>2000)?(m_.getContent()).substring(0, 2000):m_.getContent()));
 			
@@ -87,13 +88,20 @@ public class MessageListAction extends ActionSupport{
 			   mb_.setLastReplyId(lm.getMessage_id());
 			   mb_.setLastReplyUser(lm.getCreate_user());
 			   mb_.setLastReplyDate(lm.getIn_date());
-			   mb_.setLastReplyFriendlyDate(getFriendlyDate(lm.getIn_date()));
+			   mb_.setLastReplyFriendlyDate(DateUtil.toFriendlyDate(lm.getIn_date()));
+			   
+			   User rplu = new User();
+			   rplu = userService.queryUser(mb_.getLastReplyUser());
+			    if(rplu != null){
+					mb_.setLastRplUser(rplu);
+				}			   
 			}
 			
 			User u = new User();
 			u = userService.queryUser(m_.getCreate_user());
 			if(u!=null){
 				mb_.setAvatar(u.getAvatar());
+				mb_.setUser(u);
 			}
 			messages.add(mb_);
 		}
@@ -108,7 +116,7 @@ public class MessageListAction extends ActionSupport{
 		{
 			volume.add(1);
 			if(page>4){
-				volume.add(0); //Ê¡ÂÔºÅ	
+				volume.add(0); //Ê¡ï¿½Ôºï¿½	
 			}
 			Integer start_i = new Integer(2);
 			Integer end_i = new Integer(pageCount-1);
@@ -124,7 +132,7 @@ public class MessageListAction extends ActionSupport{
 			}	
 			
 			if(page<pageCount-3){ 		
-				volume.add(0); //Ê¡ÂÔºÅ
+				volume.add(0); //Ê¡ï¿½Ôºï¿½
 			}
 			
 			volume.add(pageCount);
@@ -136,26 +144,7 @@ public class MessageListAction extends ActionSupport{
 		
 		return SUCCESS;
 	}
-	
-	public String getFriendlyDate(Date time){
-		if(time == null) return getText("unknown");
-		int ct = (int)((System.currentTimeMillis() - time.getTime())/1000);
-		if(ct < 3600)
-			return Math.max(ct / 60,1) +getText("minutes_before");
-		if(ct >= 3600 && ct < 86400)
-			return ct / 3600 +getText("hours_before");
-		if(ct >= 86400 && ct < 2592000){ //86400 * 30
-			int day = ct / 86400 ;	
-			if(day>1){
-				return day +getText("days_before");	
-			}
-			return getText("yesterday");			
-		}
-		if(ct >= 2592000 && ct < 31104000) //86400 * 30
-			return ct / 2592000 +getText("months_before");
-		return ct / 31104000 + getText("years_before");
-	}
-	
+
 	public MessageService getMessageService() {
 		return messageService;
 	}

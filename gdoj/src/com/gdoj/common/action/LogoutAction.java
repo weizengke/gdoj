@@ -1,4 +1,6 @@
 package com.gdoj.common.action;
+import java.util.Date;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.util.OnlineUsers;
@@ -20,18 +22,20 @@ public class LogoutAction extends ActionSupport {
 					url="enter";
 				}
 				String name = (String)ActionContext.getContext().getSession().get("session_username").toString();
+				System.out.println(new Date()+": "+name + " logout.");
 				if(name!=null&&name.length()!=0){						
 					OnlineUsers.offlineUser(name);
 				}
 				
 				ActionContext actionContext = ActionContext.getContext();
-				
 				actionContext.getSession().clear();
 				
 				Cookie cookie = new Cookie("cookieOnlineJudgeUsername", null);
 				cookie.setMaxAge(0);
+				cookie.setPath("/");
 				Cookie cookie_ = new Cookie("cookieOnlineJudgePassword", null);
 				cookie_.setMaxAge(0);
+				cookie.setPath("/");
 				ServletActionContext.getResponse().addCookie(cookie);
 				ServletActionContext.getResponse().addCookie(cookie_);
 				

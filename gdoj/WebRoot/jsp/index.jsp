@@ -18,21 +18,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
   </head>
- 
-  <body>
-  <jsp:include  page="/jsp/head.jsp" ></jsp:include> 
-  <div id="body">
-  	<div id="sidebar"> 	          
-		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include>
-   	</div> 
-   	<div id="content" class="content-with-sidebar">	
-   		<div id="nav-content" >    	
-     	</div>
-	 <div class="content " style="">      	
-		<jsp:include page="/WEB-INF/templates/homepage.html"></jsp:include>	
-     </div>
-    </div> 
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
-  </div>
-  </body>
+
+	<body>
+		<jsp:include page="/jsp/head.jsp"></jsp:include>
+		<div class="container">
+			<div class="content">
+				<div class="page-header">
+	        	</div>
+				<div class="sidebar">
+					<jsp:include page="/jsp/sidebar.jsp"></jsp:include>
+				</div>
+				<div id="content" class="content-with-sidebar">
+					<div id="nav-content">
+					</div>
+					<div class="content " style="">
+						<jsp:include page="/WEB-INF/templates/homepage.html"></jsp:include>
+					</div>
+				</div>
+				<jsp:include page="/jsp/footer.jsp"></jsp:include>
+			</div>
+		</div>
+	</body>
 </html>

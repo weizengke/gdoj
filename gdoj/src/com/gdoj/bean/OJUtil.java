@@ -1,6 +1,11 @@
 package com.gdoj.bean;
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
+
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ServletActionContext;
+
 import com.gdoj.problem.service.ProblemService;
 import com.gdoj.contest.problem.service.CProblemService;
 import com.gdoj.contest.problem.vo.CProblem;
@@ -12,7 +17,22 @@ import com.util.OnlineUsers;
 import com.gdoj.user.service.UserService;
 
 public class OJUtil {
-
+	public static String getVerdictName(Integer verdictId, Integer testcase) {
+		ActionSupport action = new ActionSupport();
+		String verdictName = "";
+		switch (verdictId) {
+			case 5:
+				verdictName = action.getText("verdict"+verdictId);
+				break;
+			default:
+				verdictName = action.getText("verdict"+verdictId);
+				if (testcase > 0) {
+					verdictName += " on test " + testcase;
+				}
+				break;
+		}
+		return verdictName;
+	}
 	public static Problem queryProblem(Integer problemId) {
 		// TODO Auto-generated method stub
 		ProblemService problemService = (ProblemService)MyApplicationContextUtil.getContext().getBean("problemService");
@@ -49,16 +69,15 @@ public class OJUtil {
 		user_ = userService.checkLogin(handle, password);
 		if (null != user_) {
 			ActionContext.getContext().getSession().put("session_username",user_.getUsername());
+			ActionContext.getContext().getSession().put("session_avatar",user_.getAvatar());
 			OnlineUsers.onlineUser(user_.getUsername());
 			user_.setLastlogin(new Date());
 			userService.save(user_);
-
+			
 			return 1;
 		}else{
 			System.out.println(new Date()+":"+handle+" dologin auto ,but password is invalid.");
 			return 0;
 		}
-		
-		
 	}
 }

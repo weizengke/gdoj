@@ -53,12 +53,10 @@ SyntaxHighlighter.all();
 
   <body>  
   	<jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  	<div id="body">
-		<div id="sidebar"> 	
-            <div class="sidebox roundbox">
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>
-	       		    
+  	<div class="container">
+        <div class="content">       
+	     	<div class="sidebar"> 	   
+            	<div class="sidebox roundbox">
 	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
 	            	<div class="title-sidebox" style="width: 100%">Add Privilege</div>
 	            </div>  
@@ -112,29 +110,11 @@ SyntaxHighlighter.all();
 
 	});
 </script>	
-     <div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >	
-     	<a href="admin">Admin</a>
-     	  	  <a href="admin/news">News</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     	<a href="admin/privilege">Privilege</a>		    
-     	</div>
-	    <div class="datatable">	
-	    	<div class="lt">&nbsp;</div>
-	        <div class="rt">&nbsp;</div>
-	        <div class="lb">&nbsp;</div>
-	        <div class="rb">&nbsp;</div>
-	    	<div style="padding: 4px 0 0 6px;position: relative;">
-				<div class="left">Privilege</div>
-				<div class="right"></div>
-			</div> 		
-			<br/>
-			<div class="innertable" style="position: relative;margin:0.3em 3px 0 3px;">
-				<div class="ilt">&nbsp;</div>
-           		<div class="irt">&nbsp;</div>	
-				<table class="standings">
+     		<div class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
+     	<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
+	    <div class="roundbox">
+			<div >
+				<table class="standings rtable">
 					 <tr class="header">
 					   <th class="coder left-item" style="width: 168px;">Author</th>
 					   <th class="motto" >Privilege</th>
@@ -145,7 +125,7 @@ SyntaxHighlighter.all();
 	                </s:if>
 					<s:iterator value="privilegeList" status="st">	
 	            	<tr <s:if test="#st.odd">class="dark"</s:if>>
-	            		<td class="coder left-item"><b><a href="profile/<s:property value="username"/>"><s:property value="username"/></a></b></td>
+	            		<td class="coder left-item"><b><a href="profile/<s:property value="username"/>" class="rated-user user-rate-<s:property value="user.rate" default="0"/> user-tip" user="<s:property value="username"/>"><s:property value="username"/></a></b></td>
 	            		<td class="motto">
 	            				<s:property value="rightstr"/>
 	            		</td>   		
@@ -155,8 +135,10 @@ SyntaxHighlighter.all();
 				</table>
 		    </div>	 	 
 	   </div>    	  
-	</div>   
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
-  </div>
+	</div>
+			<div class="clear"></div>
+    	</div>
+    	<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+  	</div>
   </body>
 </html>

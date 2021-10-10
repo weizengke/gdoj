@@ -53,7 +53,7 @@ public class ShowTestFileAction extends ActionSupport {
 			try {
 				//this.content = StreamHandler.read(file);
 				//System.out.println(content);
-				this.content = StreamHandler.read(file).replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;");
+				this.content = StreamHandler.readEx(file).replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;");
 			} catch (NullPointerException npe) {
 				this.content = "File Not Found, Please Check First!";
 				return SUCCESS;

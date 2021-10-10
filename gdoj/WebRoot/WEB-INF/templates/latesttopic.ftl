@@ -1,8 +1,8 @@
 <ul>
 <#list topics as e>  
 <li>
-<div style="font-size:0.9em;padding: 6px 0;">
-<span class="user"><a title="${e.author}" href="profile/${e.author}" class="user-tip" user="${e.author}">
+<div style="font-size:9pt;padding: 6px 0;">
+<span class="user"><a title="${e.author}" href="profile/${e.author}" class="rated-user user-rate-${e.user.rate} user-tip" user="${e.author}">
 ${e.author}
 </a></span>:   	
 <span class="title">

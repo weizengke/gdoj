@@ -23,6 +23,11 @@ public class TagsviewServiceImpl implements TagsviewService {
 		return tagsviewDao.counts(sql);
 	}
 
+	public Integer getTagsCountbyId(Integer tagId){
+		// TODO Auto-generated method stub
+		return tagsviewDao.getTagsCountbyId(tagId);
+	}
+	
 	public boolean isExistByMessages(Integer tagId, Integer messageId) {
 		// TODO Auto-generated method stub
 		return tagsviewDao.isExistByMessages(tagId, messageId);

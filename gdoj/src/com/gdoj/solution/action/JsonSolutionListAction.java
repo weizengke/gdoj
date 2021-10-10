@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.gdoj.bean.OJUtil;
+import com.util.DateUtil;
 import org.apache.struts2.json.annotations.JSON;
 
-import com.gdoj.bean.StatusBean;
 import com.gdoj.contest.problem.service.CProblemService;
 import com.gdoj.contest.problem.vo.CProblem;
 import com.gdoj.contest.service.ContestService;
-import com.gdoj.contest.vo.Contest;
-import com.gdoj.problem.service.ProblemService;
 import com.gdoj.solution.service.SolutionService;
 import com.gdoj.solution.vo.Solution;
-import com.opensymphony.xwork2.ActionContext;
+import com.gdoj.contest.vo.Contest;
+import com.gdoj.problem.service.ProblemService;
 import com.opensymphony.xwork2.ActionSupport;
-import com.util.DateUtil;
 
 public class JsonSolutionListAction extends ActionSupport{
 
@@ -31,99 +30,113 @@ public class JsonSolutionListAction extends ActionSupport{
 	private String problemId;
 	private String username;
 	private Integer contestId=0;
-	
+	private Integer fromSolutionId;
+	private Integer pageSize = 20;
+
+	private Integer contestOnly = 0;
 	private boolean success;
 	private String error;
 
-	private List<StatusBean> solutions;
+	private List<Solution> solutions;
 
 	public String queryStatusList() throws Exception{
 		try {
-			
-			
 			String sql_count = new String();
 			String sql_query = new String();
 			String sql_condition = new String();
 			
 			Integer intRowCount=0;
-			Integer pageSize=100;
 			Integer page=1;
-			List<Solution> solutionList = new ArrayList<Solution>();
-			//System.out.println(contestId);
-			Contest contest_ = contestService.queryContest(contestId,"ADMIN");
-			if(null==contest_){
-				success = false;
-				error = "No such contest.";
-				return SUCCESS;
-			}
 
-		
-			sql_count = "select count(s.solution_id) from Solution s where s.contest_id="+contestId+" and s.submit_date between '" + contest_.getStart_time() +"' and '"+ contest_.getEnd_time()+"'";
-			sql_query = "select s from Solution s where s.contest_id="+contestId +" and s.submit_date between '" + contest_.getStart_time() +"' and '"+ contest_.getEnd_time()+"'";
-			
-			if(problemId!=null){
-				CProblem cproblem_ = new CProblem();
-				cproblem_ = cproblemService.queryProblemByNum(problemId, contestId);
-				if(cproblem_==null){
+			List<Solution> solutionList = new ArrayList<Solution>();
+
+			sql_count = "select count(s.solution_id) from Solution s where s.solution_id>0 ";
+			sql_query = "select s from Solution s where s.solution_id>0 ";
+
+			Contest contest_ = null;
+			if (contestId != 0) {
+				sql_condition += " and s.contest_id=" + contestId;
+				contest_ = contestService.queryContest(contestId,"ADMIN");
+				if (null == contest_){
 					success = false;
-					error = "No such problem.";
+					error = "No such contest.";
 					return SUCCESS;
 				}
-				sql_condition += " and s.problem_id=" + cproblem_.getProblem_id();
+				/* 只查询比赛期间 */
+				if (contestOnly != 0) {
+					sql_condition += " and s.submit_date between '" + contest_.getStart_time() + "' and '" + contest_.getEnd_time() + "'";
+				}
+			}
+
+			if(problemId !=null ){
+				Integer problemId_ = 0;
+				if (null != contestId && contestId != 0) {
+					CProblem cproblem_ = new CProblem();
+					cproblem_ = cproblemService.queryProblemByNum(problemId, contestId);
+					if(cproblem_== null){
+						success = false;
+						error = "No such problem.";
+						return SUCCESS;
+					}
+					problemId_ = cproblem_.getProblem_id();
+				} else {
+					problemId_ = Integer.valueOf(problemId);
+				}
+
+				sql_condition += " and s.problem_id=" + problemId_;
 			}
 			if (null != username) {
 				sql_condition += " and s.username='" + username+"'";
 			}
-			sql_condition +=" order by s.solution_id ASC";
-			
-			if (pageSize > 100) {
-				pageSize = 100;
+			if (null != fromSolutionId) {
+				sql_condition += " and s.solution_id<" + fromSolutionId;
+			}
+
+			if (null != contestOnly && contestOnly != 0) {
+				sql_condition +=" order by s.solution_id ASC";
+			}else {
+				sql_condition +=" order by s.solution_id DESC";
+			}
+
+			//System.out.println(sql_condition);
+
+			if (getPageSize() > 100) {
+				setPageSize(100);
 			}
 			intRowCount = solutionService.countSolutions(sql_count
 					+ sql_condition);
-			Integer pageCount = ((intRowCount + pageSize - 1) / pageSize);//计算出总页数
+			Integer pageCount = ((intRowCount + getPageSize() - 1) / getPageSize());
 			if (page < 1) {
 				page = 1;
 			}
 			if (page > pageCount) {
 				page = pageCount;
 			}
-			Integer from = (page - 1) * pageSize;
-			solutionList = solutionService.querySolutions(from, pageSize,
+			Integer from = (page - 1) * getPageSize();
+			solutions = solutionService.querySolutions(from, getPageSize(),
 			sql_query + sql_condition);
-			
-			solutions = new ArrayList<StatusBean>();
-			
-			for(Solution s:solutionList){
-				StatusBean sb = new StatusBean();
-				sb.setSolutionId(s.getSolution_id());
-				sb.setTestCase(s.getTestcase());
-				sb.setTime(s.getTime());
-				sb.setContestId(s.getContest_id());
-				String case_str = new String();
-				if(s.getVerdict()!=5&&s.getVerdict()<12&&s.getVerdict()>3){
-					case_str = " on test "+s.getTestcase();
-					sb.setStatus_description(getText("verdict"+s.getVerdict())+case_str);
-				}else{
-					sb.setStatus_description(getText("verdict"+s.getVerdict()));
+			if (null != solutionList) {
+				for (Solution s : solutions) {
+					s.setLanguage_name(getText("language"+s.getLanguage()));
+					s.setStatus_description(OJUtil.getVerdictName(s.getVerdict(), s.getTestcase()));
+					s.setFriendlySubmitDate(DateUtil.toFriendlyDate(s.getSubmit_date()));
+
+					if (contest_ != null) {
+						//int 强制转换存在风险
+						s.setTimeSinceContestStart(DateUtil.penaltyString((int)((s.getSubmit_date().getTime()-contest_.getStart_time().getTime())/1000)));
+						CProblem cp = new CProblem();
+						cp = cproblemService.queryProblemByPid(s.getProblem_id(), contestId);
+						if(cp != null){
+							s.setProblemNum(cp.getNum());
+						}else{
+							success = false;
+							error = "Failed to get contest problem num. solutionId="+ s.getSolution_id() + ", contestId=" + contestId + ", problemId=" + s.getProblem_id();
+							return SUCCESS;
+						}
+					}
+
 				}
-				//int 强制转换存在风险
-				sb.setContestTimes(DateUtil.penaltyString((int)((s.getSubmit_date().getTime()-contest_.getStart_time().getTime())/1000)));
-				
-				CProblem cproblem_ = new CProblem();
-				cproblem_ = cproblemService.queryProblemByPid(s.getProblem_id(), contestId);
-				if(cproblem_!=null){
-					sb.setProblemNum(cproblem_.getNum());
-				}else{
-					success = false;
-					error = "Error.";
-					return SUCCESS;
-				}
-				solutions.add(sb);	
 			}
-		
-			//System.out.println(verdicts.get(0));
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 			success = false;
@@ -195,10 +208,35 @@ public class JsonSolutionListAction extends ActionSupport{
 		this.error = error;
 	}
 	
-	public List<StatusBean> getSolutions() {
+	public List<Solution> getSolutions() {
 		return solutions;
 	}
-	public void setSolutions(List<StatusBean> solutions) {
+	public void setSolutions(List<Solution> solutions) {
 		this.solutions = solutions;
 	}
+
+	public Integer getFromSolutionId() {
+		return fromSolutionId;
+	}
+
+	public void setFromSolutionId(Integer fromSolutionId) {
+		this.fromSolutionId = fromSolutionId;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public Integer getContestOnly() {
+		return contestOnly;
+	}
+
+	public void setContestOnly(Integer contestOnly) {
+		this.contestOnly = contestOnly;
+	}
+
 }

@@ -17,35 +17,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="ACM,OJ,OnlineJudge,JAVA,C++,Program Contest">
 	<meta http-equiv="description" content="Online Judge System for ACM">
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
-		
-	<link rel="stylesheet" href="themes/base/jquery.ui.all.css">
 	<script src="js/jquery-1.7.1.js"></script>
-	<script src="js/ui/jquery.ui.core.js"></script>
-	<script src="js/ui/jquery.ui.widget.js"></script>
-	<script src="js/ui/jquery.ui.datepicker.js"></script>
-	
-	<script type="text/javascript" src="js/ui/jquery.ui.mouse.js"></script>
-    <script type="text/javascript" src="js/ui/jquery.ui.sortable.js"></script>
-	
   	<script type="text/javascript" src="js/gdoj.js"></script>
-
 </head>
   
   <body>
     <jsp:include  page="/jsp/head.jsp" ></jsp:include>
-  <div id="body">
-	    
-    <div style="position: relative;">
-      	<div id="content" >
+   <div class="container">
+  		<div class="content"> 	
 		 	<div>
 				<div class="roundbox" style="width: 420px;margin:24px auto;">
-					 <div class="roundbox-lt">&nbsp;</div>
-	           		<div class="roundbox-rt">&nbsp;</div>
-	           		<div class="roundbox-lb">&nbsp;</div>
-	           		<div class="roundbox-rb">&nbsp;</div>
 					 <div class="top-link">
-			           	<div class="titled"><s:text name="register"/>
-			          	 </div>
+			           	<div class="titled"><s:text name="register"/></div>
 		       		 </div>	 		       		 
 					 <div class="register-box">
 						<form id="register" method="post" action="register">	
@@ -110,10 +93,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			      	</form>
 			     </div>
 			 </div>      
-	       </div>     
-	    </div>   
-    </div>
-         <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+	       </div>
+			<div class="clear"></div>
+	    </div>
+	   <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>
 </html>

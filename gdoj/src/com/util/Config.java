@@ -39,7 +39,7 @@ public class Config {
 		 
 		 System.out.println(root);
 		 
-		 OutputStream fos = new FileOutputStream(PATH);
+		 OutputStream fos = new FileOutputStream(root + PATH);
 		 properties.setProperty(key,value);
 		 properties.store(fos,"");
          fos.close(); //------------------------------------important

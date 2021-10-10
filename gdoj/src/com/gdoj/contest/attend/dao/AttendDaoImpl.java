@@ -22,6 +22,17 @@ public class AttendDaoImpl extends HibernateDaoSupport implements AttendDAO {
 		} else
 			return 0;
 	}
+
+	public List<Attend> getUserAttends(String username) {
+		// TODO Auto-generated method stub
+		String sql = "select a from Attend a where a.username='"+username+"' order by a.contest_id DESC";
+		List<Attend> list = getHibernateTemplate().find(sql);
+		if(list == null || list.size() == 0){
+			return null;
+		}
+		return list;
+	}
+	
 	public Integer countContestAttends(Integer contestId) {
 		// TODO Auto-generated method stub
 		Integer[] param = new Integer[] {contestId};

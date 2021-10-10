@@ -29,45 +29,31 @@ $(document).ready(function() {
 
   <body>  
   	<jsp:include   page="/jsp/head.jsp"></jsp:include>
-  	<div id="body">
-		 
-		<div id="sidebar"> 	
+    <div class="container">
+	  <div class="content">
+		<div class="sidebar"> 
 	 		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-   	 	</div> 
-	
-     <div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >	
-     	<a href="contests"><s:text name="contests"/></a>
-     	<a href="contest/recent" class="current"><s:text name="recent-contest"/></a>
-     	</div>	 
-		<!-- Ended  -->
-	    <div class="datatable">	
-	    	<div class="lt">&nbsp;</div>
-	        <div class="rt">&nbsp;</div>
-	        <div class="lb">&nbsp;</div>
-	        <div class="rb">&nbsp;</div>
-	    	<div style="padding: 4px 0 0 6px;position: relative;">
-				<div class="left">Data collected from <a href="http://acmicpc.info/archives/224" style="color:#FF8C00;text-decoration: none;">acmicpc.info</a></div>
-				<div class="right"></div>
-			</div> 		
-			<br/>
-			<div class="innertable" style="position: relative;">
-				<div class="ilt">&nbsp;</div>
-           		<div class="irt">&nbsp;</div>	
-				<table class="contest" id="contest_body">
-<tr class='header'><th class='oj left-item'>OJ</th><th class='name '>Title</th>
-		                 <th class='start'>Start</th>
- 						 <th class='week'>Week</th>
-		                 <th class='access'>Access</th></tr>
-<tr><td class='left-item dark' colspan='15' style='text-align: left;'>Loading...</td></tr>
-				</table>	
-		    </div>	
-		 </div> 
+   	 	</div>
+     	<div class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
+			<div id="nav-content" >
+				<a href="contests"><s:text name="contests"/></a>
+				<a href="contest/recent" class="current"><s:text name="recent-contest"/></a>
+			</div>
+			<div class="roundbox">
+				<div class="">
+					<table class="contest rtable" id="contest_body">
+						 <tr class='header'><th class='oj left-item'>OJ</th><th class='name '>Title</th>
+						 <th class='start'>Start</th>
+						 <th class='week'>Week</th>
+						 <th class='access'>Access</th></tr>
+						 <tr><td class='left-item dark' colspan='15' style='text-align: left;'>Loading...</td></tr>
+					</table>
+				</div>
+			</div>
 		 <div>
-		  
-		 </div> 			
-	</div>  
-	
+	  </div>
+	</div>
+		  <div class="clear"></div>
 <script type="text/javascript">
 $(document).ready(function() {	 	   
 			var contest_html = "<tr class='header'><th class='oj left-item'>OJ</th><th class='name '>Title</th>"+
@@ -96,10 +82,9 @@ $(document).ready(function() {
 			     $('#contest_body').html(contest_html);			     
         	});
 });
-</script>	
-	
-	 
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+</script>
+	</div>
+	<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
 <!-- JiaThis Button BEGIN -->
 <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?uid=1339907478548202&type=left&amp;move=0" charset="utf-8"></script>
 <!-- JiaThis Button END -->

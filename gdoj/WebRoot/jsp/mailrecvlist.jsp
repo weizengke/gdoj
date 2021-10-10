@@ -21,88 +21,79 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script type="text/javascript">
       $(document).ready(function() {	
 });
-</script>  
-
+</script>
   </head>
+	<body>
+		<jsp:include   page="/jsp/head.jsp"></jsp:include>
+		<div class="container">
+			<div class="content">
+				<div class="sidebar"><jsp:include  page="/jsp/sidebar.jsp" ></jsp:include></div> <!-- End sidebar -->
+				<div class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
+				<div id="nav-content" >
+				<a href="mails" class="current"><s:text name="mails.recv"/></a>
+				<a href="mails/send"><s:text name="mails.send"/></a>
+				<a href="mails/new"><s:text name="mails.new"/></a>
+				</div>
+				<div class="roundbox">
+					<div class="roundbox-title" >
+						<s:text name="mails.recvlist"/>
+					</div>
+					<div>
+						<table class="mails rtable">
+							 <tr class="header">
+							   <th class="status left-item"><s:text name="mails.status"/></th>
+							   <th class="title"><s:text name="mails.title"/></th>
+							   <th class="sender"><s:text name="mails.sender"/></th>
+							   <th class="date"><s:text name="mails.date"/></th>
+							</tr>
+							<s:if test="mailList.size==0">
+							 <tr><td class="left-item dark" colspan="5" style="text-align: left;">There is no records.</td></tr>
+							</s:if>
+							<s:iterator value="mailList" status="st">
+							<tr <s:if test="#st.odd">class="dark"</s:if>>
+								<td class="status left-item "><s:if test="isnew==1"><img title="never read" alt="never read" src="img/mail_new.gif" width=16 height=16></s:if><s:else><img title="readed" alt="readed" src="img/mail_old.gif" width=16 height=16></s:else></td>
+								<td class="title">
+									<div style="float:left;">
+									<a href="mails/<s:property value="mail_id"/>" ><s:property value="title"/></a>
+									</div>
+									 <div style="float:right;font-size:11px;padding-top:1px;text-align:right;color: grey;">
+									</div>
+								</td>
+								<td class="sender">
+								<b><a href="profile/<s:property value="from_user"/>" class="rated-user user-rate-<s:property value="sendUser.rate" default="0"/> user-tip" user="<s:property value="from_user"/>">
+								<s:property value="from_user" default="NULL"/>
+								</a></b>
+								</td>
+								<td class="date" title=""><s:date  name="create_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/></td>
+							</tr>
+							</s:iterator>
+						</table>
+					</div>
+					<div style="margin:6px;font-size:15px;">
+						<div class=left></div>
+						<div class="right">
+							<s:if test="page>1">
+								<a href="mails/page/<s:property value="page-1"/>" style="color:#000;text-decoration: none;">  &larr; </a>
+							</s:if>
+							<s:iterator value="pageList" status="st_page">
+								<s:if test="pageList[#st_page.index]==0">...</s:if>
+								<s:else><a href="mails/page/<s:property/>" style="color:#000;text-decoration: none;">
+									<s:if test="page==pageList[#st_page.index]"><b><s:property/></b></s:if>
+									<s:else><s:property/></s:else>
+								</a></s:else>
+							</s:iterator>
+							<s:if test="page < pageCount">
+								<a href="mails/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>
+							</s:if>
+						</div>
+					</div>
+				</div>
 
-  <body>  
-  	<jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  	<div id="body">
-		<div id="sidebar"> 	   
 
-		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-   	 	</div> <!-- End sidebar -->
-	
-     <div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >
-     	<a href="mails" class="current"><s:text name="mails.recv"/></a>
-     	<a href="mails/send"><s:text name="mails.send"/></a> 
-     	<a href="mails/new"><s:text name="mails.new"/></a>   	
-     	</div>
-	    <div class="datatable">	
-	    	<div class="lt">&nbsp;</div>
-	        <div class="rt">&nbsp;</div>
-	        <div class="lb">&nbsp;</div>
-	        <div class="rb">&nbsp;</div>
-	    	<div style="padding: 4px 0 0 6px;position: relative;">
-				<div class="left"><s:text name="mails.recvlist"/></div>
-				<div class="right"></div>
-			</div> 		
-			<br/>
-			<div class="innertable" style="position: relative;margin:0.3em 3px 0 3px;">
-				<div class="ilt">&nbsp;</div>
-           		<div class="irt">&nbsp;</div>	
-				<table class="mails">
-					 <tr class="header">
-					   <th class="status left-item"><s:text name="mails.status"/></th>
-					   <th class="title"><s:text name="mails.title"/></th>
-					   <th class="sender"><s:text name="mails.sender"/></th>
-					   <th class="date"><s:text name="mails.date"/></th>
-	                </tr>
-	                <s:if test="mailList.size==0">
-	                 <tr><td class="left-item dark" colspan="5" style="text-align: left;">There is no records.</td></tr>
-	                </s:if>
-					<s:iterator value="mailList" status="st">	
-	            	<tr <s:if test="#st.odd">class="dark"</s:if>>
-	            		<td class="status left-item "><s:if test="isnew==1"><img title="never read" alt="never read" src="img/mail_new.gif" width=16 height=16></s:if><s:else><img title="readed" alt="readed" src="img/mail_old.gif" width=16 height=16></s:else></td>
-	            		<td class="title">
-	            			<div style="float:left;">
-	            			<a href="mails/<s:property value="mail_id"/>" ><s:property value="title"/></a>
-	            			</div>
-	            			 <div style="float:right;font-size:11px;padding-top:1px;text-align:right;color: grey;">
-	            			</div>
-	            		</td>
-	            		<td class="sender">
-	            		<b><a href="profile/<s:property value="from_user"/>" >
-	            		<s:property value="from_user" default="NULL"/>
-	            		</a></b>
-	            		</td>
-	            		<td class="date" title=""><s:date  name="create_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/></td>
-	            	</tr>	
-	           		</s:iterator>   
-				</table>
-		    </div>	 	 
-	   </div>    
-	    <div style="margin:0 12px;font-size:15px;">	
-			<div class=left></div>
-			<div class="right">
-					<s:if test="page>1">
-						<a href="mails/page/<s:property value="page-1"/>" style="color:#000;text-decoration: none;">  &larr; </a>
-					</s:if>	
-					<s:iterator value="pageList" status="st_page">				
-						<s:if test="pageList[#st_page.index]==0">...</s:if>
-						<s:else><a href="mails/page/<s:property/>" style="color:#000;text-decoration: none;">
-							<s:if test="page==pageList[#st_page.index]"><b><s:property/></b></s:if>
-							<s:else><s:property/></s:else>
-						</a></s:else>
-					</s:iterator>	
-					<s:if test="page < pageCount">		
-						<a href="mails/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
-					</s:if>						
-		   </div>
-		</div>  	    	  
-	</div>   
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
-  </div>
-  </body>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+		</div>
+	</body>
 </html>

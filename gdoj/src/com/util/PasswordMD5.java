@@ -32,7 +32,7 @@ public class PasswordMD5 {
         }
     }
     public static void main(String[] args) {
-        System.out.print(PasswordMD5.MD5("password"));
+        System.out.println(PasswordMD5.MD5("password"));
         
         System.out.print(PasswordMD5.MD5("password1"));
     }

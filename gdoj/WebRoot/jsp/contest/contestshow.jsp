@@ -30,24 +30,19 @@ SyntaxHighlighter.all();
 
   <body>  
   <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">
-	<div id="sidebar"> 	
-             <div class="sidebox roundbox">
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>
-	       		    
-	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
-	            	<div class="title-sidebox" style="width: 100%"><s:text name="sidebar.infobox"/></div>
-	            </div>  
-	            <div class="" style="margin: 6px;font-size: 12px;word-wrap:break-word;">
-        			<pre><s:property value="contest.description" escape="flase"/></pre>
-	            </div>
-	           
-	        </div>    
-            
-	        
-   	 </div> 
-     <div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
+    <div class="container">
+	  	<div class="content">
+			<div class="sidebar">
+				 <div class="sidebox roundbox">
+					<div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
+						<div class="title-sidebox" style="width: 100%"><s:text name="sidebar.infobox"/></div>
+					</div>
+					<div class="" style="margin: 6px;font-size: 12px;word-wrap:break-word;">
+						<pre><s:property value="contest.description" escape="flase"/></pre>
+					</div>
+				</div>
+		 </div>
+			<div class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
      	<div id="nav-content" >	
      	<a href="contest/<s:property value="contest.contest_id"/>" class="current"><s:text name="contestproblems"/></a>
 		<a href="contest/<s:property value="contest.contest_id"/>/status"><s:text name="status"/></a>
@@ -97,88 +92,49 @@ $(document).ready(function(){
 				   </div>
 <!--					<s:if test="contest.password==''">Public</s:if><s:else>Private</s:else>-->
 				</div>
-				<div class="datatable">	
-				    	<div class="lt">&nbsp;</div>
-				        <div class="rt">&nbsp;</div>
-				        <div class="lb">&nbsp;</div>
-				        <div class="rb">&nbsp;</div>
-				    	<div style="padding: 4px 0 0 6px;position: relative;">
-							<div class="left"><s:text name="contestproblems"/></div>
-							<div class="right"></div>
-						</div> 		
-						<br/>
-						<div class="innertable" style="position: relative;">
-							<div class="ilt">&nbsp;</div>
-			           		<div class="irt">&nbsp;</div>	
-							<table class="problem">
-								 <tr class="header">
-					               	 <th class="id left-item"><s:text name="problemid"/></th>
-					               	 <th class="title"><s:text name="problem"/></th>
-					               	 <s:if test="contest.type==1"><th class="point"><s:text name="point"/></th></s:if>
-					                 <th class="solved"><s:text name="solved"/>/<s:text name="submit"/></th>
-					                 <th class="ratio"></th>
-				                </tr>
-				                
-				                <s:if test="problemList.size==0">
-				                 <tr><td class="left-item dark" colspan="15" style="text-align: left;">There is no records.</td></tr>
-				                </s:if>
-								<s:iterator value="problemList" status="st">	
-				            	<tr <s:if test="#st.odd">class="dark"</s:if>>
-				            		<td class="id left-item"><a href="contest/<s:property value="contestId"/>/problem/<s:property value="num"/>"><s:property value="num"/></a></td>
-				            		<td class="title" style="text-align: left;word-wrap:break-word;">
-				            			<a href="contest/<s:property value="contestId"/>/problem/<s:property value="num"/>"><s:property value="title"/></a>
-				            		</td>
-				            		<s:if test="contest.type==1"><td class="point"><s:property value="point"/>pt</td></s:if>
-				            		<td class="solved">
-				            		<a href="contest/<s:property value="contest.contest_id"/>/status/problem/<s:property value="num"/>/page/1" title="users solved this problem"><s:property value="solved" default="0"/></a><span style="font-size:11px;color:grey;font-family:verdana,Serif,Arial;" title="submissions"><sub>/<s:property value="submit" default="0"/></sub> </span>
-				            		</td>
-				            		<td class="ratio" >
-				            		<a href="contest/<s:property value="contestId"/>/submit/<s:property value="num"/>" style="">
-			            			<s:if test="problemStatusList[#st.index]==1">
-			            			<img title="<s:text name="submit"/>" src="img/submit-green-22.png" style="vertical-align: middle;">
-			            			</s:if><s:else>
-			            			<img title="<s:text name="submit"/>" src="img/submit-22.png" style="vertical-align: middle;">
-			            			</s:else>
-			            			</a>
-				            		</td>
-				            	</tr>	
-				           		</s:iterator>   
-							</table>
-					    </div>	 	 
-			</div>	
-			<div style="margin-right: 12px;text-decoration: none;">
-				<div class="left"></div>
-				<div class="right">
+				<div class="roundbox">
+				<div>
+					<table class="problem rtable">
+						 <tr class="header">
+							 <th class="id left-item"><s:text name="problemid"/></th>
+							 <th class="title"><s:text name="problem"/></th>
+							 <s:if test="contest.type==1"><th class="point"><s:text name="point"/></th></s:if>
+							 <th class="solved"><s:text name="solved"/>/<s:text name="submit"/></th>
+							 <th class="ratio"></th>
+						</tr>
+						<s:if test="problemList.size==0">
+						 <tr><td class="left-item dark" colspan="15" style="text-align: left;">There is no records.</td></tr>
+						</s:if>
+						<s:iterator value="problemList" status="st">
+						<tr <s:if test="#st.odd">class="dark"</s:if>>
+							<td class="id left-item"><a href="contest/<s:property value="contestId"/>/problem/<s:property value="num"/>"><s:property value="num"/></a></td>
+							<td class="title" style="text-align: left;word-wrap:break-word;">
+								<a href="contest/<s:property value="contestId"/>/problem/<s:property value="num"/>"><s:property value="title"/></a>
+							</td>
+							<s:if test="contest.type==1"><td class="point"><s:property value="point"/>pt</td></s:if>
+							<td class="solved">
+							<a href="contest/<s:property value="contest.contest_id"/>/status/problem/<s:property value="num"/>/page/1" title="users solved this problem"><s:property value="solved" default="0"/></a><span style="font-size:11px;color:grey;font-family:verdana,Serif,Arial;" title="submissions"><sub>/<s:property value="submit" default="0"/></sub> </span>
+							</td>
+							<td class="ratio" >
+							<a href="contest/<s:property value="contestId"/>/problem/<s:property value="num"/>" style="">
+							<s:if test="problemStatusList[#st.index]==1">
+							<img title="<s:text name="submit"/>" src="img/submit-green-22.png" style="vertical-align: middle;">
+							</s:if><s:else>
+							<img title="<s:text name="submit"/>" src="img/submit-22.png" style="vertical-align: middle;">
+							</s:else>
+							</a>
+							</td>
+						</tr>
+						</s:iterator>
+					</table>
 				</div>
-			</div>       	  	 
-			
-<!-- 			
-			<div class="problem-to-contest" style="display: none;">	
-			  <s:form action="contestAddproblem" theme="simple">
-				<table>
-					<tr>
-						<td>
-						<SELECT name="pid">
-						<option value=""></option>
-						</SELECT>
-						</td>
-						<td>
-						<input type="text" name="title">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<input type="submit"  value="Add To Contest">	
-						</td>
-					</tr>
-					
-				</table>			
-			  </s:form>	
-			</div>
- -->			
-	   </div>    
-	</div>   
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+			</div>	
+
+		   </div>    
+		</div>
+		    <div class="clear"></div>
+		</div>
+		<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>
 </html>

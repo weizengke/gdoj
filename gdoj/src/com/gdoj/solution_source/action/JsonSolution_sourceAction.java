@@ -1,6 +1,8 @@
 package com.gdoj.solution_source.action;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.Date;
 
 import org.apache.struts2.json.annotations.JSON;
@@ -94,8 +96,7 @@ public class JsonSolution_sourceAction extends ActionSupport {
 		try {
 			//System.out.println("Source[" + solutionId + "] is open via ajax...");
 			Solution_source solutionSource_ = new Solution_source();
-			solutionSource_ = solutionSourceService
-					.querySolutionSource(solutionId);
+			solutionSource_ = solutionSourceService.querySolutionSource(solutionId);
 			if (null == solutionSource_) {
 				success = false;
 				error="No such solution source.";
@@ -113,9 +114,6 @@ public class JsonSolution_sourceAction extends ActionSupport {
 			if(username==null){
 				//未登录，标记一下随便一个不可能的用户名
 				username = ".";
-				//success=false;
-				//error="You must <a href='enter'>Login</a> first.";
-				//return SUCCESS;
 			}
 
 			if(solution_.getContest_id()>0){
@@ -125,39 +123,35 @@ public class JsonSolution_sourceAction extends ActionSupport {
 				if(contest_==null){
 					success=false;
 					error="No such contest.";
-					//ActionContext.getContext().put("tip", "");
 					return SUCCESS;
 				}
 				contestTitle = contest_.getTitle();
 				Date dt = new Date();
 				if(contest_.getEnd_time().getTime()>dt.getTime()){ //比赛没有结束
 					if(!username.equals(solution_.getUsername())){
-						//ActionContext.getContext().put("tip", "You can't view such source on a running contest.");
 						success=false;
 						error="You can't view such source on a running contest.";
 						return SUCCESS;
 					}
 					judgeLog = "You can not view judge-log on a running contest.";
-				}else
-				{
+				} else {
 					try {
 						File file;
 						judgeLog = new String();
 						file = new File(Config.getValue("OJ_JUDGE_LOG") + "judge-log-"
 								+ solutionId + ".log");
-						judgeLog = StreamHandler.read(file);
+						judgeLog = StreamHandler.readEx(file);
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
 				}
-			}else
-			{
+			} else {
 				try {
 					File file;
 					judgeLog = new String();
 					file = new File(Config.getValue("OJ_JUDGE_LOG") + "judge-log-"
 							+ solutionId + ".log");
-					judgeLog = StreamHandler.read(file);
+					judgeLog = StreamHandler.readEx(file);
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -166,9 +160,9 @@ public class JsonSolution_sourceAction extends ActionSupport {
 			User user_ = new User();
 			user_ = userService.queryUser(solution_.getUsername());
 			if(user_!=null){
-				if(!username.equals(solution_.getUsername())){					
-					if ("NO".equals(Config.getValue("OPENSOURCE")))
-					{
+				solution_.setUser(user_);
+				if(!username.equals(solution_.getUsername())){	
+					if ("NO".equals(Config.getValue("OPENSOURCE"))) {
 						success=false;
 						error="This operation is now closed by Administrator.";
 						return SUCCESS;
@@ -176,7 +170,7 @@ public class JsonSolution_sourceAction extends ActionSupport {
 					
 					if(user_.getOpensource().equals("N")){
 						success=false;
-						error="This source isn't open for you.You can write mail to "+solution_.getUsername();
+						error="This source isn't open for you, you can write mail to "+solution_.getUsername();
 						return SUCCESS;
 					}
 				}

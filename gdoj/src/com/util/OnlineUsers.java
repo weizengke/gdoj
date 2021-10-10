@@ -18,10 +18,11 @@ public class OnlineUsers {
 	 *   新增用户，若存在增更新lastAccessTime
 	 */
 	public static boolean onlineUser(String username) {
-		//System.out.println(new Date()+":"+username+" ping or online");
 		if (username == null){
 			return false;
 		}
+		
+		System.out.println(new Date()+":"+username+" ping or online");
 		
 		if (true == map_online_users.containsKey(username)){
 			/*

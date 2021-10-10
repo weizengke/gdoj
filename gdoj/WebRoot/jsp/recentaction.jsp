@@ -31,8 +31,7 @@ SyntaxHighlighter.all();
   	
   <div id="body">
 
-	<div id="sidebar"> 	
-          
+	<div id="sidebar">
    		 <jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
    	</div>	 
    		 
@@ -123,9 +122,9 @@ SyntaxHighlighter.all();
 						<a href="recent-actions/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
 					</s:if>						
 		   </div>
-		</div>  	    	  
+		</div>  	
+		<jsp:include  page="/jsp/footer.jsp" ></jsp:include>    	  
 	</div>   
-        <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>
 </html>

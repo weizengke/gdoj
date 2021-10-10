@@ -40,6 +40,10 @@ public class AttendServiceImpl implements AttendService {
 		return attendDao.queryUserAttend(contestId, username);
 	}
 
+	public List<Attend> getUserAttends(String username) {
+		return attendDao.getUserAttends(username);
+	}
+	
 	public void save(Attend attend) {
 		// TODO Auto-generated method stub
 		attendDao.save(attend);

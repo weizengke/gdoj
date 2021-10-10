@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.util.DateUtil;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.json.annotations.JSON;
 
@@ -131,47 +132,52 @@ public class PostMessageAction extends ActionSupport {
 
 	public String postMessage()throws Exception{
 		
-		try {
-
-			success = true;
-			createUser = (String)ActionContext.getContext().getSession().get("session_username");
-			  if(null==createUser||"".equals(createUser)){
-				  	success = false;error="You must login first.";	
-				  	return SUCCESS;
-		        }
-			  if("new".equals(type)){
-				  if(rootId!=null&&rootId.equals(0)){ 
-					  if(null==title||title.trim().length()==0){
-						 	success = false;error="Title shouldn't be empty.";
-						 	return SUCCESS;
-						}
-				  }
-			  }else if("edit".equals(type)){
+	try {
+		 success = true;
+		 createUser = (String)ActionContext.getContext().getSession().get("session_username");
+	     if(null==createUser||"".equals(createUser)){
+		   	 success = false;error="You must login first.";	
+		   	 return SUCCESS;
+         }
+	     
+		 if ("NO".equals(Config.getValue("OPENBBS"))){
+			 success = false;error="This operation is now closed by Administrator.";	
+			 return SUCCESS;
+		 }
+		
+		  if("new".equals(type)){
+			  if(rootId!=null&&rootId.equals(0)){ 
 				  if(null==title||title.trim().length()==0){
 					 	success = false;error="Title shouldn't be empty.";
 					 	return SUCCESS;
 					}
 			  }
-			 	
-				if(null==content||content.trim().length()==0){
-				 	success = false; error="Content shouldn't be empty.";
+		  }else if("edit".equals(type)){
+			  if(null==title||title.trim().length()==0){
+				 	success = false;error="Title shouldn't be empty.";
 				 	return SUCCESS;
 				}
-				
-				//System.out.println(title+content);
-				
-				Date dt_prevSubmit = (Date)ActionContext.getContext().getSession().get("session_submit");
-				Date dt = new Date(); 
-				
-				if(dt_prevSubmit!=null){
-					//System.out.println(dt.getTime()-dt_prevSubmit.getTime());
-					if(dt.getTime()-dt_prevSubmit.getTime()<10000){  //限制5s一次提交
-						System.out.println(createUser+" submit-topic twice at 5 second.");
-					//	this.addFieldError("tip", "");
-						success = true;
-						return SUCCESS;
-					}
+		  }
+		 	
+			if(null==content||content.trim().length()==0){
+			 	success = false; error="Content shouldn't be empty.";
+			 	return SUCCESS;
+			}
+			
+			//System.out.println(title+content);
+			
+			Date dt_prevSubmit = (Date)ActionContext.getContext().getSession().get("session_submit");
+			Date dt = new Date(); 
+			
+			if(dt_prevSubmit!=null){
+				//System.out.println(dt.getTime()-dt_prevSubmit.getTime());
+				if(dt.getTime()-dt_prevSubmit.getTime()<10000){  //限制5s一次提交
+					System.out.println(createUser+" submit-topic twice at 5 second.");
+				//	this.addFieldError("tip", "");
+					success = true;
+					return SUCCESS;
 				}
+			}
 			ActionContext.getContext().getSession().put("session_submit", dt);
 			
 			Message message_ = new Message();
@@ -294,15 +300,16 @@ public class PostMessageAction extends ActionSupport {
 			
 			//latest topic
 			latestMessages = new ArrayList<Message>();
-			latestMessages = messageService.queryLatestMessages(null,0,20);
+			latestMessages = messageService.queryLatestMessages(null,0,10);
 			List<MessageBean> topics = new ArrayList<MessageBean>();
 
 			for(Message m_:latestMessages){
 				MessageBean mb = new MessageBean();
+				mb.setUser(userService.queryUser(m_.getCreate_user()));
 				mb.setAuthor(m_.getCreate_user());
 				mb.setTitle(m_.getTitle());
 				mb.setIn_date(m_.getIn_date());
-				mb.setFriendly_Date(getFriendlyDate(m_.getIn_date()));
+				mb.setFriendly_Date(DateUtil.toFriendlyDate(m_.getIn_date()));
 				mb.setMessageId(m_.getMessage_id());
 				mb.setParentId(m_.getParent_id());
 				mb.setRootId(m_.getRoot_id());
@@ -327,25 +334,7 @@ public class PostMessageAction extends ActionSupport {
 		System.out.println("post topic ok. ");
 		return SUCCESS;
 	}
-	
-	public String getFriendlyDate(Date time){
-		if(time == null) return getText("unknown");
-		int ct = (int)((System.currentTimeMillis() - time.getTime())/1000);
-		if(ct < 3600)
-			return Math.max(ct / 60,1) +getText("minutes_before");
-		if(ct >= 3600 && ct < 86400)
-			return ct / 3600 +getText("hours_before");
-		if(ct >= 86400 && ct < 2592000){ //86400 * 30
-			int day = ct / 86400 ;	
-			if(day>1){
-				return day +getText("days_before");	
-			}
-			return getText("yesterday");			
-		}
-		if(ct >= 2592000 && ct < 31104000) //86400 * 30
-			return ct / 2592000 +getText("months_before");
-		return ct / 31104000 + getText("years_before");
-	}
+
 	public Integer getParentId() {
 		return parentId;
 	}

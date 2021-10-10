@@ -139,7 +139,7 @@ public class Solution_sourceAction extends ActionSupport {
 						judgeLog = new String();
 						file = new File(Config.getValue("OJ_JUDGE_LOG") + "judge-log-"
 								+ solutionId + ".log");
-						judgeLog = StreamHandler.read(file);
+						judgeLog = StreamHandler.readEx(file);
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
@@ -151,7 +151,7 @@ public class Solution_sourceAction extends ActionSupport {
 					judgeLog = new String();
 					file = new File(Config.getValue("OJ_JUDGE_LOG") + "judge-log-"
 							+ solutionId + ".log");
-					judgeLog = StreamHandler.read(file);
+					judgeLog = StreamHandler.readEx(file);
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -160,14 +160,15 @@ public class Solution_sourceAction extends ActionSupport {
 			User user_ = new User();
 			user_ = userService.queryUser(solution_.getUsername());
 			if(user_!=null){
+				solution_.setUser(user_);
 				if(!username.equals(solution_.getUsername())){
-					if ("NO".equals(Config.getValue("OPENSOURCE")))
-					{
+					if ("NO".equals(Config.getValue("OPENSOURCE"))) {
 						ActionContext.getContext().put("tip", "This operation is now closed by Administrator.");	
 						return ERROR;
 					}
+					
 					if(user_.getOpensource().equals("N")){
-						ActionContext.getContext().put("tip", "This source doesn't open for you.You can write mail to "+solution_.getUsername());	
+						ActionContext.getContext().put("tip", "This source doesn't open for you, you can write mail to "+solution_.getUsername());	
 						return ERROR;
 					}
 				}

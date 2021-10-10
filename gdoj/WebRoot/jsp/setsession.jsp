@@ -5,7 +5,15 @@ String path = request.getContextPath();
 %>
 <%
 	String url = request.getParameter("url");
-	if(!url.contains("passwordRecovery")&&!url.contains("password-recovery")&&!url.contains("registration")&&!url.contains("register")&&!url.contains("login")&&!url.contains("enter")&&!url.contains("logout")){
+	if(!url.contains("passwordRecovery")&&
+            !url.contains("password-recovery")&&
+            !url.contains("registration")&&
+            !url.contains("register")&&
+            !url.contains("login")&&
+            !url.contains("enter")&&
+            !url.contains("logout")&&
+            !url.contains("auth/")&&
+            !url.contains("unauth/")){
 		session.setAttribute("session_url", url);
 	}
  %>

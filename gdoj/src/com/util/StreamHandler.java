@@ -38,7 +38,25 @@ public class StreamHandler {
 			//log.warn("---- write to outputStream catches a IOException, outputStream not available ----");
 		}
 	}
-	
+	public static String readEx(String fileName) {
+		/**
+		 * read file by fileName, return a String pattern of file's context, or null if throw a IOException.
+		 */
+		try {
+			BufferedReader in = new BufferedReader(new FileReader(fileName));
+			StringBuffer sb = new StringBuffer();
+			String line = new String();
+			while ( (line = in.readLine()) != null ) {
+				sb.append(line);
+				sb.append("\n");
+			}
+			in.close();
+			return sb.toString();
+		} catch (IOException ioe) {
+			//log.warn("---- read file by fileName catches a IOException, file not found ----");
+			return null;
+		}
+	}
 	public static String read(String fileName) {
 		/**
 		 * read file by fileName, return a String pattern of file's context, or null if throw a IOException.
@@ -58,7 +76,26 @@ public class StreamHandler {
 			return null;
 		}
 	}
-	
+
+	public static String readEx(File file) {
+		/**
+		 * read file by file, return a String pattern of file's context, or null if throw a IOException.
+		 */
+		try {
+			BufferedReader in = new BufferedReader(new FileReader(file));
+			StringBuffer sb = new StringBuffer();
+			String line = new String();
+			while ( (line = in.readLine()) != null ) {
+				sb.append(line);
+				sb.append("\n");
+			}
+			in.close();
+			return sb.toString();
+		} catch (IOException ioe) {
+			//log.warn("---- read file by file catches a IOException, file not found ----");
+			return null;
+		}
+	}
 	public static String read(File file) {
 		/**
 		 * read file by file, return a String pattern of file's context, or null if throw a IOException.

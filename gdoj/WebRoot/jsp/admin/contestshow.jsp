@@ -52,12 +52,10 @@ SyntaxHighlighter.all();
 
   <body>  
   <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">
-	<div id="sidebar"> 	
-             <div class="sidebox roundbox">
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>
-	       		    
+  	<div class="container">
+        <div class="content">       
+	     	<div class="sidebar"> 
+              <div class="sidebox roundbox">
 	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
 	            	<div class="title-sidebox" style="width: 100%">Contest Info.</div>
 	            </div>  
@@ -66,9 +64,6 @@ SyntaxHighlighter.all();
 	            </div>           
 	        </div>    	   
             <div class="sidebox roundbox">
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>
-	       		    
 	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
 	            	<div class="title-sidebox" style="width: 100%">Tools Box</div>
 	            </div>  
@@ -79,14 +74,8 @@ SyntaxHighlighter.all();
 	        </div>    
 	        
    	 </div> 
-     <div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >	
-     	<a href="admin">Admin</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/problemset/status">Status</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     	</div>
+    		 <div  class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
+     	<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
 	    <div class="content" style="padding:3px 3px 3px 3px;">	    		
 				<div class="data-title">
 					<h3>
@@ -98,20 +87,12 @@ SyntaxHighlighter.all();
 					<br/>
 <!--					<s:if test="contest.password==''">Public</s:if><s:else>Private</s:else>-->
 				</div>
-				<div class="datatable">	
-				    	<div class="lt">&nbsp;</div>
-				        <div class="rt">&nbsp;</div>
-				        <div class="lb">&nbsp;</div>
-				        <div class="rb">&nbsp;</div>
-				    	<div style="padding: 4px 0 0 6px;position: relative;">
-							<div class="left"><s:text name="contestproblems"/></div>
-							<div class="right"></div>
-						</div> 		
-						<br/>
-						<div class="innertable" style="position: relative;">
-							<div class="ilt">&nbsp;</div>
-			           		<div class="irt">&nbsp;</div>	
-							<table class="problem">
+				<div class="roundbox">
+				    	<div class="roundbox-title">
+							<s:text name="contestproblems"/>
+						</div>
+						<div >
+							<table class="problem rtable">
 								 <tr class="header">
 					               	 <th class="id left-item"><s:text name="problemid"/></th>
 					               	 <th class="problem">
@@ -234,17 +215,11 @@ $(document).ready(function() {
  		
 
 });
-</script> 			
-			
-			<div style="margin-right: 12px;text-decoration: none;">
-				<div class="left"></div>
-				<div class="right">
-				</div>
-			</div>       	  	 
-
-					
+</script>
 	   </div>    
-	</div>   
+	</div>
+			<div class="clear"></div>
+  		 </div>
     <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>

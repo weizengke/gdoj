@@ -27,32 +27,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
 
   <body>  
-  	<jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">
-     <div id="content" > 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >
-  		<a href="admin">Admin</a>
-  		  	  <a href="admin/news">News</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/problemset/status">Status</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     		<a href="admin/privilege">Privilege</a>	
-     	</div>
-	    <div class="datatable">	
-	    	<div class="lt">&nbsp;</div>
-	        <div class="rt">&nbsp;</div>
-	        <div class="lb">&nbsp;</div>
-	        <div class="rb">&nbsp;</div>
-	    	<div style="padding: 4px 0 0 6px;position: relative;">
-				<div class="left">Users</div>
-				<div class="right"></div>
-			</div> 		
-			<br/>
-			<div class="innertable ">
-				<div class="ilt">&nbsp;</div>
-           		<div class="irt">&nbsp;</div>
-				<table class="standings">
+  	<jsp:include page="/jsp/head.jsp"></jsp:include> 
+  	<div class="container">
+        <div class="content">  
+     	<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
+	    <div class="roundbox">
+			<div >
+				<table class="standings rtable">
 					 <tr class="header" style="">  
 		               	 <th  class="rank left-item">#</th>
 		               	 <th  class="coder"><s:text name="author"/></th>
@@ -68,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            		<td class="rank left-item"><s:property value="(page-1)*pageSize+#st.index+1"/></td>
 	            		<td class="coder">
 	            			<div style="text-align:left;">
-	            			<b><a href="profile/<s:property value="username"/>"><s:property value="username"/></a></b>
+	            			<b><a href="profile/<s:property value="username"/>" class="rated-user user-rate-<s:property value="rate" default="0"/> user-tip" user="<s:property value="username"/>"><s:property value="username"/></a></b>
 	            			</div>
 	            			<div style="font-size:11px;padding-top:1px;text-align:left;color: grey;">
 	            			<s:property value="nickname"/>,<s:property value="school"/>,Email:<a href="mails/new/<s:property value="username"/>"><s:property value="email"/></a>
@@ -83,26 +64,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            	</tr>	
 	           		</s:iterator>   
 				</table>
-		    </div>				  	 
-	   </div>   
-		<div style="margin-right: 12px;font-size:15px;">
+		    </div>
+			<div style="margin: 6px;font-size:15px;">
 				<div class="left"></div>
 				<div class="right">
 					<s:if test="page>1">
 						<a href="admin/user/page/<s:property value="page-1"/>" style="color:#000;text-decoration: none;">  &larr; </a>
-					</s:if>	
-					<s:iterator value="pageList" status="st_page">				
+					</s:if>
+					<s:iterator value="pageList" status="st_page">
 						<s:if test="pageList[#st_page.index]==0">...</s:if>
 						<s:else><a href="admin/user/page/<s:property/>" style="color:#000;text-decoration: none;">
 							<s:if test="page==pageList[#st_page.index]"><b><s:property/></b></s:if>
 							<s:else><s:property/></s:else>
 						</a></s:else>
-					</s:iterator>	
-					<s:if test="page < pageCount">		
-						<a href="admin/user/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
-					</s:if>		
+					</s:iterator>
+					<s:if test="page < pageCount">
+						<a href="admin/user/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>
+					</s:if>
+				</div>
 			</div>
-		</div>       	    
+		</div>
+		<div class="clear"></div>
 	</div>   
     <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>

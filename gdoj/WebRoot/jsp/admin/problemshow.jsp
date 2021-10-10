@@ -30,13 +30,10 @@ SyntaxHighlighter.all();
 
   <body>  
   	<jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">
-
-	<div id="sidebar"> 	
+  	<div class="container">
+        <div class="content">       
+	     	<div class="sidebar"> 	
              <div class="sidebox roundbox">
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>
-	       		    
 	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
 	            	<div class="title-sidebox" style="width: 100%">Problem Info.</div>
 	            </div>  
@@ -48,32 +45,18 @@ SyntaxHighlighter.all();
 	        </div>    
 
             <div class="sidebox roundbox">
-            	<div class="roundbox-lt">&nbsp;</div>
-	       		<div class="roundbox-rt">&nbsp;</div>
-	       		    
 	            <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
 	            	<div class="title-sidebox" style="width: 100%">Tools Box</div>
 	            </div>  
 	            <div class="tools-box" style="margin: 6px;color: #000;">
         			<ul >
-        		
         			<li style="list-style: circle;"><a href="admin/problemEdit.action?problemId=<s:property value="problem.problem_id"/>">Edit</a></li>
-    			
 	            	</ul>
 	            </div>
-	        </div>    
-	        
+	        </div> 
    	 </div> 
-     <div id="content" class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >	
-   				<a href="admin">Admin</a>
-   		<a href="admin/news">News</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/problemset/status">Status</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     		<a href="admin/privilege">Privilege</a>		
-     	</div>
+     		<div class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
+     	<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
 	    <div class="content" style="border-left:4px solid #B9B9B9;padding:3px 3px 3px 0px;">	    	
 			<blockquote>
 				<div class="data-title">
@@ -88,7 +71,7 @@ SyntaxHighlighter.all();
 				<h5>
 					Description:
 				</h5>
-					<s:property value="problem.description" default="null" escape="false"/>
+					<s:property value="problem.description" default="null" escape="false"/></span>
 				<h5>
 					Input:
 				</h5>
@@ -102,10 +85,10 @@ SyntaxHighlighter.all();
 				</h5>
 					<div class="sample-test">
 						<div class="input"><div class="title">Input</div>
-						<div class="sample-input"><s:property value="problem.sample_input" default="null" escape="false"/></div>
+						<div class="sample-input"><pre><s:property value="problem.sample_input" default="null" escape="false"/></pre></div>
 						</div>					
 						<div class="output"><div class="title">Output</div>
-						<div class="sample-output"><s:property value="problem.sample_output" default="null" escape="false"/></div>
+						<div class="sample-output"><pre><s:property value="problem.sample_output" default="null" escape="false"/></pre></div>
 						</div>
 					</div>				
 				<h5>
@@ -120,6 +103,13 @@ SyntaxHighlighter.all();
 					Author:
 				</h5>
 					<s:property value="problem.author" default="null" escape="false"/>
+				<h5><s:text name="problem.tags"/>:</h5>
+					<div class="tags">
+						<s:if test="tagsList.size==0"><span style="font: 11px/26px Monaco, monospace;color: #454545;"><s:text name="notags"/></span></s:if>
+						<s:else><s:iterator  value="tagsList" status="tagsst" >
+							<a href="search?word=<s:property />&type=problem" rel="tag" ><s:property /></a>
+						</s:iterator></s:else>
+					</div>
 				</div>	
 			</blockquote>	
 				<div style="margin-right: 12px;text-decoration: none;">
@@ -129,8 +119,10 @@ SyntaxHighlighter.all();
 				</div>     
 			  	  	 
 	   </div>    
-	</div>   
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
-  </div>
+	</div>
+			<div class="clear"></div>
+  		</div>
+   		 <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+  	</div>
   </body>
 </html>

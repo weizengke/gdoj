@@ -3,6 +3,10 @@ package com.gdoj.contest.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.struts2.json.annotations.JSON;
+
+import com.gdoj.user.vo.User;
+
 public class Contest implements Serializable {
 	
 	
@@ -23,6 +27,8 @@ public class Contest implements Serializable {
 	private String create_user;
 	private String defunct;
 	private Integer type;
+	
+	private User user;
 	
 	public Contest() {
 		this.defunct = "Y";
@@ -83,6 +89,7 @@ public class Contest implements Serializable {
 	public void setEnd_time(Date endTime) {
 		end_time = endTime;
 	}
+	@JSON(deserialize=false,serialize=false)
 	public String getPassword() {
 		return password;
 	}
@@ -100,6 +107,14 @@ public class Contest implements Serializable {
 	}
 	public void setDefunct(String defunct) {
 		this.defunct = defunct;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public User getUser() {
+		return user;
 	}
 	
 }

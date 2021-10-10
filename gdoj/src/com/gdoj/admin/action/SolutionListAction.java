@@ -85,13 +85,7 @@ public class SolutionListAction extends ActionSupport{
 			if(!"".equals(sql_condition)) sql_condition = " where"+sql_condition;
 			sql_condition +=" order by s.solution_id DESC";
 			
-			//System.out.println(sql_condition);
-			
-			intRowCount = solutionService.countSolutions(sql_count
-					+ sql_condition);
-			
-			//System.out.println(intRowCount);
-			
+			intRowCount = solutionService.countSolutions(sql_count + sql_condition);
 			pageCount = ((intRowCount + pageSize - 1) / pageSize);//计算出总页数
 			if (page < 1) {
 				page = 1;
@@ -106,14 +100,19 @@ public class SolutionListAction extends ActionSupport{
 			List<String> problemTitle_ = new ArrayList<String>();
 			
 			if (null != solutionList) {
-				
 				for (Solution s : solutionList) {
-					//System.out.println(s.getSolution_id());
 					Problem problem_ = problemService.queryProblem(s.getProblem_id());
 					if(problem_==null){
 						problemTitle_.add("problem missed");
+					} else {
+						problemTitle_.add(problem_.getTitle());
 					}
-					else problemTitle_.add(problem_.getTitle());
+
+					User user_ = new User();
+					user_ = userService.queryUser(s.getUsername());
+					if(user_ != null){
+						s.setUser(user_);
+					}
 				}
 			}
 			problemTitle = problemTitle_;

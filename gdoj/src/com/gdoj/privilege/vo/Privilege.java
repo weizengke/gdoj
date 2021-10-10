@@ -2,13 +2,15 @@ package com.gdoj.privilege.vo;
 
 import java.io.Serializable;
 
+import com.gdoj.user.vo.User;
+
 public class Privilege implements Serializable {
 
 	private Integer id;
 	private String username;
 	private String rightstr;
 	
-	
+	private User user;
 	
 	public Privilege() {
 		super();
@@ -31,6 +33,12 @@ public class Privilege implements Serializable {
 	}
 	public void setRightstr(String rightstr) {
 		this.rightstr = rightstr;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public User getUser() {
+		return user;
 	}
 	
 }

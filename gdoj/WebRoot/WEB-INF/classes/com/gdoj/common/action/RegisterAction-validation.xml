@@ -7,8 +7,8 @@
 			<message>username shouldn't be empty.</message>
 		</field-validator>
 		 <field-validator type="regex">  
-                 <param name="expression"><![CDATA[(^[_A-Za-z0-9]+[a-zA-Z0-9_.]{3,19}$)]]></param>  
-                 <message>Invalid username</message>  
+                 <param name="expression"><![CDATA[(^[_A-Za-z0-9]+[a-zA-Z0-9_]{3,19}$)]]></param>
+                 <message>Invalid username, only letter,number,dash</message>
             </field-validator>  
 		<field-validator type="stringlength">
             <param name="minLength">4</param>

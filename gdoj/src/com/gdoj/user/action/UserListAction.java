@@ -18,8 +18,6 @@ public class UserListAction extends ActionSupport {
 	private List<String> users;
 	private String q;
 	
-	
-
 	public String getQ() {
 		return q;
 	}
@@ -42,22 +40,14 @@ public class UserListAction extends ActionSupport {
 	}
 
 	public String execute()throws Exception {
-		
 		String q_ = new String();
-		if(q!=null){
+		if (q != null){
 			q_ = q;
 		}else{
 			return SUCCESS;
 		}
 		String sql = "select u.username from User u where u.username like ? and u.defunct='N' order by u.id ASC";
-		//System.out.println(q_); 
-
-        users = userService.queryAllUserName(sql,q_,10);
-        //System.out.println(users.size()); 
-       //  username = "我将它修改了，哈哈";
-       // out.println(jsonResult); 
-       // System.out.println(jsonResult);  
+        users = userService.queryAllUserName(sql, q_, 20); 
         return SUCCESS;
 	}
-   
 }

@@ -10,6 +10,7 @@ public interface TagsviewDAO {
 	public List<Tagsview> queryByProblems(Integer problemId);
 	public List<Tagsview> queryByMessages(Integer messageId);
 	public Integer counts(String sql);
+	public Integer getTagsCountbyId(Integer tagId);
 	public boolean isExistByProblems(Integer tagId,Integer problemId);
 	public boolean isExistByMessages(Integer tagId,Integer messageId);
 	

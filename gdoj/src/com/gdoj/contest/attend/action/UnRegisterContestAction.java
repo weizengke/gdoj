@@ -41,11 +41,12 @@ public class UnRegisterContestAction extends ActionSupport {
 			Contest contest_ = new Contest();
 			contest_ = contestService.queryContest(contestId,"USER");
 			if (null == contest_) {
-				//No such contest;
+				this.addFieldError("tip", "No such contest.");
 				return ERROR;
 			}
 			
 			if(contest_.getStart_time().before(new Date())){
+				this.addFieldError("tip", "The contest has been ended.");
 				return ERROR;
 			}
 			

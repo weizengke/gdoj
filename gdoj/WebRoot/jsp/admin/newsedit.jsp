@@ -53,11 +53,10 @@ SyntaxHighlighter.all();
   
   <body>
     <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">	
-
-
-	<div id="sidebar"> 	  
-		<div class="sidebox roundbox">
+  	<div class="container">
+        <div class="content">       
+	     	<div class="sidebar"> 	 	  
+			 <div class="sidebox roundbox">
             	<div class="roundbox-lt">&nbsp;</div>
 	       		<div class="roundbox-rt">&nbsp;</div>
 	       		    
@@ -69,24 +68,15 @@ SyntaxHighlighter.all();
 	            </div>	              
 	        </div>    
  		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-   	</div> 
-   	
-    <div id="content" class="content-with-sidebar round0123"  >     
-	   <div id="nav-content" >
-    <a href="admin">Admin</a>
-   		<a href="admin/news">News</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/problemset/status">Status</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     		<a href="admin/privilege">Privilege</a>		
-     	</div>
+   	</div>
+   			 <div  class="content-with-sidebar round0123"  >
+	   <jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
 	    <div class="topic">	
 	     	<div>	
-				  <div class="comment round_0123 highlight mail-edit-box mail-edit-box-pro" style="position: relative;padding: 6px;">
+				  <div class="comment round_0123 mail-edit-box mail-edit-box-pro" >
 				  <form action="" method="post">	     																								
-				  			<input type="hidden" name="newsId" value="<s:property value="news.news_id"/>" >						
-							<div style="text-align:left;margin-bottom: 6px;">
+			  			<input type="hidden" name="newsId" value="<s:property value="news.news_id"/>" >						
+						<div style="text-align:left;margin-bottom: 6px;">
 							Title:
 							<input class="message-title" id="message-title" name="title1" maxlength="100" value="<s:property value="news.title"/>">
 							
@@ -100,17 +90,15 @@ SyntaxHighlighter.all();
 							</select>
 							<div style="text-align:center;" ><span class="fielderror"></span></div>
 							<div style="text-align: center;margin-top: 12px;">
-							<input  type="Submit" value="Post">
-							<input  type="reset" value="Reset" >
+								<input class="button_submit" type="submit" value="<s:text name="topic.btn_post"/>" >
 							</div>
-					</div>
-						
+						</div>
 					</form>     
 	    		</div> 	
 	    	</div>
 	    </div>
-	</div>  
-
+	</div>
+			<div class="clear"></div>
 <script type='text/javascript' src='js/ke/kindeditor-min.js' charset='utf-8'></script>
 
 <style>
@@ -306,6 +294,7 @@ $(document).ready(function() {
 		
 });
 </script>  
+    </div>
       <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
    </div>
   </body>

@@ -22,6 +22,15 @@ public class TagsviewDaoImpl extends HibernateDaoSupport implements TagsviewDAO 
 			return 0;
 	}
 
+	public Integer getTagsCountbyId(Integer tagId) {
+		// TODO Auto-generated method stub
+		String sql = "select count(t.tag_id) from Tagsview t where t.tag_id='"+tagId+"'";
+		List list = getHibernateTemplate().find(sql);
+		if (list != null && list.size() > 0) {
+			return ((Long) list.get(0)).intValue();
+		} else
+			return 0;	
+	}
 	public boolean isExistByMessages(Integer tagId, Integer messageId) {
 		// TODO Auto-generated method stub
 		Integer[] param = new Integer[] { tagId,messageId};

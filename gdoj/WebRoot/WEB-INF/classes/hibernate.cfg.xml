@@ -9,14 +9,10 @@
 <session-factory>
 	<property name="connection.username">root</property>
 	<property name="connection.url">jdbc:mysql://localhost:3306/gdoj</property>
-	<property name="dialect">
-		org.hibernate.dialect.MySQLDialect
-	</property>
+	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 	<property name="myeclipse.connection.profile">localhost</property>
 	<property name="connection.password">rootpwd</property>
-	<property name="connection.driver_class">
-		com.mysql.jdbc.Driver
-	</property>
+	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 	<mapping resource="com/gdoj/user/vo/User.hbm.xml" />
 	<mapping resource="com/gdoj/message/vo/Message.hbm.xml" />
 	<mapping resource="com/gdoj/problem/vo/Problem.hbm.xml" />
@@ -32,6 +28,7 @@
 	<mapping resource="com/gdoj/tagsview/vo/Tagsview.hbm.xml" />
 	<mapping resource="com/gdoj/privilege/vo/Privilege.hbm.xml" />
 	<mapping resource="com/gdoj/news/vo/News.hbm.xml" />
+	<mapping resource="com/gdoj/rating/vo/Rating.hbm.xml" />
 </session-factory>
 
 </hibernate-configuration>

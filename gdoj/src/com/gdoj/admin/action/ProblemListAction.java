@@ -1,10 +1,15 @@
 package com.gdoj.admin.action;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.gdoj.problem.service.ProblemService;
 import com.gdoj.problem.vo.Problem;
+import com.gdoj.tags.service.TagsService;
+import com.gdoj.tagsview.service.TagsviewService;
+import com.gdoj.tagsview.vo.Tagsview;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class ProblemListAction extends ActionSupport{
@@ -20,9 +25,36 @@ public class ProblemListAction extends ActionSupport{
 	private String order;
 	private Integer pageSize=100;
 	private Integer intRowCount=0;
-	
 	private String ojName;
-	
+
+	private Map<Integer,List<String>> tagsList;
+	private TagsService tagsService ;
+	private TagsviewService tagsviewService ;
+
+	public Map<Integer, List<String>> getTagsList() {
+		return tagsList;
+	}
+
+	public void setTagsList(Map<Integer, List<String>> tagsList) {
+		this.tagsList = tagsList;
+	}
+
+	public TagsService getTagsService() {
+		return tagsService;
+	}
+
+	public void setTagsService(TagsService tagsService) {
+		this.tagsService = tagsService;
+	}
+
+	public TagsviewService getTagsviewService() {
+		return tagsviewService;
+	}
+
+	public void setTagsviewService(TagsviewService tagsviewService) {
+		this.tagsviewService = tagsviewService;
+	}
+
 	public String getOjName() {
 		return ojName;
 	}
@@ -52,9 +84,6 @@ public class ProblemListAction extends ActionSupport{
 				page = pageCount;
 			}
 			Integer from = (page - 1) * pageSize;
-			
-			
-			
 			problemList = problemService.queryProblems(from, pageSize, order,ojName,"admin");
 			
 			List<Integer> volume = new ArrayList<Integer>();
@@ -62,6 +91,24 @@ public class ProblemListAction extends ActionSupport{
 				volume.add(i);
 			}
 			pageList = volume;
+
+			//tags
+			tagsList = new HashMap<Integer, List<String>>();
+			for(Problem p:problemList){
+				List<Tagsview> tagsviewsList_ = new ArrayList<Tagsview>();
+				List<String> tagsNameList_ = new ArrayList<String>();
+				try {
+					tagsviewsList_ = tagsviewService.queryByProblems(p.getProblem_id());
+					for (Tagsview t_ : tagsviewsList_) {
+						tagsNameList_.add(tagsService.queryTag(t_.getTag_id()).getName());
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				tagsList.put(p.getProblem_id(), tagsNameList_);
+			}
+			//end tags
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			return ERROR;

@@ -34,11 +34,12 @@ public class BBSInterceptor extends AbstractInterceptor {
 		if(privilegeService.query(queryString)!=null){
 			return invocation.invoke();
 		}
+		
 		//普通管理员
 		queryString = "from Privilege p where p.username='"+username+"' and p.rightstr='ADMIN'";
 		if(privilegeService.query(queryString)!=null){
 			return invocation.invoke();
-		}	
+		}
 		
 		if ("YES".equals(Config.getValue("OPENSOURCE"))){
 			return invocation.invoke();

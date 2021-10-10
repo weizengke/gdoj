@@ -35,7 +35,7 @@ public class Problem implements Serializable {
 	    private Integer contest_id;
 	    
 	    private String oj_name;
-	    private Integer oj_pid;
+	    private String oj_pid;
 	    private Integer isvirtual;
 	    
 		public String getOj_name() {
@@ -44,10 +44,10 @@ public class Problem implements Serializable {
 		public void setOj_name(String ojName) {
 			oj_name = ojName;
 		}
-		public Integer getOj_pid() {
+		public String getOj_pid() {
 			return oj_pid;
 		}
-		public void setOj_pid(Integer ojPid) {
+		public void setOj_pid(String ojPid) {
 			oj_pid = ojPid;
 		}
 		public Integer getIsvirtual() {
@@ -81,7 +81,7 @@ public class Problem implements Serializable {
 			this.spj = 0;
 			this.create_date=new Date();
 			this.oj_name="GUET";
-			this.oj_pid = 0;
+			this.oj_pid = "0";
 			this.isvirtual = 0 ;
 			this.defunct = "N";
 		}

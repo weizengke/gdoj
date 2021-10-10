@@ -64,5 +64,8 @@
         <property name="rating" type="java.lang.Integer">
             <column name="rating" not-null="false" />
         </property>
+        <property name="rate" type="java.lang.Integer">
+            <column name="rate" not-null="false" />
+        </property>
     </class>
 </hibernate-mapping>

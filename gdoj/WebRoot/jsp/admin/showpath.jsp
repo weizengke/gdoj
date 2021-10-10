@@ -20,29 +20,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script type="text/javascript" src="js/gdoj.js"></script>
   </head>
  <body>
-  <jsp:include  page="../head.jsp" ></jsp:include> 
- 
-  <div id="body">
-   	<div id="content">
-   		<div id="nav-content" >	
-     	<a href="admin">Admin</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/problemset/status">Status</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     	</div>
+  <jsp:include  page="/jsp/head.jsp" ></jsp:include> 
+  	<div class="container">
+        <div class="content">  
+   		<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
      	<div class="probleminfo" style="margin: 0 auto;">
-   <table align="center" width="100%">
-	<tr><th align="center"  width="30%">FileList</th></tr>
-	<tr><td style="line-height: 18px;">
-	<ol style=" float: left;margin: 10px;">
-	<s:iterator value="inputFilesName" status="stuts">
-			
-		<a style="text-decoration: none;" target="_blank" href="admin/showFileContent?fileName=<s:property />"><s:property /></a>
-		&nbsp;			
-	</s:iterator>
-	</ol>
-	</table>
+		   <table align="center" width="100%">
+			<tr><th align="center"  width="30%">FileList</th></tr>
+			<tr><td style="line-height: 18px;">
+			<ol style=" float: left;margin: 10px;">
+			<s:iterator value="inputFilesName" status="stuts">
+				<a style="text-decoration: none;" target="_blank" href="admin/showFileContent?fileName=<s:property />"><s:property /></a>
+				&nbsp;			
+			</s:iterator>
+			</ol>
+			</table>
      	</div>	
    	</div>
     <jsp:include  page="/jsp/footer.jsp" ></jsp:include>

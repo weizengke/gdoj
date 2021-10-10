@@ -30,56 +30,55 @@ SyntaxHighlighter.all();
 </head>
   
   <body>
-    <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">	
-	<div id="sidebar"> 	    
- 	<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-   	</div> 
-    <div id="content" class="content-with-sidebar round0123"  >     
-	   <div id="nav-content" >
-     	<a href="mails"><s:text name="mails.recv"/></a>
-     	<a href="mails/send"><s:text name="mails.send"/></a> 
-         	<a href="mails/new"><s:text name="mails.new"/></a>    	
-     	</div>
-	    <div class="topic">
-			<div class="title">
-			   	<p><s:property value="mail.title"/></p>
+	<jsp:include   page="/jsp/head.jsp"></jsp:include>
+	<div class="container">
+		<div class="content">
+			<div class="sidebar">
+			<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include>
 			</div>
-		    <div class="info">		       
-			 	<b>Received From <b><a href="profile/<s:property value="mail.from_user"/>"><s:property value="mail.from_user"/></a></b> at <s:date name="mail.create_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/></b>
+			<div class="content-with-sidebar round0123"  >
+			   <div id="nav-content" >
+					<a href="mails"><s:text name="mails.recv"/></a>
+					<a href="mails/send"><s:text name="mails.send"/></a>
+					<a href="mails/new"><s:text name="mails.new"/></a>
+				</div>
+				<div class="topic">
+					<div class="title">
+						<p><s:property value="mail.title"/></p>
+					</div>
+					<div class="info">
+						<b>Received From <b><a href="profile/<s:property value="mail.from_user"/>"><s:property value="mail.from_user"/></a></b> at <s:date name="mail.create_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/></b>
+					</div>
+					<div class="content">
+						<blockquote>
+						<p><s:property value="mail.content" escape="false"/></p>
+						</blockquote>
+					 </div>
+					 <!-- Reply -->
+					<div>
+						   <b><s:text name="mails.your_reply"/>:</b>
+						  <div class="round_0123 reply-edit-box reply-edit-box-pro" style="position: relative;padding: 6px;">
+						  <form action="" method="post">
+								<input type="hidden" name="sendto" value="<s:property value="mail.from_user"/>">
+								<input type="hidden" name="reply" value="<s:property value="mail.mail_id"/>">
+								<div style="text-align:left;margin-bottom: 6px;">
+									<input class="message-title" id="message-title" name="title1" placeholder="<s:text name="mails.input_title"/>" value="Re:<s:property value="mail.title"/>">
+									<textarea class="message-content" id="mail-content" name="content" rows="10" ></textarea>
+								</div>
+								<div style="margin-top: 12px;">
+									<input class="button_submit" type="Submit" value="<s:text name="mails.btn_send"/>" >
+									<span class="fielderror"></span>
+								</div>
+						   </form>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="content">   
-		       	<blockquote>
-		      	<p><s:property value="mail.content" escape="false"/></p>		      				   
-		        </blockquote>
-		     </div>
-		     <!-- Reply -->
-	     	<div>
-		    	   <b>Reply:</b> 	
-				  <div class="round_0123 highlight reply-edit-box reply-edit-box-pro" style="position: relative;padding: 6px;">
-				  <form action="" method="post">	     												
-							<input  type="hidden" name="sendto" value="<s:property value="mail.from_user"/>">
-							<input  type="hidden" name="reply" value="<s:property value="mail.mail_id"/>">
-							<div style="text-align:left;margin-bottom: 6px;">
-							Title:
-							<input class="message-title" id="message-title" name="title1" maxlength="100" value="Re:<s:property value="mail.title"/>">							
-							<textarea class="message-content" id="mail-content" name="content" rows="10" ></textarea>	
-							</div>
-							<div style="text-align:center;" ><span class="fielderror"></span></div>
-							<div style="text-align: center;margin-top: 12px;">
-							<input class="" type="Submit" value="Post">
-							<input class="" type="reset" value="Reset" >
-							</div>
-					</form>     
-	    		</div> 	
-	    	</div>
-	    </div>
-	</div>  
-	
-
-	
+			<div class="clear"></div>
+		</div>
+		<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+	</div>
 <script type='text/javascript' src='js/ke/kindeditor-min.js' charset='utf-8'></script>
-
 <style>
 
 .ke-icon-code {
@@ -206,7 +205,6 @@ KE.plugin['quote'] = {
 //-->
 
 </script>
-
 <script type='text/javascript'>
 
 <!--
@@ -225,7 +223,7 @@ $(document).ready(function(){
 		items : [ 'bold', 'italic', 'underline', 'strikethrough', 'removeformat','|','textcolor', 'bgcolor',  
 				 'title', 'fontname', 'fontsize',  '|', 
 				 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-				 'link', 'unlink', 'emoticons','code', 'image', 'flash', 'quote', '|','selectall','source' ,'about'
+				 'link', 'unlink', 'code', 'image', 'quote', '|', 'source' ,'about'
 				 ]
 	});
 });
@@ -233,8 +231,6 @@ $(document).ready(function(){
 //-->
 
 </script>
-		
-	
 <script type="text/javascript">
 $(document).ready(function() {  
 
@@ -274,8 +270,7 @@ $(document).ready(function() {
 		init();
    
 });
-</script>   
-      <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
-   </div>
+</script>         
+
   </body>
 </html>

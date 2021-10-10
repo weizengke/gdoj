@@ -1,734 +1,787 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 2.6//EN"
         "http://tuckey.org/res/dtds/urlrewrite2.6.dtd">
-<!--
+	<!--
 
-    Configuration file for UrlRewriteFilter
-    http://tuckey.org/urlrewrite/
-
--->
+		Configuration file for UrlRewriteFilter http://tuckey.org/urlrewrite/
+	-->
 <urlrewrite>
 	<rule>
-       <note>home</note>  
-        <from>/home$</from>  
-        <to>  
-            /home.action
-        </to>  
-    </rule>
-     <outbound-rule>
-        <note>home2
+		<note>home</note>
+		<from>/home$</from>
+		<to>
+			/home.action
+        </to>
+	</rule>
+	<outbound-rule>
+		<note>home2
         </note>
-        <from> /home.action</from>
-        <to type="forward">/home</to>
-    </outbound-rule>
-    
+		<from> /home.action</from>
+		<to type="forward">/home</to>
+	</outbound-rule>
+
 	<rule>
-       <note>enter</note>  
-        <from>/enter$</from>  
-        <to>  
-            /enter.action
-        </to>  
-    </rule>
-   <outbound-rule>
-        <note>enter2
+		<note>enter</note>
+		<from>/enter$</from>
+		<to>
+			/enter.action
+        </to>
+	</rule>
+	<outbound-rule>
+		<note>enter2
         </note>
-        <from> /enter.action</from>
-        <to type="forward">/enter</to>
-    </outbound-rule>
-    <rule>
-       <note>registration</note>  
-        <from>/registration$</from>  
-        <to>  
-            /registration.action
-        </to>  
-    </rule>
-   <outbound-rule>
-        <note>registration2
+		<from> /enter.action</from>
+		<to type="forward">/enter</to>
+	</outbound-rule>
+	<rule>
+		<note>registration</note>
+		<from>/registration$</from>
+		<to>
+			/registration.action
+        </to>
+	</rule>
+	<outbound-rule>
+		<note>registration2
         </note>
-        <from> /registration.action</from>
-        <to type="forward">/registration</to>
-    </outbound-rule>
-    
-     <rule>
-       <note>register</note>  
-        <from>/register$</from>  
-        <to>  
-            /register.action
-        </to>  
-    </rule>
-   <outbound-rule>
-        <note>register2
+		<from> /registration.action</from>
+		<to type="forward">/registration</to>
+	</outbound-rule>
+
+	<rule>
+		<note>register</note>
+		<from>/register$</from>
+		<to>
+			/register.action
+        </to>
+	</rule>
+	<outbound-rule>
+		<note>register2
         </note>
-        <from> /register.action</from>
-        <to type="forward">/register</to>
-    </outbound-rule>
-    
-    <rule>
-       <note>login</note>  
-        <from>/login$</from>  
-        <to>  
-            /login.action
-        </to>  
-    </rule>
-    <outbound-rule>
-        <note>login2
+		<from> /register.action</from>
+		<to type="forward">/register</to>
+	</outbound-rule>
+
+	<rule>
+		<note>login</note>
+		<from>/login$</from>
+		<to>
+			/login.action
+        </to>
+	</rule>
+	<outbound-rule>
+		<note>login2
         </note>
-        <from> /login.action</from>
-        <to type="forward">/login</to>
-    </outbound-rule>
-    
-    <rule>
-       <note>loginEx</note>  
-        <from>/loginEx$</from>  
-        <to>  
-            /loginEx.action
-        </to>  
-    </rule>
-    <outbound-rule>
-        <note>loginEx2
+		<from> /login.action</from>
+		<to type="forward">/login</to>
+	</outbound-rule>
+
+	<rule>
+		<note>loginEx</note>
+		<from>/loginEx$</from>
+		<to>
+			/loginEx.action
+        </to>
+	</rule>
+	<outbound-rule>
+		<note>loginEx2
         </note>
-        <from> /loginEx.action</from>
-        <to type="forward">/loginEx</to>
-    </outbound-rule>
-    
-      <rule>
-       <note>logout</note>  
-        <from>/logout$</from>  
-        <to>  
-            /logout.action
-        </to>  
-    </rule>
-    <outbound-rule>
-        <note>logout2
+		<from> /loginEx.action</from>
+		<to type="forward">/loginEx</to>
+	</outbound-rule>
+
+	<rule>
+		<note>logout</note>
+		<from>/logout$</from>
+		<to>
+			/logout.action
+        </to>
+	</rule>
+	<outbound-rule>
+		<note>logout2
         </note>
-        <from> /logout.action</from>
-        <to type="forward">/logout</to>
-    </outbound-rule>
+		<from> /logout.action</from>
+		<to type="forward">/logout</to>
+	</outbound-rule>
 
-    <rule>
-       <note>profile</note>  
-        <from>/profile/([\a-zA-Z0-9_.]+)</from>  
-        <to>  
-            /profile.action?username=$1 
-        </to>  
-    </rule>
-    <outbound-rule>
-        <note>   profile2
+	<rule>
+		<note>profile</note>
+		<from>/profile/([\a-zA-Z0-9_.]+)</from>
+		<to>
+			/profile.action?username=$1 
+        </to>
+	</rule>
+	<outbound-rule>
+		<note> profile2
         </note>
-        <from>/profile.action\?username=([\a-zA-Z0-9_.]+)$</from>
-        <to  type = "forward">/profile/$1</to>
-    </outbound-rule>
-    
-    <rule>
-    <note>recent-actions</note>  
-        <from>/recent-actions$</from>  
-        <to>  
-            /recent-actions.action
-        </to>  
-   </rule>
-    <rule>
-    <note>recent-actions</note>  
-        <from>/recent-actions/page/([0-9]+)$</from>  
-        <to>  
-            /recent-actions.action?page=$1
-        </to>  
-   </rule>
-    
-    <rule>
-       <note>topic</note>  
-        <from>/topic$</from>  
-        <to>  
-            /topic.action 
-        </to>  
-    </rule>
-     <rule>
-    <note>topic</note>  
-        <from>/topic/page/([0-9]+)$</from>  
-        <to>  
-            /topic.action?page=$1
-        </to>  
-    </rule>
-   <rule>
-       <note>topic</note>  
-        <from>/topic/([0-9]+)$</from>  
-        <to>  
-            /topic/show.action?messageId=$1
-        </to>  
-    </rule>
-   <rule>
-       <note>topic</note>  
-        <from>/topic/new$</from>  
-        <to>  
-            /topic/new.action 
-        </to>  
-    </rule>
-    <rule>
-       <note>topic</note>  
-        <from>/topic/edit/([0-9]+)$</from>  
-        <to>  
-            /topic/edit.action?messageId=$1 
-        </to>  
-    </rule>
-   
-   
-   
-    <rule>
-       <note>settings</note>  
-        <from>/settings$</from>  
-        <to>  
-            /settings.action 
-        </to>  
-    </rule>
-      <outbound-rule>
-        <note> settings2
+		<from>/profile.action\?username=([\a-zA-Z0-9_.]+)$</from>
+		<to type="forward">/profile/$1</to>
+	</outbound-rule>
+
+	<rule>
+		<note>recent-actions</note>
+		<from>/recent-actions$</from>
+		<to>
+			/recent-actions.action
+        </to>
+	</rule>
+	<rule>
+		<note>recent-actions</note>
+		<from>/recent-actions/page/([0-9]+)$</from>
+		<to>
+			/recent-actions.action?page=$1
+        </to>
+	</rule>
+
+	<rule>
+		<note>topic</note>
+		<from>/topic$</from>
+		<to>
+			/topic.action 
+        </to>
+	</rule>
+	<rule>
+		<note>topic</note>
+		<from>/topic/page/([0-9]+)$</from>
+		<to>
+			/topic.action?page=$1
+        </to>
+	</rule>
+	<rule>
+		<note>topic</note>
+		<from>/topic/([0-9]+)$</from>
+		<to>
+			/topic/show.action?messageId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>topic</note>
+		<from>/topic/new$</from>
+		<to>
+			/topic/new.action 
+        </to>
+	</rule>
+	<rule>
+		<note>topic</note>
+		<from>/topic/edit/([0-9]+)$</from>
+		<to>
+			/topic/edit.action?messageId=$1 
+        </to>
+	</rule>
+
+
+
+	<rule>
+		<note>settings</note>
+		<from>/settings$</from>
+		<to>
+			/settings.action 
+        </to>
+	</rule>
+	<outbound-rule>
+		<note> settings2
         </note>
-        <from>/settings.action</from>
-        <to  type = "forward">/settings</to>
-    </outbound-rule>
-    
-    <rule>
-       <note>postmessage</note>  
-        <from>/postmessage$</from>  
-        <to>  
-            /postmessage.action 
-        </to>  
-    </rule>
-      <outbound-rule>
-        <note> postmessage2
+		<from>/settings.action</from>
+		<to type="forward">/settings</to>
+	</outbound-rule>
+
+	<rule>
+		<note>postmessage</note>
+		<from>/postmessage$</from>
+		<to>
+			/postmessage.action 
+        </to>
+	</rule>
+	<outbound-rule>
+		<note> postmessage2
         </note>
-        <from>/postmessage.action</from>
-        <to  type = "forward">/postmessage</to>
-    </outbound-rule>
-    
-
-    <rule>
-       <note>problemset </note>  
-        <from>/problemset$</from>  
-        <to>  
-            /problemset.action
-        </to>  
-    </rule>
-     <rule>
-       <note>problemset/page/?</note>  
-        <from>/problemset/page/([0-9]+)$</from>  
-        <to>  
-            /problemset.action?page=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>problemset?</note>  
-        <from>/problemset\?ORDER=([\a-zA-Z_]{0,20})&amp;OJ=([\a-zA-Z_]{0,20})$</from>  
-        <to>  
-            /problemset.action?order=$1&amp;ojName=$2
-        </to>  
-    </rule>
-    <rule>
-       <note>problemset/page/?</note>  
-        <from>/problemset/page/([0-9]+)\?ORDER=([\a-zA-Z_]{0,20})&amp;OJ=([\a-zA-Z_]{0,20})$</from>  
-        <to>  
-            /problemset.action?page=$1&amp;order=$2&amp;ojName=$3
-        </to>  
-    </rule>  
-    
- 
-    
-     <rule>
-       <note>problem/?</note>  
-        <from>/problemset/problem/([0-9]+)$</from>  
-        <to>  
-            /problemset/problem.action?problemId=$1
-        </to>  
-    </rule>
-     <rule>
-       <note>problem/statistic/?</note>  
-        <from>/problemset/statistic/([0-9]+)$</from>  
-        <to>  
-            /problemset/statistic.action?problemId=$1
-        </to>  
-    </rule>
-    
-    <rule>
-       <note>status</note>  
-        <from>/problemset/status$</from>  
-        <to>  
-            /problemset/status.action
-        </to>  
-    </rule>
-    <rule>
-       <note>status/page/?</note>  
-        <from>/problemset/status/page/([0-9]+)$</from>  
-        <to>  
-            /problemset/status.action?page=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>status/with/?/page/?</note>  
-        <from>/problemset/status/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>  
-        <to>  
-            /problemset/status.action?username=$1&amp;page=$2
-        </to>  
-    </rule>
-     <rule>
-       <note>status/status/problem/?/page/?</note>  
-        <from>/problemset/status/problem/([0-9]+)/page/([0-9]+)$</from>  
-        <to>  
-            /problemset/status.action?problemId=$1&amp;page=$2
-        </to>  
-    </rule>
-    
-     <rule>
-       <note>status/status/problem/?/page/?</note>  
-        <from>/problemset/status/problem/([0-9]+)/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>  
-        <to>  
-            /problemset/status.action?username=$2&amp;problemId=$1&amp;page=$3
-        </to>  
-    </rule>
-    
-  <rule>
-       <note>standings</note>  
-        <from>/problemset/standings$</from>  
-        <to>  
-            /problemset/standings.action
-        </to>  
-    </rule>
-     <rule>
-       <note>standings/page/?</note>  
-        <from>/problemset/standings/page/([0-9]+)$</from>  
-        <to>  
-            /problemset/standings.action?page=$1
-        </to>  
-    </rule> 
-  
-  
-    <rule>
-       <note>view-source</note>  
-        <from>/view-source/([0-9]+)$</from>  
-        <to>  
-            /view-source.action?solutionId=$1
-        </to>  
-    </rule>
-    
-    <rule>
-       <note>view-compileinfo</note>  
-        <from>/view-compileinfo/([0-9]+)$</from>  
-        <to>  
-           /view-compileinfo.action?solutionId=$1
-        </to>  
-    </rule>
-    
-     <rule>
-       <note>submit</note>  
-        <from>/problemset/submit/([0-9]+)$</from>  
-        <to>  
-            /problemset/submit.action?problemId=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>contest.submit</note>  
-        <from>/contest/([0-9]+)/submit/([A-Z]+)$</from>  
-        <to>  
-            /contest/submit.action?contestId=$1&amp;numId=$2
-        </to>  
-    </rule>
-    
-     <rule>
-       <note>contests </note>  
-        <from>/contests$</from>  
-        <to>  
-            /contests.action
-        </to>  
-    </rule>
-     <rule>
-       <note>contests/page/?</note>  
-        <from>/contests/page/([0-9]+)$</from>  
-        <to>  
-            /contests.action?page=$1
-        </to>  
-    </rule>
-    
-     <rule>
-       <note>contest/?</note>  
-        <from>/contest/([0-9]+)$</from>  
-        <to>  
-            /contest.action?contestId=$1
-        </to>  
-    </rule>
-    
-      <rule>
-       <note>contest/?/problem/?</note>  
-        <from>/contest/([0-9]+)/problem/([A-Z]+)$</from>  
-        <to>  
-            /contest/problem.action?contestId=$1&amp;num=$2
-        </to>  
-   	 </rule>
-     
-     <rule>
-       <note>contestRegistrants/?</note>  
-        <from>/contestRegistrants/([0-9]+)$</from>  
-        <to>  
-            /contestRegistrants.action?contestId=$1
-        </to>  
-    </rule>
-    
-     <rule>
-       <note>contest standings</note>  
-        <from>/contest/([0-9]+)/standings$</from>  
-        <to>  
-            /contest/standings.action?contestId=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>contest/?/standings/page/?</note>  
-        <from>/contest/([0-9]+)/standings/page/([0-9]+)$</from>  
-        <to>  
-           /contest/standings.action?contestId=$1&amp;page=$2
-        </to>  
-    </rule>
-    
-        <rule>
-       <note>contest status</note>  
-        <from>/contest/([0-9]+)/status$</from>  
-        <to>  
-            /contest/status.action?contestId=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>status/page/?</note>  
-        <from>/contest/([0-9]+)/status/page/([0-9]+)$</from>  
-        <to>  
-           /contest/status.action?contestId=$1&amp;page=$2
-        </to>  
-    </rule>
-  
-   <rule>
-       <note>status/with/?/page/?</note>  
-        <from>/contest/([0-9]+)/status/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>  
-        <to>  
-            /contest/status.action?contestId=$1&amp;username=$2&amp;page=$3
-        </to>  
-    </rule>
-     <rule>
-       <note>status/problem/?/page/?</note>  
-        <from>/contest/([0-9]+)/status/problem/([A-Z]+)/page/([0-9]+)$</from>  
-        <to>  
-            /contest/status.action?contestId=$1&amp;problemId=$2&amp;page=$3
-        </to>  
-    </rule>
-    
-     <rule>
-       <note>status/status/problem/?/page/?</note>  
-        <from>/contest/([0-9]+)/status/problem/([A-Z]+)/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>  
-        <to>  
-            /contest/status.action?contestId=$1&amp;problemId=$2&amp;username=$3&amp;page=$4
-        </to>  
-    </rule>
-    <rule>
-       <note>contest unregister</note>  
-        <from>/contest/([0-9]+)/UnRegisterContest$</from>  
-        <to>  
-            /contest/UnRegisterContest.action?contestId=$1
-        </to>  
-    </rule>
+		<from>/postmessage.action</from>
+		<to type="forward">/postmessage</to>
+	</outbound-rule>
 
 
-    <rule>
-       <note>mails </note>  
-        <from>/mails$</from>  
-        <to>  
-            /mails.action
-        </to>  
-    </rule>
-    <rule>
-       <note>mails/page/? </note>  
-        <from>/mails/page/([0-9]+)$</from>  
-        <to>  
-            /mails.action?page=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>mails/send </note>  
-        <from>/mails/send$</from>  
-        <to>  
-            /mails/send.action
-        </to>  
-    </rule>
-    <rule>
-       <note>mails/send/page/? </note>  
-        <from>/mails/send/page/([0-9]+)$</from>  
-        <to>  
-            /mails/send.action?page=$1
-        </to>  
-    </rule>
- 	<rule>
-       <note>mails/? </note>  
-        <from>/mails/([0-9]+)$</from>  
-        <to>  
-            /mails/show.action?mailId=$1
-        </to>  
-    </rule>
- <rule>
-       <note>mails/new/? </note>  
-        <from>/mails/new/([\a-zA-Z0-9_.]+)$</from>  
-        <to>  
-            /mails/new.action?username=$1
-        </to>  
-    </rule>
+	<rule>
+		<note>problemset </note>
+		<from>/problemset$</from>
+		<to>
+			/problemset.action
+        </to>
+	</rule>
+	<rule>
+		<note>problemset/page/?</note>
+		<from>/problemset/page/([0-9]+)$</from>
+		<to>
+			/problemset.action?page=$1
+        </to>
+	</rule>
+	<rule>
+		<note>problemset?</note>
+		<from>/problemset\?ORDER=([\a-zA-Z_]{0,20})&amp;OJ=([\a-zA-Z_]{0,20})$</from>
+		<to>
+			/problemset.action?order=$1&amp;ojName=$2
+        </to>
+	</rule>
+	<rule>
+		<note>problemset/page/?</note>
+		<from>/problemset/page/([0-9]+)\?ORDER=([\a-zA-Z_]{0,20})&amp;OJ=([\a-zA-Z_]{0,20})$</from>
+		<to>
+			/problemset.action?page=$1&amp;order=$2&amp;ojName=$3
+        </to>
+	</rule>
 
-  <rule>
-       <note>admin problemset </note>  
-        <from>/admin/problemset$</from>  
-        <to>  
-            /admin/problemset.action
-        </to>  
-    </rule>
-     <rule>
-       <note>/adminproblemset/page/?</note>  
-        <from>/admin/problemset/page/([0-9]+)$</from>  
-        <to>  
-            /admin/problemset.action?page=$1
-        </to>  
-    </rule>
- <rule>
-       <note>/admin/problemset/?</note>  
-        <from>/admin/problemset/problem/([0-9]+)$</from>  
-        <to>  
-            /admin/problemset/problem.action?problemId=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>/admin/problemset/data/?</note>  
-        <from>/admin/problemset/data/([0-9]+)$</from>  
-        <to>  
-            /admin/problemset/testFileList.action?problemId=$1
-        </to>  
-    </rule>
-  
-      <rule>
-       <note>admin/status</note>  
-        <from>/admin/problemset/status$</from>  
-        <to>  
-            /admin/problemset/status.action
-        </to>  
-    </rule>
-    <rule>
-       <note>/adminstatus/page/?</note>  
-        <from>/admin/problemset/status/page/([0-9]+)$</from>  
-        <to>  
-            /admin/problemset/status.action?page=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>/adminstatus/with/?/page/?</note>  
-        <from>/admin/problemset/status/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>  
-        <to>  
-            /admin/problemset/status.action?username=$1&amp;page=$2
-        </to>  
-    </rule>
-     <rule>
-       <note>/adminstatus/status/problem/?/page/?</note>  
-        <from>/admin/problemset/status/problem/([0-9]+)/page/([0-9]+)$</from>  
-        <to>  
-            /admin/problemset/status.action?problemId=$1&amp;page=$2
-        </to>  
-    </rule>
-    
-     <rule>
-       <note>/adminstatus/status/problem/?/page/?</note>  
-        <from>/admin/problemset/status/problem/([0-9]+)/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>  
-        <to>  
-            /admin/problemset/status.action?username=$2&amp;problemId=$1&amp;page=$3
-        </to>  
-    </rule>
-     <rule>
-       <note>admin/view-source</note>  
-        <from>/admin/view-source/([0-9]+)$</from>  
-        <to>  
-            /admin/view-source.action?solutionId=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>admin/rejudge</note>  
-        <from>/admin/rejudge/problem/([0-9]+)$</from>  
-        <to>  
-            /admin/reJudge.action?problemId=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>admin/rejudge</note>  
-        <from>/admin/rejudge/status/([0-9]+)$</from>  
-        <to>  
-            /admin/reJudge.action?solutionId=$1
-        </to>  
-    </rule>
-   <rule>
-       <note>admin contests </note>  
-        <from>/admin/contests$</from>  
-        <to>  
-            /admin/contests.action
-        </to>  
-    </rule>
-     <rule>
-       <note>/admin/contests/page/?</note>  
-        <from>admin/contests/page/([0-9]+)$</from>  
-        <to>  
-            /admin/contests.action?page=$1
-        </to>  
-    </rule>  
-      <rule>
-       <note>admin contest/?</note>  
-        <from>/admin/contest/([0-9]+)$</from>  
-        <to>  
-            /admin/contest.action?contestId=$1
-        </to>  
-    </rule>
-    
-      <rule>
-       <note>admin user</note>  
-        <from>admin/user$</from>  
-        <to>  
-            /admin/users.action
-        </to>  
-    </rule>
-     <rule>
-       <note>admin user/page/?</note>  
-        <from>/admin/user/page/([0-9]+)$</from>  
-        <to>  
-            /admin/users.action?page=$1
-        </to>  
-    </rule> 
-    
-    <rule>
-       <note>news/new/? </note>  
-        <from>admin/newsnew$</from>  
-        <to>  
-            /admin/newsnew.action
-        </to>  
-    </rule>
-    <rule>
-       <note>news/edit/? </note>  
-        <from>admin/news/edit/([0-9]+)$</from>  
-        <to>  
-            /admin/newsedit.action?newsId=$1
-        </to>  
-    </rule>
-    <rule>
-       <note>admin news</note>  
-        <from>admin/news/([0-9]+)$</from>  
-        <to>  
-            /admin/newsshow.action?newsId=$1
-        </to>  
-    </rule>
-     <rule>
-       <note>news</note>  
-        <from>news/([0-9]+)$</from>  
-        <to>  
-            /newsshow.action?newsId=$1
-        </to>  
-    </rule>
-   <rule>
-       <note>admin news</note>  
-        <from>admin/news$</from>  
-        <to>  
-            /admin/news.action
-        </to>  
-    </rule>
-     <rule>
-       <note>admin news/page/?</note>  
-        <from>/admin/news/page/([0-9]+)$</from>  
-        <to>  
-            /admin/news.action?page=$1
-        </to>  
-    </rule> 
-    
-    <rule>
-       <note>news</note>  
-        <from>news$</from>  
-        <to>  
-            /news.action
-        </to>  
-    </rule>
-     <rule>
-       <note>news/page/?</note>  
-        <from>/news/page/([0-9]+)$</from>  
-        <to>  
-            /news.action?page=$1
-        </to>  
-    </rule> 
-    
-     <rule>
-       <note>uploadphoto</note>  
-        <from>/uploadphoto$</from>  
-        <to>  
-            /uploadphoto.action
-        </to>  
-    </rule>
-    
-    <rule>
-       <note>search</note>  
-        <from>/search$</from>  
-        <to>  
-            /search.action
-        </to>  
-    </rule>
-    
-   <rule>
-       <note>ping</note>  
-        <from>/ping$</from>  
-        <to>  
-            /ping.action
-        </to>  
-    </rule>
-    
-    <!--
 
-    INSTALLATION
 
-        in your web.xml add...
+	<rule>
+		<note>problem/?</note>
+		<from>/problemset/problem/([0-9]+)$</from>
+		<to>
+			/problemset/problem.action?problemId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>problem/statistic/?</note>
+		<from>/problemset/statistic/([0-9]+)$</from>
+		<to>
+			/problemset/statistic.action?problemId=$1
+        </to>
+	</rule>
 
-        <filter>
-            <filter-name>UrlRewriteFilter</filter-name>
-            <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
-            <init-param>
-                <param-name>logLevel</param-name>
-                <param-value>WARN</param-value>
-            </init-param>
-        </filter>
-        <filter-mapping>
-            <filter-name>UrlRewriteFilter</filter-name>
-            <url-pattern>/*</url-pattern>
-        </filter-mapping>
+	<rule>
+		<note>status</note>
+		<from>/problemset/status$</from>
+		<to>
+			/problemset/status.action
+        </to>
+	</rule>
+	<rule>
+		<note>status/page/?</note>
+		<from>/problemset/status/page/([0-9]+)$</from>
+		<to>
+			/problemset/status.action?page=$1
+        </to>
+	</rule>
+	<rule>
+		<note>status/with/?/page/?</note>
+		<from>/problemset/status/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>
+		<to>
+			/problemset/status.action?username=$1&amp;page=$2
+        </to>
+	</rule>
+	<rule>
+		<note>status/status/problem/?/page/?</note>
+		<from>/problemset/status/problem/([0-9]+)/page/([0-9]+)$</from>
+		<to>
+			/problemset/status.action?problemId=$1&amp;page=$2
+        </to>
+	</rule>
 
-     EXAMPLES
+	<rule>
+		<note>status/status/problem/?/page/?</note>
+		<from>/problemset/status/problem/([0-9]+)/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>
+		<to>
+			/problemset/status.action?username=$2&amp;problemId=$1&amp;page=$3
+        </to>
+	</rule>
 
-     Redirect one url
-        <rule>
-            <from>/some/old/page.html</from>
-            <to type="redirect">/very/new/page.html</to>
-        </rule>
+	<rule>
+		<note>standings</note>
+		<from>/problemset/standings$</from>
+		<to>
+			/problemset/standings.action
+        </to>
+	</rule>
+	<rule>
+		<note>standings/page/?</note>
+		<from>/problemset/standings/page/([0-9]+)$</from>
+		<to>
+			/problemset/standings.action?page=$1
+        </to>
+	</rule>
 
-    Redirect a directory
-        <rule>
-            <from>/some/olddir/(.*)</from>
-            <to type="redirect">/very/newdir/$1</to>
-        </rule>
 
-    Clean a url
-        <rule>
-            <from>/products/([0-9]+)</from>
-            <to>/products/index.jsp?product_id=$1</to>
-        </rule>
-    eg, /products/1234 will be passed on to /products/index.jsp?product_id=1234 without the user noticing.
+	<rule>
+		<note>view-source</note>
+		<from>/view-source/([0-9]+)$</from>
+		<to>
+			/view-source.action?solutionId=$1
+        </to>
+	</rule>
 
-    Browser detection
-        <rule>
-            <condition name="user-agent">Mozilla/[1-4]</condition>
-            <from>/some/page.html</from>
-            <to>/some/page-for-old-browsers.html</to>
-        </rule>
-    eg, will pass the request for /some/page.html on to /some/page-for-old-browsers.html only for older
-    browsers whose user agent srtings match Mozilla/1, Mozilla/2, Mozilla/3 or Mozilla/4.
+	<rule>
+		<note>view-compileinfo</note>
+		<from>/view-compileinfo/([0-9]+)$</from>
+		<to>
+			/view-compileinfo.action?solutionId=$1
+        </to>
+	</rule>
 
-    -->
+	<rule>
+		<note>contests </note>
+		<from>/contests$</from>
+		<to>
+			/contests.action
+        </to>
+	</rule>
+	<rule>
+		<note>contests/page/?</note>
+		<from>/contests/page/([0-9]+)$</from>
+		<to>
+			/contests.action?page=$1
+        </to>
+	</rule>
+
+	<rule>
+		<note>contest/?</note>
+		<from>/contest/([0-9]+)$</from>
+		<to>
+			/contest.action?contestId=$1
+        </to>
+	</rule>
+
+	<rule>
+		<note>contest/?/problem/?</note>
+		<from>/contest/([0-9]+)/problem/([A-Z]+)$</from>
+		<to>
+			/contest/problem.action?contestId=$1&amp;num=$2
+        </to>
+	</rule>
+
+	<rule>
+		<note>contestRegistrants/?</note>
+		<from>/contestRegistrants/([0-9]+)$</from>
+		<to>
+			/contestRegistrants.action?contestId=$1
+        </to>
+	</rule>
+
+	<rule>
+		<note>contest standings</note>
+		<from>/contest/([0-9]+)/standings$</from>
+		<to>
+			/contest/standings.action?contestId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>contest/?/standings/page/?</note>
+		<from>/contest/([0-9]+)/standings/page/([0-9]+)$</from>
+		<to>
+			/contest/standings.action?contestId=$1&amp;page=$2
+        </to>
+	</rule>
+
+	<rule>
+		<note>contest status</note>
+		<from>/contest/([0-9]+)/status$</from>
+		<to>
+			/contest/status.action?contestId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>status/page/?</note>
+		<from>/contest/([0-9]+)/status/page/([0-9]+)$</from>
+		<to>
+			/contest/status.action?contestId=$1&amp;page=$2
+        </to>
+	</rule>
+
+	<rule>
+		<note>status/with/?/page/?</note>
+		<from>/contest/([0-9]+)/status/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>
+		<to>
+			/contest/status.action?contestId=$1&amp;username=$2&amp;page=$3
+        </to>
+	</rule>
+	<rule>
+		<note>status/problem/?/page/?</note>
+		<from>/contest/([0-9]+)/status/problem/([A-Z]+)/page/([0-9]+)$</from>
+		<to>
+			/contest/status.action?contestId=$1&amp;problemId=$2&amp;page=$3
+        </to>
+	</rule>
+
+	<rule>
+		<note>status/status/problem/?/page/?</note>
+		<from>/contest/([0-9]+)/status/problem/([A-Z]+)/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>
+		<to>
+			/contest/status.action?contestId=$1&amp;problemId=$2&amp;username=$3&amp;page=$4
+        </to>
+	</rule>
+	<rule>
+		<note>contest unregister</note>
+		<from>/contest/([0-9]+)/UnRegisterContest$</from>
+		<to>
+			/contest/UnRegisterContest.action?contestId=$1
+        </to>
+	</rule>
+
+
+	<rule>
+		<note>mails </note>
+		<from>/mails$</from>
+		<to>
+			/mails.action
+        </to>
+	</rule>
+	<rule>
+		<note>mails/page/? </note>
+		<from>/mails/page/([0-9]+)$</from>
+		<to>
+			/mails.action?page=$1
+        </to>
+	</rule>
+	<rule>
+		<note>mails/send </note>
+		<from>/mails/send$</from>
+		<to>
+			/mails/send.action
+        </to>
+	</rule>
+	<rule>
+		<note>mails/send/page/? </note>
+		<from>/mails/send/page/([0-9]+)$</from>
+		<to>
+			/mails/send.action?page=$1
+        </to>
+	</rule>
+	<rule>
+		<note>mails/? </note>
+		<from>/mails/([0-9]+)$</from>
+		<to>
+			/mails/show.action?mailId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>mails/new/? </note>
+		<from>/mails/new/([\a-zA-Z0-9_.]+)$</from>
+		<to>
+			/mails/new.action?username=$1
+        </to>
+	</rule>
+
+	<rule>
+		<note>admin problemset </note>
+		<from>/admin/problemset$</from>
+		<to>
+			/admin/problemset.action
+        </to>
+	</rule>
+	<rule>
+		<note>/adminproblemset/page/?</note>
+		<from>/admin/problemset/page/([0-9]+)$</from>
+		<to>
+			/admin/problemset.action?page=$1
+        </to>
+	</rule>
+	<rule>
+		<note>/admin/problemset/?</note>
+		<from>/admin/problemset/problem/([0-9]+)$</from>
+		<to>
+			/admin/problemset/problem.action?problemId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>/admin/problemset/data/?</note>
+		<from>/admin/problemset/data/([0-9]+)$</from>
+		<to>
+			/admin/problemset/testFileList.action?problemId=$1
+        </to>
+	</rule>
+
+	<rule>
+		<note>admin/status</note>
+		<from>/admin/problemset/status$</from>
+		<to>
+			/admin/problemset/status.action
+        </to>
+	</rule>
+	<rule>
+		<note>/adminstatus/page/?</note>
+		<from>/admin/problemset/status/page/([0-9]+)$</from>
+		<to>
+			/admin/problemset/status.action?page=$1
+        </to>
+	</rule>
+	<rule>
+		<note>/adminstatus/with/?/page/?</note>
+		<from>/admin/problemset/status/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>
+		<to>
+			/admin/problemset/status.action?username=$1&amp;page=$2
+        </to>
+	</rule>
+	<rule>
+		<note>/adminstatus/status/problem/?/page/?</note>
+		<from>/admin/problemset/status/problem/([0-9]+)/page/([0-9]+)$</from>
+		<to>
+			/admin/problemset/status.action?problemId=$1&amp;page=$2
+        </to>
+	</rule>
+
+	<rule>
+		<note>/adminstatus/status/problem/?/page/?</note>
+		<from>/admin/problemset/status/problem/([0-9]+)/with/([\a-zA-Z0-9_.]+)/page/([0-9]+)$</from>
+		<to>
+			/admin/problemset/status.action?username=$2&amp;problemId=$1&amp;page=$3
+        </to>
+	</rule>
+	<rule>
+		<note>admin/view-source</note>
+		<from>/admin/view-source/([0-9]+)$</from>
+		<to>
+			/admin/view-source.action?solutionId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>admin/rejudge</note>
+		<from>/admin/rejudge/problem/([0-9]+)$</from>
+		<to>
+			/admin/reJudge.action?problemId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>admin/rejudge</note>
+		<from>/admin/rejudge/status/([0-9]+)$</from>
+		<to>
+			/admin/reJudge.action?solutionId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>admin contests </note>
+		<from>/admin/contests$</from>
+		<to>
+			/admin/contests.action
+        </to>
+	</rule>
+	<rule>
+		<note>/admin/contests/page/?</note>
+		<from>admin/contests/page/([0-9]+)$</from>
+		<to>
+			/admin/contests.action?page=$1
+        </to>
+	</rule>
+	<rule>
+		<note>admin contest/?</note>
+		<from>/admin/contest/([0-9]+)$</from>
+		<to>
+			/admin/contest.action?contestId=$1
+        </to>
+	</rule>
+
+	<rule>
+		<note>admin user</note>
+		<from>admin/user$</from>
+		<to>
+			/admin/users.action
+        </to>
+	</rule>
+	<rule>
+		<note>admin user/page/?</note>
+		<from>/admin/user/page/([0-9]+)$</from>
+		<to>
+			/admin/users.action?page=$1
+        </to>
+	</rule>
+
+	<rule>
+		<note>news/new/? </note>
+		<from>admin/newsnew$</from>
+		<to>
+			/admin/newsnew.action
+        </to>
+	</rule>
+	<rule>
+		<note>news/edit/? </note>
+		<from>admin/news/edit/([0-9]+)$</from>
+		<to>
+			/admin/newsedit.action?newsId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>admin news</note>
+		<from>admin/news/([0-9]+)$</from>
+		<to>
+			/admin/newsshow.action?newsId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>news</note>
+		<from>news/([0-9]+)$</from>
+		<to>
+			/newsshow.action?newsId=$1
+        </to>
+	</rule>
+	<rule>
+		<note>admin news</note>
+		<from>admin/news$</from>
+		<to>
+			/admin/news.action
+        </to>
+	</rule>
+	<rule>
+		<note>admin news/page/?</note>
+		<from>/admin/news/page/([0-9]+)$</from>
+		<to>
+			/admin/news.action?page=$1
+        </to>
+	</rule>
+
+	<rule>
+		<note>news</note>
+		<from>news$</from>
+		<to>
+			/news.action
+        </to>
+	</rule>
+	<rule>
+		<note>news/page/?</note>
+		<from>/news/page/([0-9]+)$</from>
+		<to>
+			/news.action?page=$1
+        </to>
+	</rule>
+
+	<rule>
+		<note>uploadphoto</note>
+		<from>/uploadphoto$</from>
+		<to>
+			/uploadphoto.action
+        </to>
+	</rule>
+
+	<rule>
+		<note>search</note>
+		<from>/search$</from>
+		<to>
+			/search.action
+        </to>
+	</rule>
+
+	<rule>
+		<note>ping</note>
+		<from>/ping$</from>
+		<to>
+			/ping.action
+        </to>
+	</rule>
+	<rule>
+		<note>query top 5 inqueue submit</note>
+		<from>/api/status/query$</from>
+		<to>
+			/ajaxStatus.action
+        </to>
+	</rule>
+	<rule>
+		<note>api/submit/check</note>
+		<from>/api/submit/check$</from>
+		<to>
+			/jsonTestCheck.action
+        </to>
+	</rule>
+	<rule>
+		<note>api/submit/test</note>
+		<from>/api/submit/test$</from>
+		<to>
+			/jsonSubmit.action
+        </to>
+	</rule>
+	<rule>
+		<note>api/submit</note>
+		<from>/api/submit$</from>
+		<to>
+			/jsonSubmit.action
+        </to>
+	</rule>
+	<rule>
+		<note>api/online-users</note>
+		<from>/api/online-users$</from>
+		<to>
+			/onlineUsers.action
+        </to>
+	</rule>
+
+	<rule>
+		<note>rating</note>
+		<from>/api/rating/([\a-zA-Z0-9_.]+)</from>
+		<to>
+			/jsonRatings.action?username=$1 
+        </to>
+	</rule>
+	<outbound-rule>
+		<note>rating2
+        </note>
+		<from>/jsonRatings.action\?username=([\a-zA-Z0-9_.]+)$</from>
+		<to type="forward">/api/rating/$1</to>
+	</outbound-rule>
+	
+	<rule>
+		<note>my-contests</note>
+		<from>/contests/([\a-zA-Z0-9_.]+)</from>
+		<to>
+			/mycontest.action?username=$1 
+        </to>
+	</rule>
+	<outbound-rule>
+		<note>my-contests
+        </note>
+		<from>/mycontest.action\?username=([\a-zA-Z0-9_.]+)$</from>
+		<to type="forward">/contests/$1</to>
+	</outbound-rule>
+
+	<rule>
+		<note>query submissions</note>
+		<from>/api/submission/query$</from>
+		<to>
+			/jsonSolutions.action
+		</to>
+	</rule>
+
+	<rule>
+		<note>open-auth</note>
+		<from>/auth/([\a-zA-Z0-9_.]+)</from>
+		<to>
+			/openAuth.action?provider=$1
+		</to>
+	</rule>
+	<outbound-rule>
+		<note>open-auth
+		</note>
+		<from>/openAuth.action\?provider=([\a-zA-Z0-9_.]+)$</from>
+		<to type="forward">/auth/$1</to>
+	</outbound-rule>
+	<rule>
+		<note>open-auth-unbind</note>
+		<from>/unauth/([\a-zA-Z0-9_.]+)</from>
+		<to>
+			/unbindOAuth.action?provider=$1
+		</to>
+	</rule>
+	<outbound-rule>
+		<note>open-auth-unbind
+		</note>
+		<from>/unbindOAuth.action\?provider=([\a-zA-Z0-9_.]+)$</from>
+		<to type="forward">/unauth/$1</to>
+	</outbound-rule>
+	<!--
+
+		INSTALLATION in your web.xml add... <filter>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+		<init-param> <param-name>logLevel</param-name>
+		<param-value>WARN</param-value> </init-param> </filter>
+		<filter-mapping> <filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/*</url-pattern> </filter-mapping> EXAMPLES Redirect one
+		url <rule> <from>/some/old/page.html</from> <to
+		type="redirect">/very/new/page.html</to> </rule> Redirect a directory
+		<rule> <from>/some/olddir/(.*)</from> <to
+		type="redirect">/very/newdir/$1</to> </rule> Clean a url <rule>
+		<from>/products/([0-9]+)</from>
+		<to>/products/index.jsp?product_id=$1</to> </rule> eg, /products/1234
+		will be passed on to /products/index.jsp?product_id=1234 without the
+		user noticing. Browser detection <rule> <condition
+		name="user-agent">Mozilla/[1-4]</condition>
+		<from>/some/page.html</from> <to>/some/page-for-old-browsers.html</to>
+		</rule> eg, will pass the request for /some/page.html on to
+		/some/page-for-old-browsers.html only for older browsers whose user
+		agent srtings match Mozilla/1, Mozilla/2, Mozilla/3 or Mozilla/4.
+	-->
 
 </urlrewrite>
 

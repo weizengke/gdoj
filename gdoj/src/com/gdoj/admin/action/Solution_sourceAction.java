@@ -142,7 +142,7 @@ public class Solution_sourceAction extends ActionSupport {
 				judgeLog = new String();
 				file = new File(Config.getValue("OJ_JUDGE_LOG") + "judge-log-"
 						+ solutionId + ".log");
-				judgeLog = StreamHandler.read(file);
+				judgeLog = StreamHandler.readEx(file);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}

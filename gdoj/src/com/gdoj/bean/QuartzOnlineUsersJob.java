@@ -25,31 +25,39 @@ public class QuartzOnlineUsersJob {
 			Set set = mou.keySet();
 	        Iterator it=set.iterator();
 	        while(it.hasNext()){
-	           String username = (String) it.next();
-	           User u = new User();
-	           
-	           //System.out.println(username);
-	           if(username==null){
+			   String username = (String) it.next();
+			   User u = new User();
+			   
+			   //System.out.println(username);
+			   if(username==null){
 					it.remove();
-	        	    continue;
-	           }
-	           
-	           u = userService.queryUser(username);
-	           if(u==null){
+				    continue;
+			   }
+			   
+			   u = userService.queryUser(username);
+			   if(u==null){
 					it.remove();
-	        	    continue;
-	           }
+				    continue;
+			   }
+			   
+			   long time_now = new Date().getTime();
+			   long time_cache = mou.get(username).getLastAccessTime().getTime();
+			   if ((time_now - time_cache) > 60 * 15 * 1000){
+				   System.out.println("removeUser " + username + ", because of no action last 15 mins.");
+				   it.remove();
+				   continue;
+			   }
+			   
 				
-				u.setLastaccesstime(mou.get(username).getLastAccessTime());
-				userService.save(u);
+			   u.setLastaccesstime(mou.get(username).getLastAccessTime());
+			   userService.save(u);
 				
-				/* 离线的需要剔除 */
-				if (mou.get(username).getStatusFlag() == 0){
-					System.out.println("removeUser " + username + " , because of offline...");
-					it.remove();
-				}
-				
-				//System.out.println("Next...");
+			   /* 离线的需要剔除 */
+			   if (mou.get(username).getStatusFlag() == 0){
+				   System.out.println("removeUser " + username + ", because of offline...");
+				   it.remove();
+				   continue;
+			   }
 	       }
 
 		} catch (Exception e) {

@@ -81,9 +81,8 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDAO {
 	public List<String> queryAllUserName(String sql,String q,Integer pageSize){
 		Session session = HibernateSessionFactory.getSession();
 		session.beginTransaction();
-	
 		Query query = (Query) session.createQuery(sql);
-		query.setString(0, "%"+q+"%");
+		query.setString(0, q+"%");
 		query.setFirstResult(0); 
 		query.setMaxResults(pageSize);
 		List<String> list = query.list();
@@ -105,12 +104,12 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDAO {
 		session.beginTransaction();
 		String sql =new String();
 		
-		if("rate".equals(order)){
+		if("rating".equals(order)){
 			sql = "select u from User u order by u.rating DESC, u.solved DESC, u.submit ASC,u.id ASC";
 		}else if("solved".equals(order)){
 			sql = "select u from User u order by u.solved DESC,u.rating DESC, u.submit ASC,u.id ASC";
 		}else {
-			sql = "select u from User u order by u.solved DESC,u.rating DESC, u.submit ASC,u.id ASC";
+			sql = "select u from User u order by u.rating DESC, u.solved DESC, u.submit ASC,u.id ASC";
 		}
 		Query q = (Query) session.createQuery(sql);
 		q.setFirstResult(from); 
@@ -139,10 +138,12 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDAO {
 		   Session session = HibernateSessionFactory.getSession();
 			session.beginTransaction();
 			String sql =new String();
-			sql="select count(u) from User u where u.solved> :solved"				
-				+" or (u.solved= :solved  and u.submit< :submit)"
-			     +" or (u.solved= :solved  and u.submit= :submit) and u.id< :id";
+			sql="select count(u) from User u where u.rating> :rating" +
+					" or (u.rating= :rating and u.solved< :solved)"				
+				+" or (u.rating= :rating and u.solved= :solved  and u.submit< :submit)"
+			     +" or (u.rating= :rating and u.solved= :solved  and u.submit= :submit) and u.id< :id";
 			Query query=(Query)session.createQuery(sql)
+											.setParameter("rating", user.getRating())
 											.setParameter("solved", user.getSolved())											
 											.setParameter("submit", user.getSubmit())
 											.setParameter("id", user.getId());

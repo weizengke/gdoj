@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.util.DateUtil;
 import org.apache.struts2.ServletActionContext;
 
 import com.gdoj.bean.LatestTopicBean;
@@ -20,6 +21,7 @@ import com.gdoj.user.service.UserService;
 import com.gdoj.user.vo.User;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.util.Config;
 import com.util.Html2Text;
 import com.util.freemarker.MyFreeMarker;
 
@@ -244,6 +246,7 @@ public class MessageAction extends ActionSupport {
 			u = userService.queryUser(messageList.get(i).getCreate_user());
 			if(u!=null){
 				mb_.setAvatar(u.getAvatar());
+				mb_.setUser(u);
 			}				
 			commentsList.add(mb_);
 			
@@ -346,12 +349,17 @@ public class MessageAction extends ActionSupport {
 		try {
 			Message message_ = new Message();
 			
-			
 			createUser = (String)ActionContext.getContext().getSession().get("session_username");
 			System.out.println(moduleId+" "+parentId+" "+rootId+" "+createUser);
-			  if(null==createUser||"".equals(createUser)){				  		
-				  	return LOGIN;
-		        }	
+			if(null==createUser||"".equals(createUser)){				  		
+				return LOGIN;
+		    }	
+			
+			if ("NO".equals(Config.getValue("OPENBBS"))){
+				ActionContext.getContext().put("tip", "This operation is now closed by Administrator.");	
+				return INPUT;
+			}
+			
 			if(null==title||title.trim().length()==0){
 				this.addFieldError("title", "Title shouldn't be empty.");
 				return INPUT;
@@ -400,25 +408,20 @@ public class MessageAction extends ActionSupport {
 			 parentId=messageId; //for reply
 			 rootId=message_.getRoot_id();//for reply
 			 
-		
 			 message_.setViews(message_.getViews()+1);
 			 messageService.saveMessage(message_);				 
-			// message = message_;
-			
-			 
-			 
+
 			//tags
-				List<Tagsview> tagsviewsList_ = new ArrayList<Tagsview>();
-				tagsList = new ArrayList<String>();
-				tagsviewsList_ = tagsviewService.queryByMessages(messageId);
-				if(tagsviewsList_!=null){
-					for (Tagsview t_ : tagsviewsList_) {
-						tagsList.add(tagsService.queryTag(
-								t_.getTag_id()).getName());
-					}
+			List<Tagsview> tagsviewsList_ = new ArrayList<Tagsview>();
+			tagsList = new ArrayList<String>();
+			tagsviewsList_ = tagsviewService.queryByMessages(messageId);
+			if(tagsviewsList_!=null){
+				for (Tagsview t_ : tagsviewsList_) {
+					tagsList.add(tagsService.queryTag(
+							t_.getTag_id()).getName());
 				}
+			}
 			  
-			 
 		//	 System.out.println(messageId+" "+message_.getTitle()+" "+ message_.getContent());
 			 if(message_.getParent_id()>0){
 				 Message messageReplyTo_ = messageService.queryMessage(message_.getParent_id());	
@@ -428,8 +431,6 @@ public class MessageAction extends ActionSupport {
 					 messageReplyTo = messageReplyTo_;
 				 }
 			 } 
-			
-			
 			
 			 List<Message> messageListOri =  new ArrayList<Message>();
 			 List<Message> messageList =  new ArrayList<Message>();
@@ -454,8 +455,6 @@ public class MessageAction extends ActionSupport {
 				messageList.remove(0); //É¾³ý×Ô¼º////////////////////////////////////////////////
 				
 				//messagesFollowedBy = messageList;
-				
-				
 				
 				Integer size = messageList.size();
 				Integer a =null;
@@ -483,7 +482,7 @@ public class MessageAction extends ActionSupport {
 					mb_.setAuthor(messageList.get(i).getCreate_user());
 					mb_.setContent(messageList.get(i).getContent());
 					mb_.setIn_date(messageList.get(i).getIn_date());
-					mb_.setFriendly_Date(getFriendlyDate(mb_.getIn_date()));
+					mb_.setFriendly_Date(DateUtil.toFriendlyDate(mb_.getIn_date()));
 					mb_.setMessageId(messageList.get(i).getMessage_id());
 					mb_.setParentId(messageList.get(i).getParent_id());
 					mb_.setRootId(messageList.get(i).getRoot_id());
@@ -494,6 +493,7 @@ public class MessageAction extends ActionSupport {
 					u = userService.queryUser(messageList.get(i).getCreate_user());
 					if(u!=null){
 						mb_.setAvatar(u.getAvatar());
+						mb_.setUser(u);
 					}				
 					commentsList.add(mb_);
 					
@@ -563,9 +563,14 @@ public class MessageAction extends ActionSupport {
 				messagebean.setParentId(message_.getParent_id());
 				messagebean.setRootId(message_.getRoot_id());
 				messagebean.setTitle(message_.getTitle());
-				messagebean.setFriendly_Date(getFriendlyDate(message_.getIn_date()));
+				messagebean.setFriendly_Date(DateUtil.toFriendlyDate(message_.getIn_date()));
 				messagebean.setViews(message_.getViews());
 				messagebean.setVotes(message_.getVotes());
+				User u1 = new User();
+				u1 = userService.queryUser(message_.getCreate_user());
+				if(u1 != null){
+					messagebean.setUser(u1);
+				}		
 				
 				String bufString = new String();
 			 	bufString = Html2Text.RemoveHtml(((message_.getContent().length()>2000)?(message_.getContent()).substring(0, 2000):message_.getContent()));
@@ -588,8 +593,13 @@ public class MessageAction extends ActionSupport {
 				ActionContext.getContext().put("tip", "You must login first.");
 				return LOGIN;
 			}	
-			 Message message_ = messageService.queryMessage(messageId);	
 			
+			if ("NO".equals(Config.getValue("OPENBBS"))){
+				ActionContext.getContext().put("tip", "This operation is now closed by Administrator.");	
+				return INPUT;
+			}
+			
+			 Message message_ = messageService.queryMessage(messageId);
 			 if(message_==null||!message_.getParent_id().equals(0)){
 				 ActionContext.getContext().put("tip", "No such topic.");
 				 return ERROR;
@@ -630,24 +640,7 @@ public class MessageAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-	public String getFriendlyDate(Date time){
-		if(time == null) return getText("unknown");
-		int ct = (int)((System.currentTimeMillis() - time.getTime())/1000);
-		if(ct < 3600)
-			return Math.max(ct / 60,1) +getText("minutes_before");
-		if(ct >= 3600 && ct < 86400)
-			return ct / 3600 +getText("hours_before");
-		if(ct >= 86400 && ct < 2592000){ //86400 * 30
-			int day = ct / 86400 ;	
-			if(day>1){
-				return day +getText("days_before");	
-			}
-			return getText("yesterday");			
-		}
-		if(ct >= 2592000 && ct < 31104000) //86400 * 30
-			return ct / 2592000 +getText("months_before");
-		return ct / 31104000 + getText("years_before");
-	}
+
 	public int getPageSize() {
 		return pageSize;
 	}

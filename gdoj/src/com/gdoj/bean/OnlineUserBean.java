@@ -9,6 +9,8 @@ public class OnlineUserBean {
 	private Date loginDate;
 	private Date lastAccessTime; /* 用户最近一次ping时间 */
 	private Integer statusFlag; /* 上线(1) or 离线(0) */
+	private Integer level;
+	private String levelTitle;
 	
 	public Integer getStatusFlag() {
 		return statusFlag;
@@ -50,6 +52,18 @@ public class OnlineUserBean {
 		this.loginDate = loginDate;
 		this.lastAccessTime = lastAccessTime;
 		this.statusFlag = 1;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevelTitle(String levelTitle) {
+		this.levelTitle = levelTitle;
+	}
+	public String getLevelTitle() {
+		return levelTitle;
 	}
 	
 }

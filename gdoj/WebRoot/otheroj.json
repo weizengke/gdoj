@@ -1,1 +1,71 @@
-[{"id":"152410","oj":"AtCoder","link":"https:\/\/code-festival-2017-qualc.contest.atcoder.jp","name":"CODE FESTIVAL 2017 qual C","start_time":"2017-10-22 20:00:00","week":"SUN","access":""},{"id":"156827","oj":"Codeforces","link":"http:\/\/codeforces.com\/contests","name":"Codeforces Round #442 (Div. 2)","start_time":"2017-10-23 23:35:00","week":"MON","access":""},{"id":"156828","oj":"Codeforces","link":"http:\/\/codeforces.com\/contests","name":"Codeforces Round #443 (Div. 1)","start_time":"2017-10-26 22:35:00","week":"THU","access":""},{"id":"156829","oj":"Codeforces","link":"http:\/\/codeforces.com\/contests","name":"Codeforces Round #443 (Div. 2)","start_time":"2017-10-26 22:35:00","week":"THU","access":""},{"id":"152502","oj":"AtCoder","link":"https:\/\/abc076.contest.atcoder.jp","name":"AtCoder Beginner Contest 076","start_time":"2017-10-28 20:00:00","week":"SAT","access":""},{"id":"144210","oj":"HackerRank","link":"http:\/\/www.hackerrank.com\/contests","name":"HourRank 24","start_time":"2017-11-02 23:00:00","week":"THU","access":""},{"id":"149762","oj":"UVA","link":"https:\/\/uva.onlinejudge.org\/index.php?option=com_onlinejudge&amp;Itemid=12&amp;page=show_contest&amp;contest=381","name":"ACM-ICPC Regional Warmup II","start_time":"2017-11-04 17:00:00","week":"SAT","access":"Public"},{"id":"148202","oj":"HackerRank","link":"http:\/\/www.hackerrank.com\/contests","name":"Week of Code 35","start_time":"2017-11-13 15:00:00","week":"MON","access":""},{"id":"149763","oj":"UVA","link":"https:\/\/uva.onlinejudge.org\/index.php?option=com_onlinejudge&amp;Itemid=12&amp;page=show_contest&amp;contest=382","name":"ACM-ICPC Regional Warmup III","start_time":"2017-11-18 22:00:00","week":"SAT","access":"Public"},{"id":"149764","oj":"UVA","link":"https:\/\/uva.onlinejudge.org\/index.php?option=com_onlinejudge&amp;Itemid=12&amp;page=show_contest&amp;contest=383","name":"ACM-ICPC Regional Warmup IV","start_time":"2017-12-02 17:00:00","week":"SAT","access":"Public"}]
+[{
+		"oj":	"HDU",
+		"link":	"http://acm.hdu.edu.cn/contests/contest_show.php?cid=850",
+		"name":	"2019 Multi-University Training Contest 3",
+		"start_time":	"2019-07-29 12:00:00",
+		"week":	"Mon",
+		"access":	"private"
+	}, {
+		"oj":	"Codeforces",
+		"link":	"http://codeforces.com/contests",
+		"name":	"Codeforces Round #576 (Div. 1)",
+		"start_time":	"2019-07-30 22:35:00",
+		"week":	"Tue",
+		"access":	""
+	}, {
+		"oj":	"Codeforces",
+		"link":	"http://codeforces.com/contests",
+		"name":	"Codeforces Round #576 (Div. 2)",
+		"start_time":	"2019-07-30 22:35:00",
+		"week":	"Tue",
+		"access":	""
+	}, {
+		"oj":	"HDU",
+		"link":	"http://acm.hdu.edu.cn/contests/contest_show.php?cid=851",
+		"name":	"2019 Multi-University Training Contest 4",
+		"start_time":	"2019-07-31 12:00:00",
+		"week":	"Wed",
+		"access":	"private"
+	}, {
+		"oj":	"HDU",
+		"link":	"http://acm.hdu.edu.cn/contests/contest_show.php?cid=852",
+		"name":	"2019 Multi-University Training Contest 5",
+		"start_time":	"2019-08-05 12:00:00",
+		"week":	"Mon",
+		"access":	"private"
+	}, {
+		"oj":	"HDU",
+		"link":	"http://acm.hdu.edu.cn/contests/contest_show.php?cid=853",
+		"name":	"2019 Multi-University Training Contest 6",
+		"start_time":	"2019-08-07 12:00:00",
+		"week":	"Wed",
+		"access":	"private"
+	}, {
+		"oj":	"HDU",
+		"link":	"http://acm.hdu.edu.cn/contests/contest_show.php?cid=854",
+		"name":	"2019 Multi-University Training Contest 7",
+		"start_time":	"2019-08-12 12:00:00",
+		"week":	"Mon",
+		"access":	"private"
+	}, {
+		"oj":	"HDU",
+		"link":	"http://acm.hdu.edu.cn/contests/contest_show.php?cid=855",
+		"name":	"2019 Multi-University Training Contest 8",
+		"start_time":	"2019-08-14 12:00:00",
+		"week":	"Wed",
+		"access":	"private"
+	}, {
+		"oj":	"HDU",
+		"link":	"http://acm.hdu.edu.cn/contests/contest_show.php?cid=856",
+		"name":	"2019 Multi-University Training Contest 9",
+		"start_time":	"2019-08-19 12:00:00",
+		"week":	"Mon",
+		"access":	"private"
+	}, {
+		"oj":	"HDU",
+		"link":	"http://acm.hdu.edu.cn/contests/contest_show.php?cid=857",
+		"name":	"2019 Multi-University Training Contest 10",
+		"start_time":	"2019-08-21 12:00:00",
+		"week":	"Wed",
+		"access":	"private"
+	}]

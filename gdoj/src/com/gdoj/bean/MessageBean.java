@@ -2,6 +2,8 @@ package com.gdoj.bean;
 
 import java.util.Date;
 
+import com.gdoj.user.vo.User;
+
 public class MessageBean {
 	private Integer messageId;
 	private Integer problemId;
@@ -17,7 +19,7 @@ public class MessageBean {
 	private String defunct;
 	private Date in_date;
 	private String author;
-	
+	private User user;
 	private String avatar;
 	
 	private Integer comments;
@@ -25,10 +27,9 @@ public class MessageBean {
 	private String content_abstract;
 	private String friendly_Date;
 	private String lastReplyUser;
+	private User lastRplUser;
 	private Date lastReplyDate;
 	private String lastReplyFriendlyDate;
-	
-	
 	
 	public MessageBean() {
 		this.problemId=0;
@@ -173,6 +174,18 @@ public class MessageBean {
 	}
 	public void setComments(Integer comments) {
 		this.comments = comments;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setLastRplUser(User lastRplUser) {
+		this.lastRplUser = lastRplUser;
+	}
+	public User getLastRplUser() {
+		return lastRplUser;
 	}
 
 }

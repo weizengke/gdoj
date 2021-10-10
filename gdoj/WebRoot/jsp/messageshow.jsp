@@ -29,247 +29,232 @@ SyntaxHighlighter.all();
 </script> 
 
 </head>
-  
   <body>
     <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">	
-	
-	<div id="sidebar"> 	              
- 	<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-
-   	</div> 
-    <div id="content" class="content-with-sidebar round0123"  >     
-		<div id="nav-content" >	
-			<a class="current" href="topic"><s:text name="topic"/></a>
-			
-			<a href="topic/new" title=<s:text name="topic.new"/> ><s:text name="topic.new"/></a>
-     	</div>
-	    <div class="topic">
-			<div class="title"><h3><s:property value="messagebean.title"/></h3></div>
-<div class="topic_manage">		       
-<span class="link_author" style="color:grey;"><a href="profile/<s:property value="messagebean.author"/>" class="user-tip" user="<s:property value="messagebean.author"/>"><s:property value="messagebean.author"/></a>  &nbsp;<s:text name="post"/><span  title="<s:date name="messagebean.in_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/>"><s:property value="messagebean.friendly_Date"/></span>			 	
-</span>
-
-<span class="link_view" title="<s:text name="topic.views"/>"><s:property value="messagebean.views"/> <s:text name="topic.views"/></span>
-<span class="link_comments" title="<s:text name="topic.reply"/>"><s:text name="topic.reply"/>(<s:property value="messagebean.comments"/>)</span>
-<span class="link_edit">
-<s:if test="#session.session_username==messagebean.author"><a href="topic/edit/<s:property value="messagebean.messageId"/>">Eidt</a></s:if>
-</span>		
-			</div>
-			<div class="content">   
-		       	<blockquote>
-		      	<p><s:property value="messagebean.content" escape="false"/></p>		      				    
-		        </blockquote>
-		     </div>
-		     
-<div class="topic-tools-box roundbox">
-	 <div class="roundbox-lt">&nbsp;</div>
-	 <div class="roundbox-rt">&nbsp;</div>	
-	 <div class="roundbox-lb">&nbsp;</div>
-	 <div class="roundbox-rb">&nbsp;</div>	
-
-<span class="tags">
-<s:iterator  value="tagsList" status="tagsst" >
-  <a href="search?word=<s:property />&type=topic" rel="tag" ><s:property /></a>
-</s:iterator>
-</span>
-
-<span class="topic-shareto"></span> 
-<!-- JiaThis Button BEGIN 
-<span id="ckepop" class="topic-share">	
-	<a class="jiathis_button_qzone"></a>
-	<a class="jiathis_button_tsina"></a>
-	<a class="jiathis_button_tqq"></a>
-	<a class="jiathis_button_renren"></a>
-	<a class="jiathis_button_kaixin001"></a>
-	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	<a class="jiathis_counter_style"></a>
-</span>
-<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
- JiaThis Button END -->
-	
-	<span class="topic-vote">	
-		<a href="#" class="topic-vote-up-<s:property value="messagebean.messageId"/>"><img style="vertical-align:middle;position:relative;top:-0.2em;" src="img/vote/voteup.png" alt="Vote: I like it" title="Vote: I like it"/></a>
-		<s:if test="messagebean.votes>0">
-		<span style="color:green;font-weight:bold;">
-		+<s:property value="messagebean.votes"/>
-		</span>
-		</s:if><s:else>
-		<span style="color:gray;font-weight:bold;">
-		<s:property value="messagebean.votes"/>
-		</span>
-		</s:else>
-		<a href="#" class="topic-vote-down-<s:property value="messagebean.messageId"/>"><img style="vertical-align:middle;position:relative;top:-0.2em;" src="img/vote/votedown.png" alt="Vote: I do not like it" title="Vote: I do not like it"/></a>
-		
-		
-		<script type="text/javascript">
-		        $(document).ready(function() {
-		    $(".topic-vote-up-<s:property value="messagebean.messageId"/>").click(function() {
-		        $.post("vote", {messageId: <s:property value="messagebean.messageId"/>, vote: +1}, function(data) {
-		             if (data.success != true) {
-		                alert(data["error"]);
-		            }else{
-		            	alert("Vote success.");
-		            }
-		        }, "json");
-		        return false;
-		    });
-		    $(".topic-vote-down-<s:property value="messagebean.messageId"/>").click(function() {
-		        $.post("vote", {messageId: <s:property value="messagebean.messageId"/>, vote: -1}, function(data) {
-		             if (data.success != true) {
-		                alert(data["error"]);
-		            }else{
-		            	alert("Vote success.");
-		            }
-		        }, "json");
-		        return false;
-		    });
-		        });
-		</script>	
+    <div class="container">
+	  <div class="content">
+		<div class="sidebar"> 	              
+	 		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 	
+	   	</div> 
+	    <div class="content-with-sidebar round0123"  >     
+			<div id="nav-content" >	
+				<a class="current" href="topic"><s:text name="topic"/></a>
+				
+				<a href="topic/new" title=<s:text name="topic.new"/> ><s:text name="topic.new"/></a>
+	     	</div>
+		    <div class="topic">
+				<div class="title"><h3><s:property value="messagebean.title"/></h3></div>
+	<div class="topic_manage">		       
+	<span class="link_author" style="color:grey;"><a href="profile/<s:property value="messagebean.author"/>" class="rated-user user-rate-<s:property value="messagebean.user.rate" default="0"/> user-tip" user="<s:property value="messagebean.author"/>"><s:property value="messagebean.author"/></a>  &nbsp;<s:text name="post"/><span  title="<s:date name="messagebean.in_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/>"><s:property value="messagebean.friendly_Date"/></span>			 	
 	</span>
-</div>		     
-<br/>
-
-		 <!-- Follow By -->
- <s:if test="commentsList.size>0">
- 		  <div class=" roundbox">
-		      <div class="roundbox-lt">&nbsp;</div>
-			  <div class="roundbox-rt">&nbsp;</div>	
-			  <div class="roundbox-lb">&nbsp;</div>
-			  <div class="roundbox-rb">&nbsp;</div>	
-			  <div class="top-link" style="border-bottom: 1px solid #b9b9b9;">
-	            	<div class="titled" style="width: 100%"><b><a name="comments">Followed By</a></b><br/></div>
-	          </div>       
-					<div class="comments">					
-						<ul id="ul-comments" style="">	
-					 	  <s:iterator value="commentsList" status="st">				
-							<s:if test="#st.index>0"><div style="height:1px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed #ddd;"></div></s:if>			 					
-					 			<li >
-					 				<s:if test="nodeID[#st.index]!=''">
-						 				<div id=mc_<s:property value="message_id"/> class="comment" >
-						 				
-						 				<span style="float:left; width:40px;"><a href="profile/<s:property value="author"/>" class="user-tip" user="<s:property value="author"/>"><img style="width:32px;height:32px;margin:3px 0 0 5px;" src="<s:if test="avatar==\"Y\"">upload/userphoto/<s:property value="author"/>/</s:if><s:else>img/</s:else>photo_50.jpg"/></a></span>
-						 				<div style="margin-left:50px;">
-							 				<a href="profile/<s:property value="author"/>" name="rpl_<s:property value="messageId"/>"><s:property value="author" /></a> <span style="color:grey"><s:text name="post"/> <s:date name="in_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/></span> 
-										<s:if test="#session.session_username!=null">
-										<s:if test="#session.session_username!=author">
-											<a href="javascript:ReplyInline(<s:property value="messageId"/>,<s:property value="rootId"/>)">回复此评论</a>
-							 			</s:if>	
-							 			</s:if>	
-<span commentid="<s:property value="messageId"/>" style="float:right;">
-<a href="#" class="vote-for-comment" voteDirection="1" dd="x"><img style="position:relative;top:3px;opacity:0.55;" src="img/vote/comment-voteup.png" alt="Vote: I like it" title="Vote: I like it"/></a>
-&nbsp;
-<s:if test="votes>0">
-<span style="color:green;font-weight:bold;">
-+<s:property value="votes"/>
-</span>
-</s:if><s:else>
-<span style="color:gray;font-weight:bold;">
-<s:property value="votes"/>
-</span>
-</s:else>
-&nbsp;
-<a href="#" class="vote-for-comment" voteDirection="-1" dd="y"><img style="position:relative;top:2px;opacity:0.55;" src="img/vote/comment-votedown.png" alt="Vote: I do not like it" title="Vote: I do not like it"/></a>
-</span>							 				
-							 					 <p><s:property value="content" escape="false"/></p>
-							 					 <div id="inline_reply_of_<s:property value='messageId'/>_<s:property value='rootId'/>" class='inline_reply'></div>
-							 			</div>
+	
+	<span class="link_view" title="<s:text name="topic.views"/>"><s:property value="messagebean.views"/> <s:text name="topic.views"/></span>
+	<span class="link_comments" title="<s:text name="topic.reply"/>"><s:text name="topic.reply"/>(<s:property value="messagebean.comments"/>)</span>
+	<span class="link_edit">
+	<s:if test="#session.session_username==messagebean.author"><a href="topic/edit/<s:property value="messagebean.messageId"/>"><s:text name="topic.edit"/></a></s:if>
+	</span>		
+				</div>
+				<div class="content">   
+			       	<blockquote>
+			      	<p><s:property value="messagebean.content" escape="false"/></p>		      				    
+			        </blockquote>
+			     </div>
+			     
+	<div class="topic-tools-box roundbox">
+	<span class="tags">
+	<s:iterator  value="tagsList" status="tagsst" >
+	  <a href="search?word=<s:property />&type=topic" rel="tag" ><s:property /></a>
+	</s:iterator>
+	</span>
+	
+	<span class="topic-shareto"></span> 
+	<!-- JiaThis Button BEGIN 
+	<span id="ckepop" class="topic-share">	
+		<a class="jiathis_button_qzone"></a>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_tqq"></a>
+		<a class="jiathis_button_renren"></a>
+		<a class="jiathis_button_kaixin001"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+		<a class="jiathis_counter_style"></a>
+	</span>
+	<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+	 JiaThis Button END -->
+		
+		<span class="topic-vote">	
+			<a href="#" class="topic-vote-up-<s:property value="messagebean.messageId"/>"><img style="vertical-align:middle;position:relative;top:-0.2em;" src="img/vote/voteup.png" alt="Vote: I like it" title="Vote: I like it"/></a>
+			<s:if test="messagebean.votes>0">
+			<span style="color:green;font-weight:bold;">
+			+<s:property value="messagebean.votes"/>
+			</span>
+			</s:if><s:else>
+			<span style="color:gray;font-weight:bold;">
+			<s:property value="messagebean.votes"/>
+			</span>
+			</s:else>
+			<a href="#" class="topic-vote-down-<s:property value="messagebean.messageId"/>"><img style="vertical-align:middle;position:relative;top:-0.2em;" src="img/vote/votedown.png" alt="Vote: I do not like it" title="Vote: I do not like it"/></a>
+			
+			
+			<script type="text/javascript">
+			        $(document).ready(function() {
+			    $(".topic-vote-up-<s:property value="messagebean.messageId"/>").click(function() {
+			        $.post("vote", {messageId: <s:property value="messagebean.messageId"/>, vote: +1}, function(data) {
+			             if (data.success != true) {
+			                alert(data["error"]);
+			            }else{
+			            	alert("Vote success.");
+			            }
+			        }, "json");
+			        return false;
+			    });
+			    $(".topic-vote-down-<s:property value="messagebean.messageId"/>").click(function() {
+			        $.post("vote", {messageId: <s:property value="messagebean.messageId"/>, vote: -1}, function(data) {
+			             if (data.success != true) {
+			                alert(data["error"]);
+			            }else{
+			            	alert("Vote success.");
+			            }
+			        }, "json");
+			        return false;
+			    });
+			        });
+			</script>	
+		</span>
+	</div>		     
+	<br/>
+	
+			 <!-- Follow By -->
+	 <s:if test="commentsList.size>0">
+	 		  <div class=" roundbox">
+						<div class="comments rtable">
+							<ul id="ul-comments" style="">	
+						 	  <s:iterator value="commentsList" status="st">				
+								<s:if test="#st.index>0"><div style="height:1px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed #ddd;"></div></s:if>			 					
+						 			<li >
+						 				<s:if test="nodeID[#st.index]!=''">
+							 				<div id=mc_<s:property value="message_id"/> class="comment" >
+							 				
+							 				<span style="float:left; width:40px;"><a href="profile/<s:property value="author"/>" class="rated-user user-rate-<s:property value="user.rate" default="0"/> user-tip" user="<s:property value="author"/>"><img style="width:32px;height:32px;margin:3px 0 0 5px;" src="<s:if test="avatar==\"Y\"">upload/userphoto/<s:property value="author"/>/</s:if><s:else>img/</s:else>photo.png"/></a></span>
+							 				<div style="margin-left:50px;">
+								 				<a href="profile/<s:property value="author"/>" class="rated-user user-rate-<s:property value="user.rate" default="0"/> user-tip" user="<s:property value="author"/>" name="rpl_<s:property value="messageId"/>"><s:property value="author" /></a> <span style="color:grey"><s:text name="post"/> <s:date name="in_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/></span> 
+											<s:if test="#session.session_username!=null">
+											<s:if test="#session.session_username!=author">
+												<a href="javascript:ReplyInline(<s:property value="messageId"/>,<s:property value="rootId"/>)">回复此评论</a>
+								 			</s:if>	
+								 			</s:if>	
+	<span commentid="<s:property value="messageId"/>" style="float:right;">
+	<a href="#" class="vote-for-comment" voteDirection="1" dd="x"><img style="position:relative;top:3px;opacity:0.55;" src="img/vote/comment-voteup.png" alt="Vote: I like it" title="Vote: I like it"/></a>
+	&nbsp;
+	<s:if test="votes>0">
+	<span style="color:green;font-weight:bold;">
+	+<s:property value="votes"/>
+	</span>
+	</s:if><s:else>
+	<span style="color:gray;font-weight:bold;">
+	<s:property value="votes"/>
+	</span>
+	</s:else>
+	&nbsp;
+	<a href="#" class="vote-for-comment" voteDirection="-1" dd="y"><img style="position:relative;top:2px;opacity:0.55;" src="img/vote/comment-votedown.png" alt="Vote: I do not like it" title="Vote: I do not like it"/></a>
+	</span>							 				
+								 					 <p><s:property value="content" escape="false"/></p>
+								 					 <div id="inline_reply_of_<s:property value='messageId'/>_<s:property value='rootId'/>" class='inline_reply'></div>
+								 			</div>
+											</div>
+							 			<ul id=u<s:property value="nodeID[#st.index]"/>>
+						 			</s:if><s:else>
+							 			<div id=mc_<s:property value="messageId"/> class="comment">
+							 			<span style="float:left; width:40px;"><a href="profile/<s:property value="author"/>" class="rated-user user-rate-<s:property value="user.rate" default="0"/> user-tip" user="<s:property value="author"/>"><img style="width:32px;height:32px;margin:3px 0 0 5px;" src="<s:if test="avatar==\"Y\"">upload/userphoto/<s:property value="author"/>/</s:if><s:else>img/</s:else>photo.png"/></a></span>
+							 				<div style="margin-left:50px;">
+								 				<a href="profile/<s:property value="author"/>" class="rated-user user-rate-<s:property value="user.rate" default="0"/> user-tip" user="<s:property value="author"/>" name="rpl_<s:property value="messageId"/>"><s:property value="author"/></a>
+								 				 <span style="color:grey"> <s:text name="post"/> 
+								 				   <span  title="<s:date name="in_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/>">
+								 				    <s:property value="friendly_Date"/>
+								 				   </span> 
+								 				 </span>    
+								 			<s:if test="#session.session_username!=null">
+											<s:if test="#session.session_username!=author">
+												<a href="javascript:ReplyInline(<s:property value="messageId"/>,<s:property value="rootId"/>)"><s:text name="reply_comment"/></a>
+								 			</s:if>	
+								 			</s:if>	
+								 				<span commentid="<s:property value="messageId"/>" style="float:right;">
+	<a href="#" class="vote-for-comment" voteDirection="1" dd="x"><img style="position:relative;top:3px;opacity:0.55;" src="img/vote/comment-voteup.png" alt="Vote: I like it" title="Vote: I like it"/></a>
+	&nbsp;
+	<s:if test="votes>0">
+	<span style="color:green;font-weight:bold;">
+	+<s:property value="votes"/>
+	</span>
+	</s:if><s:else>
+	<span style="color:gray;font-weight:bold;">
+	<s:property value="votes"/>
+	</span>
+	</s:else>
+	&nbsp;
+	<a href="#" class="vote-for-comment" voteDirection="-1" dd="y"><img style="position:relative;top:2px;opacity:0.55;" src="img/vote/comment-votedown.png" alt="Vote: I do not like it" title="Vote: I do not like it"/></a>
+	</span>
+								 				 <p><s:property value="content" escape="false"/></p>
+								 				 <div id="inline_reply_of_<s:property value='messageId'/>_<s:property value='rootId'/>" class='inline_reply'></div>
+											</div>
 										</div>
-						 			<ul id=u<s:property value="nodeID[#st.index]"/>>
-					 			</s:if><s:else>
-						 			<div id=mc_<s:property value="messageId"/> class="comment">
-						 			<span style="float:left; width:40px;"><a href="profile/<s:property value="author"/>" class="user-tip" user="<s:property value="author"/>"><img style="width:32px;height:32px;margin:3px 0 0 5px;" src="<s:if test="avatar==\"Y\"">upload/userphoto/<s:property value="author"/>/</s:if><s:else>img/</s:else>photo_50.jpg"/></a></span>
-						 				<div style="margin-left:50px;">
-							 				<a href="profile/<s:property value="author"/>" name="rpl_<s:property value="messageId"/>"><s:property value="author"/></a>
-							 				 <span style="color:grey"> <s:text name="post"/> 
-							 				   <span  title="<s:date name="in_date" nice="false" format="yyyy-MM-dd HH:mm:ss"/>">
-							 				    <s:property value="friendly_Date"/>
-							 				   </span> 
-							 				 </span>    
-							 			<s:if test="#session.session_username!=null">
-										<s:if test="#session.session_username!=author">
-											<a href="javascript:ReplyInline(<s:property value="messageId"/>,<s:property value="rootId"/>)"><s:text name="reply_comment"/></a>
-							 			</s:if>	
-							 			</s:if>	
-							 				<span commentid="<s:property value="messageId"/>" style="float:right;">
-<a href="#" class="vote-for-comment" voteDirection="1" dd="x"><img style="position:relative;top:3px;opacity:0.55;" src="img/vote/comment-voteup.png" alt="Vote: I like it" title="Vote: I like it"/></a>
-&nbsp;
-<s:if test="votes>0">
-<span style="color:green;font-weight:bold;">
-+<s:property value="votes"/>
-</span>
-</s:if><s:else>
-<span style="color:gray;font-weight:bold;">
-<s:property value="votes"/>
-</span>
-</s:else>
-&nbsp;
-<a href="#" class="vote-for-comment" voteDirection="-1" dd="y"><img style="position:relative;top:2px;opacity:0.55;" src="img/vote/comment-votedown.png" alt="Vote: I do not like it" title="Vote: I do not like it"/></a>
-</span>
-							 				 <p><s:property value="content" escape="false"/></p>
-							 				 <div id="inline_reply_of_<s:property value='messageId'/>_<s:property value='rootId'/>" class='inline_reply'></div>
-										</div>
-									</div>
-					 			</s:else>
-					 		<s:property value="prevUL[#st.index]" escape="false"/>	 	
-					 	</s:iterator>
-						</ul>					
-				 </div>
-		      
-		    </div> 
-<br/></s:if>	     	
-	     <!-- Reply -->
-	     	<div>
-		    	  <b>Reply:</b> 	
-		    	  <s:if test="#session.session_username!=null">  
-				  <div class="comment reply-edit-box reply-edit-box-pro" style="position: relative;padding: 6px;">
-				  <form action="" method="post">	     
-						<s:token />
-							<input  type="hidden" name="moduleId" value="0" >
-							<input  type="hidden" name="parentId" value=<s:property value="messagebean.messageId"/>>
-							<input  type="hidden" name="rootId"  value=<s:property value="messagebean.rootId" />>
-							<div style="text-align:left;margin-bottom: 6px;">						
-							<textarea class="message-content"  id="reply-content" name="content" rows="10" ></textarea>	
-							</div>							
-							<div style="text-align: left;">
-							<input class="padding: 12px;" type="submit" value="Post">
-							<input class="padding: 12px;" type="reset" value="Reset" >
-							<span class="fielderror"></span>
-							</div>
-					</form>     
-	    		</div> 	
-	    		<div id='inline_reply_editor' style='display: none;'>	    		
-	    		<div class="comment inline-reply-edit-box" style="position: relative;padding: 6px;">
-				  <form action="" method="post">	     
-						<s:token />
-							<input id="inline_moduleId" type="hidden" name="moduleId" value="0" >
-							<input id="inline_parentId" type="hidden" name="parentId" value="0">
-							<input id="inline_rootId" type="hidden" name="rootId"  value="0">
-							<div style="text-align:left;margin-bottom: 6px;">						
-							<textarea class="message-content"  id="inline-reply-content" name="content" rows="10" onkeydown="if(event.ctrlKey&&event.keyCode==13){$('#form_inline_comment').submit();}"></textarea>	
-							</div>
-							
-							<div style="text-align: left;margin-top: 6px;">
-							<input class="padding: 12px;" type="submit" value="Reply" id="btn_comment">
-							<input class="padding: 12px;" type="button" value="Close" id='btn_close_inline_reply'>
-							<span class="inline-fielderror"></span>
-							</div>
-					</form>     
-	    		</div>
-	    		</div>
-	    		</s:if>	 <s:else>
-		    	<span class="reply"><a href="javascript:void(0)" class="<s:property value="message.message_id"/> <s:property value="message.parent_id"/> <s:property value="message.root_id"/>">Reply it before Login</a></span>
-	    		</s:else>
-	    	</div>	
-	    </div>
-	</div>  
-<s:if test="#session.session_username!=null">
-
-
+						 			</s:else>
+						 		<s:property value="prevUL[#st.index]" escape="false"/>	 	
+						 	</s:iterator>
+							</ul>					
+					 </div>
+			      
+			    </div> 
+	<br/></s:if>	     	
+		     <!-- Reply -->
+		     	<div>
+		     		  <b><s:text name="topic.your_reply"/>:</b> 	
+			    	  <s:if test="#session.session_username!=null">  
+					  <div class="comment reply-edit-box reply-edit-box-pro" style="position: relative;padding: 6px;">
+					  <form action="" method="post">	     
+							<s:token />
+								<input  type="hidden" name="moduleId" value="0" >
+								<input  type="hidden" name="parentId" value=<s:property value="messagebean.messageId"/>>
+								<input  type="hidden" name="rootId"  value=<s:property value="messagebean.rootId" />>
+								<div style="text-align:left;margin-bottom: 6px;">						
+								<textarea class="message-content"  id="reply-content" name="content" rows="10" ></textarea>	
+								</div>							
+								<div style="text-align: left;">
+								<input class="button_submit" type="submit" value="<s:text name="topic.btn_reply"/>">
+								<input class="button_submit" type="reset" value="<s:text name="topic.btn_reset"/>" >
+								<span class="fielderror"></span>
+								</div>
+						</form>     
+		    		</div> 	
+		    		<div id='inline_reply_editor' style='display: none;'>	    		
+		    		<div class="comment inline-reply-edit-box" style="position: relative;padding: 6px;">
+					  <form action="" method="post">	     
+							<s:token />
+								<input id="inline_moduleId" type="hidden" name="moduleId" value="0" >
+								<input id="inline_parentId" type="hidden" name="parentId" value="0">
+								<input id="inline_rootId" type="hidden" name="rootId"  value="0">
+								<div style="text-align:left;">						
+								<textarea class="message-content"  id="inline-reply-content" name="content" rows="10" onkeydown="if(event.ctrlKey&&event.keyCode==13){$('#form_inline_comment').submit();}"></textarea>	
+								</div>
+								
+								<div style="text-align: left;">
+								<input class="button_submit" type="submit" value="<s:text name="topic.btn_reply"/>" id="btn_comment">
+								<input class="button_submit" type="button" value="<s:text name="topic.btn_cancel"/>" id='btn_close_inline_reply'>
+								<span class="inline-fielderror"></span>
+								</div>
+						</form>     
+		    		</div>
+		    		</div>
+		    		</s:if>	 <s:else>
+			    	<span class="reply"><a href="javascript:void(0)" class="<s:property value="message.message_id"/> <s:property value="message.parent_id"/> <s:property value="message.root_id"/>">Reply it before Login</a></span>
+		    		</s:else>
+		    	</div>	
+		    </div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+		<s:if test="#session.session_username!=null">
 <script type='text/javascript' src='js/ke/kindeditor-min.js' charset='utf-8'></script>
-
 <style>
-
 .ke-icon-code {
 	background-image: url(img/code.gif);
 	background-position: 0px 0px;
@@ -336,7 +321,6 @@ KE.plugin['code'] = {
 
 };
 
-
 KE.lang['quote'] = "引用某段文字";
 KE.plugin['quote'] = {
 	click : function(id) {
@@ -389,14 +373,9 @@ KE.plugin['quote'] = {
 };
 });
 
-
-
 //-->
-
 </script>
-
 <script type='text/javascript'>
-
 	KE.show({
 		id : 'reply-content',
 		resizeMode : 1,
@@ -410,15 +389,12 @@ KE.plugin['quote'] = {
 		items : [ 'bold', 'italic', 'underline', 'strikethrough', 'removeformat','|','textcolor', 'bgcolor',  
 				 'title', 'fontname', 'fontsize',  '|', 
 				 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-				 'link', 'unlink', 'emoticons','code', 'image', 'flash', 'quote', '|','selectall','source' ,'about'
+				 'link', 'unlink', 'code', 'image', 'quote', '|', 'source' ,'about'
 				 ]
 	});
-
 </script>
 
-
 <script type="text/javascript">
-
 function ReplyInline(messageId,rootId){	
 		$('.inline_reply').empty();		
 		var div_id = '#inline_reply_of_'+messageId+'_'+rootId;
@@ -537,13 +513,6 @@ $(document).ready(function() {
     });
 });
 </script>
-	     
-
-	      
-      <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
-<!-- JiaThis Button BEGIN -->
-<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?uid=1339907478548202&type=left&amp;move=0" charset="utf-8"></script>
-<!-- JiaThis Button END -->
    </div>
   </body>
 </html>

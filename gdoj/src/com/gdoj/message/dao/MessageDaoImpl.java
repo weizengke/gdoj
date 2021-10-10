@@ -47,10 +47,10 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDAO {
 		*/
 		Session session = HibernateSessionFactory.getSession();
 		session.beginTransaction();
-		//ÒÔ×îÐÂÆÀÂÛ»ò·¢±íÎªÐò
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û»ò·¢±ï¿½Îªï¿½ï¿½
 		//String sql = "from Message as m group by m.root_id  order by m.orderNum DESC,max(m.message_id) DESC";
 		
-		//ÒÔÂ¥Ö÷Ê±¼äÅÅÐò
+		//ï¿½ï¿½Â¥ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String sql = "from Message as m where m.message_id=m.root_id and m.defunct='N' order by m.orderNum DESC,m.message_id DESC";
 		
 		Integer from = (pageNow - 1) * pageSize;
@@ -65,7 +65,7 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDAO {
 	public Message getLatestReply(Integer messageId){
 		Session session = HibernateSessionFactory.getSession();
 		session.beginTransaction();
-		//ÒÔ×îÐÂÆÀÂÛ»ò·¢±íÎªÐò
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û»ò·¢±ï¿½Îªï¿½ï¿½
 		String 	sql = "from Message m where m.parent_id!=0 and m.root_id="+messageId+" order by m.message_id DESC";
 		
 		Query q = (Query) session.createQuery(sql);
@@ -129,9 +129,9 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDAO {
 		session.beginTransaction();
 		String sql ="";
 		if(username==null){
-			sql = "from Message as m where m.defunct='N' order by m.message_id DESC";
+				sql = "from Message as m where m.defunct='N' group by m.root_id,m.create_user order by m.message_id DESC";
 		}else{
-			sql = "from Message as m where m.create_user='"+ username+"' and m.defunct='N' order by m.message_id DESC";
+			sql = "from Message as m where m.create_user='"+ username+"' and m.defunct='N' group by m.root_id order by m.message_id DESC";
 		}
 		Query q = (Query) session.createQuery(sql);
 		q.setFirstResult(from); 
@@ -141,7 +141,7 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDAO {
 		HibernateSessionFactory.closeSession();	
 		return list;
 	}
-	
+
 	public List<Message> query(String sql,String word){
 		Session session = HibernateSessionFactory.getSession();
 		session.beginTransaction();

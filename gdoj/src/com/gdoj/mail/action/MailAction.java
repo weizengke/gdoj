@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.gdoj.mail.service.MailService;
 import com.gdoj.mail.vo.Mail;
+import com.gdoj.message.vo.Message;
 import com.gdoj.user.service.UserService;
+import com.gdoj.user.vo.User;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -62,8 +64,21 @@ public class MailAction extends ActionSupport {
 			Integer from = (page - 1) * pageSize;
 			sql = "select m from Mail m where m.defunct='N' and m.from_user='"
 					+ username_ + "' order by m.mail_id DESC";
+			
 			mailList = new ArrayList<Mail>();
 			mailList = mailService.queryMails(from, pageSize, sql);
+			for (int i = 0; i < mailList.size(); i++){
+				User u = new User();
+			    u = userService.queryUser(mailList.get(i).getFrom_user());
+			    if(u != null){
+			    	mailList.get(i).setSendUser(u);
+				}
+			    
+			    u = userService.queryUser(mailList.get(i).getTo_user());
+			    if(u != null){
+			    	mailList.get(i).setRecvUser(u);
+				}
+			}
 			
 			List<Integer> volume = new ArrayList<Integer>();
 			if (pageCount < 7) {
@@ -129,6 +144,18 @@ public class MailAction extends ActionSupport {
 					+ username_ + "' order by m.mail_id DESC";
 			mailList = new ArrayList<Mail>();
 			mailList = mailService.queryMails(from, pageSize, sql);
+			for (int i = 0; i < mailList.size(); i++){
+				User u = new User();
+			    u = userService.queryUser(mailList.get(i).getFrom_user());
+			    if(u != null){
+			    	mailList.get(i).setSendUser(u);
+				}
+			    
+			    u = userService.queryUser(mailList.get(i).getTo_user());
+			    if(u != null){
+			    	mailList.get(i).setRecvUser(u);
+				}
+			}
 			
 			intRowCount = mailList.size();
 			pageCount = ((intRowCount + pageSize - 1) / pageSize);//计算出总页数

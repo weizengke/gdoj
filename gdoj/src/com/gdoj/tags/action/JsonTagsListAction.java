@@ -26,7 +26,7 @@ public class JsonTagsListAction extends ActionSupport{
 		}
 		String sql = "select t.name from Tags t where t.name like ? and t.defunct='N' order by t.name ASC";
 		//System.out.println(q_); 
-		tags = tagsService.queryAllTagsName(sql, q_,10);
+		tags = tagsService.queryAllTagsName(sql, q_,20);
 		//System.out.println(tags.size()); 
 		return SUCCESS;
 	}

@@ -1,5 +1,7 @@
 package com.util;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -83,18 +85,24 @@ public class DateUtil {
 	}
 
 	public static String toFriendlyDate(Date time){
-		if(time == null) return "unknown";
+		ActionSupport action = new ActionSupport();
+		if(time == null) return action.getText("unknown");
 		int ct = (int)((System.currentTimeMillis() - time.getTime())/1000);
+		if (ct < 60)
+			return ct + " " + action.getText("seconds_before");
 		if(ct < 3600)
-			return Math.max(ct / 60,1) +" minutes ago";
-		if(ct >= 3600 && ct < 172800)  // 48小时
-			return ct / 3600 + " hours ago";
-		if(ct >= 172800 && ct < 2592000){ //86400 * 30
-			int day = ct / 86400 ;	
-			return day + " days ago";			
+			return Math.max(ct / 60,1) + " " + action.getText("minutes_before");
+		if(ct >= 3600 && ct < 86400)
+			return ct / 3600 + " " + action.getText("hours_before");
+		if(ct >= 86400 && ct < 2592000){ //86400 * 30
+			int day = ct / 86400 ;
+			if(day>1){
+				return day + " " + action.getText("days_before");
+			}
+			return action.getText("yesterday");
 		}
-		if(ct >= 2592000 && ct < 62208000) //到24个月
-			return ct / 2592000 + " months ago";
-		return ct / 31104000 + " years ago";
+		if(ct >= 2592000 && ct < 31104000) //86400 * 30
+			return ct / 2592000 + " " + action.getText("months_before");
+		return ct / 31104000 + " " + action.getText("years_before");
 	}
 }

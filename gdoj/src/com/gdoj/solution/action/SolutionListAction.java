@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.gdoj.bean.OJUtil;
 import com.gdoj.contest.service.ContestService;
 import com.gdoj.contest.vo.Contest;
 import com.gdoj.problem.service.ProblemService;
@@ -13,6 +14,7 @@ import com.gdoj.solution.vo.Solution;
 import com.gdoj.user.service.UserService;
 import com.gdoj.user.vo.User;
 import com.opensymphony.xwork2.ActionSupport;
+import com.util.DateUtil;
 
 public class SolutionListAction extends ActionSupport{
 
@@ -22,35 +24,9 @@ public class SolutionListAction extends ActionSupport{
 	private static final long serialVersionUID = -5701824724377184171L;
 	
 	private SolutionService solutionService;
-	
 	private ProblemService problemService;
 	private ContestService contestService;
-	private List<Integer> isPrivateList;
 	private UserService userService;
-	public UserService getUserService() {
-		return userService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	public ContestService getContestService() {
-		return contestService;
-	}
-
-	public void setContestService(ContestService contestService) {
-		this.contestService = contestService;
-	}
-
-	public List<Integer> getIsPrivateList() {
-		return isPrivateList;
-	}
-
-	public void setIsPrivateList(List<Integer> isPrivateList) {
-		this.isPrivateList = isPrivateList;
-	}
-
 	private List<Solution> solutionList;
 	private Integer languageId;
 	private Integer verdictId;
@@ -58,27 +34,10 @@ public class SolutionListAction extends ActionSupport{
 	private Integer problemId;
 	private String username;
 	private Integer intRowCount=0;
-	
 	private Integer pageSize=50;
 	private Integer page=1;
-
 	private List<String> problemTitle;
 	private Integer pageCount = 0;
-	private List<Integer> timeOutList;
-	
-	public List<Integer> getTimeOutList() {
-		return timeOutList;
-	}
-	public void setTimeOutList(List<Integer> timeOutList) {
-		this.timeOutList = timeOutList;
-	}
-	public Integer getPageCount() {
-		return pageCount;
-	}
-
-	public void setPageCount(Integer pageCount) {
-		this.pageCount = pageCount;
-	}
 
 	public String queryStatusList() throws Exception{
 		try {
@@ -102,14 +61,10 @@ public class SolutionListAction extends ActionSupport{
 			}
 			if(!"".equals(sql_condition)) sql_condition = " where"+sql_condition;
 			sql_condition +=" order by s.solution_id DESC";
-			
-			//System.out.println(sql_condition);
-			
+
 			intRowCount = solutionService.countSolutions(sql_count
 					+ sql_condition);
-			
-			//System.out.println(intRowCount);
-			
+
 			pageCount = ((intRowCount + pageSize - 1) / pageSize);//计算出总页数
 			if (page < 1) {
 				page = 1;
@@ -122,47 +77,38 @@ public class SolutionListAction extends ActionSupport{
 					sql_query + sql_condition);
 			
 			List<String> problemTitle_ = new ArrayList<String>();
-			timeOutList = new ArrayList<Integer>();
-			isPrivateList = new ArrayList<Integer>();
 			Date dt = new Date();
 			if (null != solutionList) {
-				Integer access_ = new Integer(0);
-				
 				for (Solution s : solutionList) {
-					//System.out.println(s.getSolution_id());
+					s.setFriendlySubmitDate(DateUtil.toFriendlyDate(s.getSubmit_date()));
+					s.setStatus_description(OJUtil.getVerdictName(s.getVerdict(), s.getTestcase()));
+
 					Problem problem_ = problemService.queryProblem(s.getProblem_id());
 					if(problem_==null){
 						problemTitle_.add("problem missed");
+					} else {
+						problemTitle_.add(problem_.getTitle());
 					}
-					else problemTitle_.add(problem_.getTitle());
 					
-					if(s.getContest_id()>0){
-						Contest contest_ = contestService.queryContest(s.getContest_id(),"ADMIN");
-						
+					s.setTimeout(1);
+					Contest contest_ = new Contest();
+					if(s.getContest_id() > 0){
+						contest_ = contestService.queryContest(s.getContest_id(),"ADMIN");
 						if(contest_==null) {return ERROR;}
-						if(contest_.getEnd_time().getTime()>dt.getTime()){//未结束
-							access_ = 1;
-							timeOutList.add(1);
-						}else{
-							access_ = 0;	
-							timeOutList.add(0);
+						if(contest_.getEnd_time().getTime() > dt.getTime()){
+							s.setTimeout(0);
 						}						
-					}else{
-						access_ = 0;
-						timeOutList.add(0);
 					}
 					
-					if(access_.equals(0)){
-						User user_ = new User();
-						user_ = userService.queryUser(s.getUsername());
-						if(user_!=null){
-							if(user_.getOpensource().equals("N")){
-								access_ = 1;
-							}
+					User user_ = new User();
+					user_ = userService.queryUser(s.getUsername());
+					if(user_ != null){
+						s.setUser(user_);
+						/* opensource only while opensource by user after contest ended */
+						if(user_.getOpensource().equals("Y") && s.getTimeout() == 1){
+							s.setOpensource(1);
 						}
 					}
-					
-					isPrivateList.add(access_);
 				}
 			}
 			problemTitle = problemTitle_;
@@ -299,4 +245,28 @@ public class SolutionListAction extends ActionSupport{
 	public void setProblemTitle(List<String> problemTitle) {
 		this.problemTitle = problemTitle;
 	}
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public ContestService getContestService() {
+		return contestService;
+	}
+
+	public void setContestService(ContestService contestService) {
+		this.contestService = contestService;
+	}
+
+	public Integer getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(Integer pageCount) {
+		this.pageCount = pageCount;
+	}
+
 }

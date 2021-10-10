@@ -81,6 +81,14 @@ public class PrivilegeAction extends ActionSupport{
 			for(String s:str){
 				privilegeList_ = privilegeService.queryByRight(s);
 				if(privilegeList_!=null){
+					for(Privilege p:privilegeList_){
+						User user_ = new User();
+						user_ = userService.queryUser(p.getUsername());
+						if(user_ != null){
+							p.setUser(user_);
+						}
+					}
+					
 					privilegeList.addAll(privilegeList_);
 				}
 			}

@@ -9,6 +9,8 @@ import org.hibernate.mapping.Array;
 import com.gdoj.contest.attend.service.AttendService;
 import com.gdoj.contest.service.ContestService;
 import com.gdoj.contest.vo.Contest;
+import com.gdoj.user.service.UserService;
+import com.gdoj.user.vo.User;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -23,6 +25,7 @@ public class ContestListAction extends ActionSupport{
 	 */
 	private ContestService contestService;
 	private AttendService attendService;
+	private UserService userService;
 	private Integer page=1;  //ended
 	private List<Integer> pageList;  //ended
 	private String order;
@@ -37,7 +40,6 @@ public class ContestListAction extends ActionSupport{
 	public void setContestList(List<Contest> contestList) {
 		this.contestList = contestList;
 	}
-
 
 	public String contestSet()throws Exception {
 
@@ -55,7 +57,15 @@ public class ContestListAction extends ActionSupport{
 				page = pageCount;
 			}
 			Integer from = (page - 1) * pageSize;
-			contestList = contestService.queryContests(from, pageSize,0,order,"ADMIN");		
+			contestList = contestService.queryContests(from, pageSize,0,order,"ADMIN");	
+			
+			for (Contest c:contestList) {
+				User user_ = new User();
+				user_ = userService.queryUser(c.getCreate_user());
+				if(user_ != null){
+					c.setUser(user_);
+				}
+			}
 			
 			List<Integer> volume = new ArrayList<Integer>();
 			for (Integer i = 1; i <= pageCount; i++) {
@@ -114,6 +124,12 @@ public class ContestListAction extends ActionSupport{
 	}
 	public void setIntRowCount(Integer intRowCount) {
 		this.intRowCount = intRowCount;
+	}
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	public UserService getUserService() {
+		return userService;
 	}
 	
 	

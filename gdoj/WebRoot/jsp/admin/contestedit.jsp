@@ -21,6 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
+  	<script type="text/javascript" src="js/datepick.js"></script>
 <link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shCore.css"/>
 <link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shThemeDefault.css"/>
 <script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shCore.js"></script>
@@ -34,24 +35,15 @@ SyntaxHighlighter.all();
 
   <body>  
   <jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">
-	<div id="sidebar"> 	      
- 		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
-   	</div> 	
-
-     <div id="content"  class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
-     	<div id="nav-content" >	
-  	<a href="admin">Admin</a>
-   		<a href="admin/news">News</a>
-     	<a href="admin/problemset">Problems</a>
-     	<a href="admin/problemset/status">Status</a>
-     	<a href="admin/contests">Contests</a>
-     	<a href="admin/user">Users</a>
-     		<a href="admin/privilege">Privilege</a>		
-     	</div>
-	    <div class="content round_0123" style="background-color:#EEE0E5;padding:3px 3px 3px 3px;">	    	
-			<div class="datatable round_0123" style="background-color:#FFF;word-wrap:break-word;">
-			    <s:form id="contestUpdate" method="post" action="contestUpdate.action"  theme="simple">
+  	<div class="container">
+        <div class="content">       
+	     	<div class="sidebar">      
+		 		<jsp:include  page="/jsp/sidebar.jsp" ></jsp:include> 
+		   	</div> 	
+     		<div class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
+     	<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
+	    <div class="content round_0123">	    	
+			<s:form id="contestUpdate" method="post" action="contestUpdate.action"  theme="simple">
 			    	<input type="hidden" id="id" name="contest.contest_id" style="width: 100%;"  value="<s:property value="contest.contest_id"/>"/>
 					<div style="padding:6px;">
 					<div style="text-align:center;" ><span class="fielderror"><s:property value="tip"/></span></div>
@@ -285,15 +277,16 @@ $(document).ready(function() {
     buttonImage: 'img/dateIcon.gif'
     });
 });
-</script>				
-			    </div>		
+</script>					
 			<div style="margin-right: 12px;text-decoration: none;">
 					<div class="left"></div>
 					<div class="right">
 					</div>
 		  </div>       	  	 
 	   </div>    
-	</div>   
+	</div>
+			<div class="clear"></div>
+    	</div>
     <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>

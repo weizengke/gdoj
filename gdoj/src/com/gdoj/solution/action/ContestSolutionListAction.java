@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.gdoj.bean.OJUtil;
 import com.gdoj.contest.problem.service.CProblemService;
 import com.gdoj.contest.problem.vo.CProblem;
 import com.gdoj.contest.service.ContestService;
@@ -14,6 +15,7 @@ import com.gdoj.solution.vo.Solution;
 import com.gdoj.user.service.UserService;
 import com.gdoj.user.vo.User;
 import com.opensymphony.xwork2.ActionSupport;
+import com.util.DateUtil;
 
 public class ContestSolutionListAction extends ActionSupport{
 
@@ -26,24 +28,6 @@ public class ContestSolutionListAction extends ActionSupport{
 	private ContestService contestService;
 	private CProblemService cproblemService;
 	private UserService userService;
-	public UserService getUserService() {
-		return userService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	private List<Solution> solutionList;
-	private List<Integer> timeOutList;
-	
-	public List<Integer> getTimeOutList() {
-		return timeOutList;
-	}
-	public void setTimeOutList(List<Integer> timeOutList) {
-		this.timeOutList = timeOutList;
-	}
-
 	private Integer languageId;
 	private Integer verdictId;
 	private List<Integer> pageList;
@@ -56,29 +40,9 @@ public class ContestSolutionListAction extends ActionSupport{
 	private Contest contest;
 	private List<CProblem> problemList;
 	private Integer pageCount = 0;
-	private List<Integer> isPrivateList;
 	private long timeLeft=0;
-	
-	
-	public long getTimeLeft() {
-		return timeLeft;
-	}
-	public void setTimeLeft(long timeLeft) {
-		this.timeLeft = timeLeft;
-	}
-	public List<Integer> getIsPrivateList() {
-		return isPrivateList;
-	}
-	public void setIsPrivateList(List<Integer> isPrivateList) {
-		this.isPrivateList = isPrivateList;
-	}
-	public Integer getPageCount() {
-		return pageCount;
-	}
+	private List<Solution> solutionList;
 
-	public void setPageCount(Integer pageCount) {
-		this.pageCount = pageCount;
-	}
 	public String queryStatusList() throws Exception{
 		try {
 			String sql_count = new String();
@@ -95,10 +59,8 @@ public class ContestSolutionListAction extends ActionSupport{
 			contest=contest_;
 			
 			Date nowTime = new Date();
-			if(nowTime.getTime() < contest.getStart_time().getTime()){
-				timeLeft=-1;
-			}else if(nowTime.getTime() > contest.getEnd_time().getTime()){
-				timeLeft=0;
+			if(nowTime.getTime() > contest.getEnd_time().getTime()){
+				timeLeft = 0;
 			}else{
 				timeLeft = (contest.getEnd_time().getTime()-nowTime.getTime())/1000;
 			}
@@ -135,36 +97,25 @@ public class ContestSolutionListAction extends ActionSupport{
 					sql_query + sql_condition);
 			
 			List<CProblem> problemList_ = new ArrayList<CProblem>();
-			timeOutList = new ArrayList<Integer>();
-			isPrivateList = new ArrayList<Integer>();
-			Date dt = new Date();
 			if (null != solutionList) {
-				Integer access_ = new Integer(0);
 				for (Solution s : solutionList) {
+					s.setFriendlySubmitDate(DateUtil.toFriendlyDate(s.getSubmit_date()));
+					s.setStatus_description(OJUtil.getVerdictName(s.getVerdict(), s.getTestcase()));
 					problemList_.add(cproblemService.queryProblemByPid(s.getProblem_id(),s.getContest_id()));
-					if(s.getSubmit_date().getTime()>contest_.getEnd_time().getTime()){
-						timeOutList.add(1);
-					}else{
-						timeOutList.add(0);
+					/* submit after contest ended */
+					if(s.getSubmit_date().getTime() > contest_.getEnd_time().getTime()){
+						s.setTimeout(1);
 					}
-					if(contest_.getEnd_time().getTime()>dt.getTime()){//Î´½áÊø
-						//isPrivateList.add(1);
-						access_ = 1;
-					}else{
-						//isPrivateList.add(0);
-						access_ = 0;
-					}	
 					
-					if(access_.equals(0)){
-						User user_ = new User();
-						user_ = userService.queryUser(s.getUsername());
-						if(user_!=null){
-							if(user_.getOpensource().equals("N")){
-								access_ = 1;
-							}
+					User user_ = new User();
+					user_ = userService.queryUser(s.getUsername());
+					if(user_ != null){
+						s.setUser(user_);
+						/* opensource only while opensource by user after contest ended */
+						if(user_.getOpensource().equals("Y") && contest_.getEnd_time().getTime() < nowTime.getTime()){
+							s.setOpensource(1);
 						}
-					}	
-					isPrivateList.add(access_);
+					}
 				}
 			}
 			problemList = problemList_;
@@ -324,4 +275,22 @@ public class ContestSolutionListAction extends ActionSupport{
 		this.problemList = problemList;
 	}
 
+	public UserService getUserService() {
+		return userService;
+	}
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	public long getTimeLeft() {
+		return timeLeft;
+	}
+	public void setTimeLeft(long timeLeft) {
+		this.timeLeft = timeLeft;
+	}
+	public Integer getPageCount() {
+		return pageCount;
+	}
+	public void setPageCount(Integer pageCount) {
+		this.pageCount = pageCount;
+	}
 }

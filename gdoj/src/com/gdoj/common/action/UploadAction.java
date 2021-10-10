@@ -1,9 +1,13 @@
 package com.gdoj.common.action;
 
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -12,6 +16,7 @@ import com.gdoj.user.vo.User;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.util.CompressImage;
+import com.util.RoundHeadImgUtil;
 import com.util.Upload;
 
 public class UploadAction extends ActionSupport{
@@ -37,7 +42,6 @@ public class UploadAction extends ActionSupport{
 		this.userService = userService;
 	}
 	
-
 	public String uploadPhoto()throws Exception {
 		try {
 			//System.out.println(titlePhoto);
@@ -51,22 +55,10 @@ public class UploadAction extends ActionSupport{
 				return LOGIN;
 			}
 			String root = ServletActionContext.getRequest().getRealPath("/upload");
-			String path_orig = root+"\\userphoto\\"+username;
-			if(Upload.uploadFile(titlePhoto,path_orig,"photo.jpg")==false){
+			String path_orig = root+"/userphoto/"+username;
+			if(Upload.uploadFile(titlePhoto, path_orig, "photo.png")==false){
 				return ERROR;
-			}	
-			CompressImage.Generate(path_orig+"\\photo.jpg",path_orig,"photo_250",250);//大头像
-			CompressImage.Generate(path_orig+"\\photo.jpg",path_orig,"photo_80",80);//小缩略头像
-			CompressImage.Generate(path_orig+"\\photo.jpg",path_orig,"photo_50",50);//小缩略头像
-			//back-up
-		/*	root = "E:\\OJ_BACKUP\\image";
-		    path_orig = root+"\\userphoto\\"+username;
-			if(Upload.uploadFile(titlePhoto,path_orig,"photo.jpg")==false){
-				return ERROR;
-			}	
-			CompressImage.Generate(path_orig+"\\photo.jpg",path_orig,"photo_big",250);//大头像
-			CompressImage.Generate(path_orig+"\\photo.jpg",path_orig,"photo_small",80);//小缩略头像
-		*/		
+			}
 			user_.setAvatar("Y");
 			userService.save(user_);
 		} catch (Exception e) {

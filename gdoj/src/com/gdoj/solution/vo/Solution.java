@@ -3,6 +3,8 @@ package com.gdoj.solution.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.gdoj.user.vo.User;
+
 public class Solution implements Serializable {
 
 	/**
@@ -21,16 +23,36 @@ public class Solution implements Serializable {
 	private Integer verdict;
 	private Integer contest_id;
 	private Integer testcase;
-	
-	
+	private Integer timeout;
+	private Integer opensource;
+	private User user;
+	private String status_description;
+	private String language_name;
+	private String friendlySubmitDate;
+	private String problemNum;
+	private String timeSinceContestStart;
+
 	public Solution() {
 		this.memory = 0;
 		this.time = 0;
 		this.contest_id = 0;
 		this.testcase = 0;
 		this.verdict = 1;
+		this.timeout = 0;
+		this.opensource = 0;
 	}
-	
+	public String getStatus_description() {
+		return status_description;
+	}
+	public void setStatus_description(String statusDescription) {
+		status_description = statusDescription;
+	}
+	public String getLanguage_name() {
+		return language_name;
+	}
+	public void setLanguage_name(String languageName) {
+		language_name = languageName;
+	}
 	public Integer getSolution_id() {
 		return solution_id;
 	}
@@ -97,8 +119,52 @@ public class Solution implements Serializable {
 	public void setTestcase(Integer testcase) {
 		this.testcase = testcase;
 	}
-	
-	
-	
-	
+
+	public void setTimeout(Integer timeout) {
+		this.timeout = timeout;
+	}
+
+	public Integer getTimeout() {
+		return timeout;
+	}
+
+	public void setOpensource(Integer opensource) {
+		this.opensource = opensource;
+	}
+
+	public Integer getOpensource() {
+		return opensource;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public String getFriendlySubmitDate() {
+		return friendlySubmitDate;
+	}
+
+	public void setFriendlySubmitDate(String friendlySubmitDate) {
+		this.friendlySubmitDate = friendlySubmitDate;
+	}
+	public String getProblemNum() {
+		return problemNum;
+	}
+
+	public void setProblemNum(String problemNum) {
+		this.problemNum = problemNum;
+	}
+
+	public String getTimeSinceContestStart() {
+		return timeSinceContestStart;
+	}
+
+	public void setTimeSinceContestStart(String timeSinceContestStart) {
+		this.timeSinceContestStart = timeSinceContestStart;
+	}
+
 }

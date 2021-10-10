@@ -28,16 +28,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   <body>  
   	<jsp:include   page="/jsp/head.jsp"></jsp:include> 
-  <div id="body">
-     <div id="content" > 	 <!--class="content-with-sidebar"  -->
-     	<div id="nav-content" >	
-     	</div>
-	    <div class="content" style="">	    	
-			<div class="roundbox" style="word-wrap:break-word;">		
-				 <div class="roundbox-lt">&nbsp;</div>
-	       		  <div class="roundbox-rt">&nbsp;</div>	
-	       		  <div class="roundbox-lb">&nbsp;</div>
-	       		  <div class="roundbox-rb">&nbsp;</div>	 		
+  	<div class="container">
+        <div class="content">
+			<div class="" style="">
+			<div class="roundbox" style="word-wrap:break-word;">
 				<div class="info" style="padding:12px;">
 				<h5>
 				<s:text name="compileinfo"/>:<s:property value="solutionId"/>
@@ -50,9 +44,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="right">
 				</div>
 			</div>       	  	 
-	   </div>    
-	</div>   
-    <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+	   </div>
+		</div>
+		<jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>
 </html>

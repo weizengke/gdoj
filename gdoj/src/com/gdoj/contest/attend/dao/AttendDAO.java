@@ -13,4 +13,5 @@ public interface AttendDAO {
 	public Attend queryUserAttend(Integer contestId,String username);
 	public Integer countUserAttends(String username);
 	public Integer getUserRank(Attend attend,Integer type);
+	public List<Attend> getUserAttends(String username);
 }

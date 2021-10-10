@@ -59,7 +59,7 @@ public class JsonLoginAction extends ActionSupport {
 
 	public void loginEx()throws Exception {
 		try {
-			//System.out.println(username+ "+" +password);
+			System.out.println(username + " do ajax login.");
 			if(false==userService.isUsernameExist(username)){			
 				success = false;
 				error = "username is not exist.";
@@ -75,12 +75,17 @@ public class JsonLoginAction extends ActionSupport {
 				userService.save(user_);
 				
 				ActionContext.getContext().getSession().put("session_username",user_.getUsername());
+				ActionContext.getContext().getSession().put("session_avatar",user_.getAvatar());
+				ActionContext.getContext().getSession().put("session_lang",user_.getLanguage());
+
 				ServletActionContext.getResponse().getWriter().print(1);
 
 				Cookie cookie = new Cookie("cookieOnlineJudgeUsername", username);
-				cookie.setMaxAge(60*60*24*30); //设置cookie有效期为30天
+				cookie.setMaxAge(60*60*24*30);
+				cookie.setPath("/");
 				Cookie cookie_ = new Cookie("cookieOnlineJudgePassword", password);
 				cookie_.setMaxAge(60*60*24*30);
+				cookie_.setPath("/");
 				ServletActionContext.getResponse().addCookie(cookie);
 				ServletActionContext.getResponse().addCookie(cookie_);
 				

@@ -51,6 +51,8 @@ public class LoginAction extends ActionSupport {
 	}
 	public String execute()throws Exception {
 		try {
+			System.out.println(handle + " do login.");
+			
 			if(false==userService.isUsernameExist(handle)){
 				System.out.println(new Date()+":"+handle + " is not exist.");
 				this.addFieldError("handle", "username is not exist.");
@@ -61,18 +63,22 @@ public class LoginAction extends ActionSupport {
 			user_ = userService.checkLogin(handle, password);
 			if (null != user_) {
 				ActionContext.getContext().getSession().put("session_username",user_.getUsername());
+				ActionContext.getContext().getSession().put("session_avatar",user_.getAvatar());
+				ActionContext.getContext().getSession().put("session_lang",user_.getLanguage());
+				
 				OnlineUsers.onlineUser(user_.getUsername());
 				user_.setLastlogin(new Date());
 				userService.save(user_);
 				
-				if (null != remember)
-				{
+				if (null != remember) {
 					Cookie cookie = new Cookie("cookieOnlineJudgeUsername", handle);
-					cookie.setMaxAge(60*60*24*30); //设置cookie有效期为30天
+					cookie.setMaxAge(60*60*24*30);
+					cookie.setPath("/");
 					Cookie cookie_ = new Cookie("cookieOnlineJudgePassword", password);
 					cookie_.setMaxAge(60*60*24*30);
+					cookie_.setPath("/");
 					ServletActionContext.getResponse().addCookie(cookie);
-					ServletActionContext.getResponse().addCookie(cookie_);					
+					ServletActionContext.getResponse().addCookie(cookie_);	
 				}
 				
 				return SUCCESS;

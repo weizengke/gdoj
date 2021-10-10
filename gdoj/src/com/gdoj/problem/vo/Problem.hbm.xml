@@ -79,8 +79,8 @@
         <property name="oj_name" type="java.lang.String">
             <column name="oj_name" length="255" not-null="false" />
         </property>
-         <property name="oj_pid" type="java.lang.Integer">
-            <column name="oj_pid" not-null="false" />
+         <property name="oj_pid" type="java.lang.String">
+            <column name="oj_pid" length="32" not-null="false" />
         </property>
         <property name="isvirtual" type="java.lang.Integer">
             <column name="isvirtual" not-null="false" />

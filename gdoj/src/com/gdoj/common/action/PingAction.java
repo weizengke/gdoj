@@ -33,6 +33,7 @@ public class PingAction extends ActionSupport {
 			if (username == null){
 				success = false;
 				error = "You have logout.";
+				System.out.println("ping not found username session.");
 			}
 			else
 			{

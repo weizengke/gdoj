@@ -35,14 +35,14 @@ $(document).ready(function() {
   
   <body>
   <jsp:include   page="head.jsp"></jsp:include> 
-  <div id="body">
-     <div id="content" >
-	      <div class="content" style="margin: 12px auto;">
+  	<div class="container">
+        <div class="content">   
+	      <div class="" style="margin: 12px auto;">
 		   <b>Success:</b><br/>
 		   <b><span style="color:red"><s:property value="tip"/></span></b>
-		  </div>	  
-	</div>   
-      <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
+		  </div>	 
+		  <jsp:include  page="/jsp/footer.jsp" ></jsp:include> 
+	</div>
   </div>
   </body>
 </html>

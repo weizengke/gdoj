@@ -14,6 +14,7 @@ import com.gdoj.message.vo.Message;
 import com.gdoj.user.service.UserService;
 import com.gdoj.user.vo.User;
 
+import com.util.DateUtil;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.json.annotations.JSON;
 
@@ -23,6 +24,7 @@ import com.util.freemarker.MyFreeMarker;
 public class RecentActionAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private MessageService messageService;
+	private UserService userService;
 	private List<Message> latestMessages;
 	
 	public MessageService getMessageService() {
@@ -46,15 +48,16 @@ public class RecentActionAction extends ActionSupport {
 		try {
 			//latest topic
 			latestMessages = new ArrayList<Message>();
-			latestMessages = messageService.queryLatestMessages(null,0,20);
+			latestMessages = messageService.queryLatestMessages(null,0,10);
 			List<MessageBean> topics = new ArrayList<MessageBean>();
 
 			for(Message m_:latestMessages){
 				MessageBean mb = new MessageBean();
+				mb.setUser(userService.queryUser(m_.getCreate_user()));
 				mb.setAuthor(m_.getCreate_user());
 				mb.setTitle(m_.getTitle());
 				mb.setIn_date(m_.getIn_date());
-				mb.setFriendly_Date(getFriendlyDate(m_.getIn_date()));
+				mb.setFriendly_Date(DateUtil.toFriendlyDate(m_.getIn_date()));
 				mb.setMessageId(m_.getMessage_id());
 				mb.setRootId(m_.getRoot_id());
 				mb.setParentId(m_.getParent_id());
@@ -73,23 +76,12 @@ public class RecentActionAction extends ActionSupport {
         return SUCCESS;
 	}
 
-	public String getFriendlyDate(Date time){
-		if(time == null) return getText("unknown");
-		int ct = (int)((System.currentTimeMillis() - time.getTime())/1000);
-		if(ct < 3600)
-			return Math.max(ct / 60,1) +getText("minutes_before");
-		if(ct >= 3600 && ct < 86400)
-			return ct / 3600 +getText("hours_before");
-		if(ct >= 86400 && ct < 2592000){ //86400 * 30
-			int day = ct / 86400 ;	
-			if(day>1){
-				return day +getText("days_before");	
-			}
-			return getText("yesterday");			
-		}
-		if(ct >= 2592000 && ct < 31104000) //86400 * 30
-			return ct / 2592000 +getText("months_before");
-		return ct / 31104000 + getText("years_before");
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public UserService getUserService() {
+		return userService;
 	}
 	
 }
