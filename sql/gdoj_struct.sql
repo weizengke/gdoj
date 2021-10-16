@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.72, for Win64 (unknown)
+-- MySQL dump 10.13  Distrib 5.1.55, for Win32 (ia32)
 --
 -- Host: localhost    Database: gdoj
 -- ------------------------------------------------------
--- Server version	5.1.72-community
+-- Server version	5.1.55-community
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -211,6 +211,23 @@ CREATE TABLE `news` (
   `defunct` char(1) DEFAULT NULL,
   PRIMARY KEY (`news_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
+--
+-- Table structure for table `oauth`
+--
+
+DROP TABLE IF EXISTS `oauth`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `oauth` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `provider` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `login` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `nickname` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `avatar_url` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,10 +277,29 @@ CREATE TABLE `problem` (
   `tag` varchar(255) DEFAULT NULL,
   `contest_id` int(11) DEFAULT NULL,
   `oj_name` varchar(255) DEFAULT NULL,
-  `oj_pid` int(11) DEFAULT NULL,
+  `oj_pid` varchar(32) DEFAULT NULL,
   `isvirtual` int(1) unsigned zerofill DEFAULT NULL,
   PRIMARY KEY (`problem_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=gbk;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `rating`
+--
+
+DROP TABLE IF EXISTS `rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rating` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `contest_id` int(11) NOT NULL,
+  `rank` int(11) DEFAULT NULL,
+  `delta` int(11) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
+  `rating_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -368,6 +404,7 @@ CREATE TABLE `users` (
   `lastlogin` datetime DEFAULT NULL,
   `avatar` varchar(1) DEFAULT NULL,
   `lastaccesstime` datetime DEFAULT NULL,
+  `rate` int(11) DEFAULT '0',
   PRIMARY KEY (`id`,`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -386,7 +423,7 @@ CREATE TABLE `vote` (
   `vote` int(11) DEFAULT NULL,
   `vote_date` datetime DEFAULT NULL,
   PRIMARY KEY (`vote_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -398,7 +435,7 @@ CREATE TABLE `vote` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-13 23:36:51
+-- Dump completed on 2020-05-12 23:00:22
 
 LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES ('1', 'Administrator', 'administrator', 'Admin', 'administrator@guet.com', 'GUET', 'Just manage Online Judge System', 'N', '1989-10-01 00:00:00', '2012-02-20 23:58:58', null, '1', 'Y', '0', '0', '0', null, null, null);
@@ -409,5 +446,5 @@ INSERT INTO `privilege` VALUES ('1', 'Administrator', 'HEAD');
 UNLOCK TABLES;
 
 LOCK TABLES `problem` WRITE;
-INSERT INTO `problem` VALUES ('1000', 'A+B Problem', 'Calculate A + B£¬and give me the answer! ', 'Input two integers A and B.(Watch the Sample Input) ', 'For each case, output A + B in one line..(Watch the Sample Output)', '1 2 ', '3 ', '0', 'Press the<span style=\"font-size:16px;\"> <strong>Submit</strong></span> to submit your code!<br />\r\n<span style=\"color:#ff0000;\">Q:</span> Where is the input and the output?<br />\r\n<span style=\"color:#ff0000;\">A:</span> Your program shall read input from stdin(&#39;<strong>Standard Input</strong>&#39;) and write output to stdout(&#39;<strong>Standard Output</strong>&#39;).<br />\r\nFor example, you can use &#39;scanf&#39; in C or &#39;cin&#39; in C++ to read from stdin, and use &#39;printf&#39; in C or &#39;cout&#39; in C++ to write to stdout. User programs are not allowed to open and read from/write to files, you will get a &quot;Restricted Function&quot; if you try to do so.<br />\r\nHere is a sample solution for problem 1000 using C:<br />\r\n<pre class=\"brush:java;\">\r\n#include &lt;stdio.h&gt;\r\nint main(void)\r\n{\r\n    int a,b;\r\n    while(scanf(&quot;%d%d&quot;, &amp;a,&amp;b) != EOF)\r\n        printf(&quot;%d\\n&quot;,a+b);\r\n    return 0;\r\n}</pre>\r\nHere is a sample solution for problem 1000 using C++:\r\n<pre class=\"brush:cpp;\">\r\n#include &lt;iostream&gt;\r\nusing namespace std;\r\nint main(void)\r\n{\r\n    int a,b;\r\n    while(cin &gt;&gt; a&gt;&gt;b)\r\n        cout &lt;&lt; a+b&lt;&lt;endl;\r\n    return 0;\r\n}</pre>\r\nHere is a sample solution for problem 1000 using Java:\r\n<pre class=\"brush:java;\">\r\nimport java.util.Scanner;\r\npublic class Main {\r\n public static void main(String[] args) {\r\n  Scanner in = new Scanner(System.in);\r\n  while (in.hasNextInt()) {\r\n   int a = in.nextInt();\r\n   int b = in.nextInt();\r\n   System.out.println(a + b);\r\n  }\r\n }\r\n}</pre>\r\n', ' ', '1000', '65535', 'N', '0', '0', '0', '0', 'ACSolo', null, '0', '0', '', '0', 'GUET', '0', '0');
+INSERT INTO `problem` VALUES ('1000', 'A+B Problem', 'Calculate A + B¡ê?and give me the answer! ', 'Input two integers A and B.(Watch the Sample Input) ', 'For each case, output A + B in one line..(Watch the Sample Output)', '1 2 ', '3 ', '0', 'Press the<span style=\"font-size:16px;\"> <strong>Submit</strong></span> to submit your code!<br />\r\n<span style=\"color:#ff0000;\">Q:</span> Where is the input and the output?<br />\r\n<span style=\"color:#ff0000;\">A:</span> Your program shall read input from stdin(&#39;<strong>Standard Input</strong>&#39;) and write output to stdout(&#39;<strong>Standard Output</strong>&#39;).<br />\r\nFor example, you can use &#39;scanf&#39; in C or &#39;cin&#39; in C++ to read from stdin, and use &#39;printf&#39; in C or &#39;cout&#39; in C++ to write to stdout. User programs are not allowed to open and read from/write to files, you will get a &quot;Restricted Function&quot; if you try to do so.<br />\r\nHere is a sample solution for problem 1000 using C:<br />\r\n<pre class=\"brush:java;\">\r\n#include &lt;stdio.h&gt;\r\nint main(void)\r\n{\r\n    int a,b;\r\n    while(scanf(&quot;%d%d&quot;, &amp;a,&amp;b) != EOF)\r\n        printf(&quot;%d\\n&quot;,a+b);\r\n    return 0;\r\n}</pre>\r\nHere is a sample solution for problem 1000 using C++:\r\n<pre class=\"brush:cpp;\">\r\n#include &lt;iostream&gt;\r\nusing namespace std;\r\nint main(void)\r\n{\r\n    int a,b;\r\n    while(cin &gt;&gt; a&gt;&gt;b)\r\n        cout &lt;&lt; a+b&lt;&lt;endl;\r\n    return 0;\r\n}</pre>\r\nHere is a sample solution for problem 1000 using Java:\r\n<pre class=\"brush:java;\">\r\nimport java.util.Scanner;\r\npublic class Main {\r\n public static void main(String[] args) {\r\n  Scanner in = new Scanner(System.in);\r\n  while (in.hasNextInt()) {\r\n   int a = in.nextInt();\r\n   int b = in.nextInt();\r\n   System.out.println(a + b);\r\n  }\r\n }\r\n}</pre>\r\n', ' ', '1000', '65535', 'N', '0', '0', '0', '0', 'ACSolo', null, '0', '0', '', '0', 'GUET', '0', '0');
 UNLOCK TABLES;

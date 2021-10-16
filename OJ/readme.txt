@@ -1,0 +1,1 @@
+https://github.com/weizengke/judge/tree/master/release
