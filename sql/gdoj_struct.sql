@@ -318,6 +318,7 @@ CREATE TABLE `solution` (
   `time` int(11) DEFAULT NULL,
   `code_length` int(11) DEFAULT NULL,
   `language` tinyint(4) DEFAULT NULL,
+  `language_name` text,
   `verdict` tinyint(4) DEFAULT NULL,
   `contest_id` int(11) DEFAULT NULL,
   `testcase` int(11) DEFAULT NULL,

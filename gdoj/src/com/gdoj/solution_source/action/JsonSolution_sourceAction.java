@@ -112,12 +112,12 @@ public class JsonSolution_sourceAction extends ActionSupport {
 			
 			String username = (String)ActionContext.getContext().getSession().get("session_username");
 			if(username==null){
-				//Î´µÇÂ¼£¬±ê¼ÇÒ»ÏÂËæ±ãÒ»¸ö²»¿ÉÄÜµÄÓÃ»§Ãû
+				//Î´ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Üµï¿½ï¿½Ã»ï¿½ï¿½ï¿½
 				username = ".";
 			}
 
 			if(solution_.getContest_id()>0){
-				//¼ì²é±ÈÈüÊÇ·ñover
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½over
 				Contest contest_ = new Contest();
 				contest_ = contestService.queryContest(solution_.getContest_id(),"ADMIN");
 				if(contest_==null){
@@ -127,7 +127,7 @@ public class JsonSolution_sourceAction extends ActionSupport {
 				}
 				contestTitle = contest_.getTitle();
 				Date dt = new Date();
-				if(contest_.getEnd_time().getTime()>dt.getTime()){ //±ÈÈüÃ»ÓÐ½áÊø
+				if(contest_.getEnd_time().getTime()>dt.getTime()){ //ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½ï¿½
 					if(!username.equals(solution_.getUsername())){
 						success=false;
 						error="You can't view such source on a running contest.";
@@ -186,9 +186,7 @@ public class JsonSolution_sourceAction extends ActionSupport {
 				problemId = solution_.getProblem_id().toString();
 				problemTitle_ = problemService.queryProblem(solution_.getProblem_id()).getTitle();
 			}
-			
-			//System.out.println(problemId+problemTitle_);
-			
+
 			if (null == problemTitle_) {
 				success = false;
 				error="No such problem.";
@@ -204,9 +202,14 @@ public class JsonSolution_sourceAction extends ActionSupport {
 			 * */
 			solutionSource.setSource(solutionSource_.getSource().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));			
 			
-			String className_[]={"cpp","cpp","cpp","cpp","java","csharp","fsharp","delphi","python","ruby","perl","lua","tcl","pike","haskell","php","bf","bf","go","scala","jscript","groovy"};
-
-			className = "brush:"+className_[solution.getLanguage()-1]+";";
+			String className_[]= {"cpp","cpp","cpp","cpp","java","csharp","fsharp","delphi", "python","ruby",
+					"perl", "lua","tcl","pike","haskell","php","bf","bf", "go","scala",
+					"jscript", "groovy","cpp","cpp"};
+			if (solution.getLanguage() < 25) {
+				className = "brush:"+className_[solution.getLanguage()-1]+";";
+			} else {
+				className = "brush:cpp;";
+			}
 
 			success = true;
 			return SUCCESS;

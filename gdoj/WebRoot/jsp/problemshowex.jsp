@@ -6,6 +6,10 @@ com.util.Config,
 com.gdoj.problem.vo.Problem,
 com.gdoj.bean.OJUtil" 
 pageEncoding="UTF-8"%>
+<%@ page import="net.sf.json.JSONObject" %>
+<%@ page import="net.sf.json.JSONArray" %>
+<%@ page import="com.util.StreamHandler" %>
+<%@ page import="com.gdoj.bean.LangBean" %>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <%
 String path = request.getContextPath();
@@ -123,31 +127,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<input type="hidden" id="problemId" name="problemId"  value="<s:property value="problemId"/>">
 					<select class="lang-choice" id="select_lang" name="language">
 						<%
-							try {
-								Integer problemId = Integer.valueOf(request.getParameter("problemId"));
-								Problem problem = OJUtil.queryProblem(problemId);
-								String szOjName = "GUET";
-								if (null != problem) {
-									szOjName = problem.getOj_name();
-								}
-
-								String szLangPath = Config.getValue("OJ_LANG_PATH");
-								if (1 == problem.getIsvirtual() && szOjName.equals("HDU")) {
-									szLangPath = Config.getValue("OJ_LANG_PATH_HDU");
-								}
-								File f = new File(szLangPath);
-								DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-								DocumentBuilder builder = factory.newDocumentBuilder();
-								Document doc = builder.parse(f);
-								NodeList nl = doc.getElementsByTagName("VALUE");
-								String LanguageId=new String();
-								String Language=new String();
-								for (int i = 0; i < nl.getLength(); i++) {
-									LanguageId=doc.getElementsByTagName("ID").item(i).getFirstChild().getNodeValue();
-									Language=doc.getElementsByTagName("LANG").item(i).getFirstChild().getNodeValue();
-									request.setAttribute("LanguageId",LanguageId); %>
-						<s:property value="LanguageId"/><option value="<%=LanguageId%>" <s:if test="#session.session_lang==#request.LanguageId">selected="selected"</s:if>><%=Language %></option>
-						<%}
+						try {
+							List<LangBean> languages = OJUtil.getSupportLanguages(Integer.valueOf(request.getParameter("problemId")));
+							for (LangBean language : languages) {
+								request.setAttribute("LanguageId",language.getId());%>
+								<s:property value="LanguageId"/><option value="<%=language.getId()%>" <s:if test="#session.session_lang==#request.LanguageId">selected="selected"</s:if>><%=language.getLangName() %></option>
+							<% }
 						} catch (Exception e) {%>
 						<option value="1" <s:if test="language==1">selected="selected"</s:if>>MS C++</option>
 						<option value="2" <s:if test="language==2">selected="selected"</s:if>>MS C</option>

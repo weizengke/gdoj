@@ -90,7 +90,7 @@ clock();
 	            		<td class="title" style="">
 	            			<a href="contest/<s:property value="contestId"/>/problem/<s:property value="problemList[#st.index].num"/>"><s:property value="problemList[#st.index].num"/>.<s:property value="problemList[#st.index].title" default="Unknow"/></a>
 	            		</td>
-	            		<td class="language"><s:property value="%{getText('language'+language)}"/></td>
+	            		<td class="language"><s:property value="language_name"/></td>
 						<td class="time" id="time_<s:property value="solution_id" default="0"/>"><s:property value="time" default="0"/> ms</td>
 						<td class="memory" id="memory_<s:property value="solution_id" default="0"/>"><s:property value="memory" default="0"/> kb</td>
 	            		<td class="verdict 

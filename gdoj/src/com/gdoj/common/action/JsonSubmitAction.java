@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
+import com.gdoj.bean.OJUtil;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.json.annotations.JSON;
@@ -53,72 +54,68 @@ public class JsonSubmitAction extends ActionSupport {
 	
 	public String Submit() throws Exception{
 		try {
-
-			//System.out.println("source:" + source);
-			//System.out.println("input:"+input);
-			//System.out.println("language:"+language);
-			//System.out.println("problemId:"+problemId);
-			//System.out.println("contestId:"+contestId);
-			//System.out.println("submit:"+submit);
-			
-			String username = (String)ActionContext.getContext().getSession().get("session_username");
-			if(null==username){			
-			    success = false;
-				error="Your must login first.";
-				return SUCCESS;
-		    }
-			 
-			Date dt_prevSubmit = (Date)ActionContext.getContext().getSession().get("session_submit");
-			Date dt = new Date(); 
-			
-			if(dt_prevSubmit!=null){
-				if(dt.getTime()-dt_prevSubmit.getTime()<6000){  //限制3s一次提交
-					System.out.println(" submit twice at 6 second.");
+			String username = (String) ActionContext.getContext().getSession().get("session_username");
+			if (problemId != null && Integer.parseInt(problemId) != 0) {
+				if (null == username) {
 					success = false;
-					error="You submit frequently.";
+					error = "Your must login first.";
+					return SUCCESS;
+				}
+			}
+
+			Date dt = new Date();
+			Date dt_prevSubmit = (Date)ActionContext.getContext().getSession().get("session_submit");
+			if(dt_prevSubmit != null){
+				if (dt.getTime() - dt_prevSubmit.getTime() < 3000){  //限制3s一次提交
+					success = false; error="You submit frequently.";
 					return SUCCESS;
 				}
 			}
 			ActionContext.getContext().getSession().put("session_submit", dt);
 			
 			if(source == null || source.length()<10){
-				success = false;
-				error = "Code source must at least 10 chars.";
+				success = false; error = "Code source must at least 10 chars.";
 				return SUCCESS;
 			}
 			if(source == null || source.length()>65535){
-				success = false;
-				error="Code source is at most 65535 chars.";
+				success = false; error="Code source is at most 65535 chars.";
 				return SUCCESS;
 			}
 			
-			if (contestId != null && contestId != 0) {
-				CProblem problem = new CProblem();
-				problem=cproblemService.queryProblemByNum(problemId, contestId);
-				if(null==problem){
-					success = false;
-					error="No such problem.";
+			if (contestId != null && contestId > 0) {
+				CProblem cproblem = new CProblem();
+				cproblem=cproblemService.queryProblemByNum(problemId, contestId);
+				if(null==cproblem){
+					success = false; error="No such problem.";
 					return SUCCESS;
 				}
-				problemId = problem.getProblem_id().toString();
+				problemId = cproblem.getProblem_id().toString();
 			} else {
 				contestId = 0;
 			}
 
-			problem = problemService.queryProblem(Integer.parseInt(problemId));
-			if(null == problem){
-				success = false;
-				error="No such problem.";
-				return SUCCESS;
+			String OJName = "GUET";
+			if (Integer.parseInt(problemId) != 0) {
+				problem = problemService.queryProblem(Integer.parseInt(problemId));
+				if(null == problem){
+					success = false; error="No such problem.";
+					return SUCCESS;
+				}
+				OJName = problem.getOj_name();
 			}
-		
+
 			if (submit == 0) {
 				TestBean testBean = new TestBean();
 				testBean.setCode(source);
 				testBean.setInput(input);
-				testBean.setLanguage_id(language);
+				if (!OJName.equals("GUET")) {
+					testBean.setLanguage_id(OJUtil.getLocalLanguageId(OJName, Integer.parseInt(language)).toString());
+				} else {
+					testBean.setLanguage_id(language);
+				}
+
 				testBean.setProblem_id(problemId);
-				
+
 				SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss"); 
 				sessionId = PasswordMD5.MD5(username+df.format(new Date())+ new Random().nextInt(1000)).toString();				
 				testBean.setSession_id(sessionId);
@@ -130,8 +127,7 @@ public class JsonSubmitAction extends ActionSupport {
 				} catch (Exception e) {
 					// TODO: handle exception
 					System.out.println("json serialize failed.");
-					success = false;
-					error="json serialize failed.";
+					success = false; error="json serialize failed.";
 					return SUCCESS;
 				}
 				String judger_ip = Config.getValue("OJ_JUDGER_IP");
@@ -142,6 +138,7 @@ public class JsonSubmitAction extends ActionSupport {
 				solution_.setUsername(username);
 				solution_.setProblem_id(Integer.parseInt(problemId));
 				solution_.setLanguage(Integer.parseInt(language));
+				solution_.setLanguage_name(OJUtil.getLanguageName(OJName, Integer.parseInt(language)));
 				solution_.setContest_id(contestId);
 				
 				SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 

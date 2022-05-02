@@ -40,9 +40,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<img style="margin:auto;vertical-align:middle;display:inline;max-width:100%;max-height:100%;" alt="<s:property value="user.username"/>" src="<s:if test="user.avatar==\"Y\"">upload/userphoto/<s:property value="user.username"/>/</s:if><s:else>img/</s:else>photo.png" />
 						</div>
 					</div>
-					<div style="word-wrap:break-word;width:350px;">
+					<div style="word-wrap:break-word;width:450px;">
 					 <ul style="padding: 0px;margin: 0px;">
-						<li><span class="rated-user user-rate-<s:property value="user.rate"/>" style="font-size: 12px;"><s:property value="%{getText('user_rate'+user.rate)}"/></span></li>
 						<li><span class="rated-user user-rate-<s:property value="user.rate"/>" style="font-size: 16px;"><s:property value="user.username"/></span>
 							<s:if test="user.nickname==''||user.nickname==null"></s:if><s:else><span style="color:grey;font-size: 16px;">(<s:property value="user.nickname"/>)</span></s:else>
 							<!--<a href="mails/new/<s:property value="user.username"/>" title="mail to <s:property value="user.username"/>">@<s:property value="user.username"/></a> --></li>
@@ -66,7 +65,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<s:else>Yes</s:else>
 						</li>
 					   <!-- <li><s:text name="profile.rank"/>: <b><s:property value="rank" default="0"/></b> &nbsp;&nbsp;<s:text name="profile.solve"/>: <b><s:property value="user.solved" default="0"/></b>  &nbsp;&nbsp;<s:text name="profile.submissions"/>: <b><s:property value="user.submit" default="0"/></b></li>	 -->
-						<li><s:text name="profile.rating"/>: <span class="rated-user user-rate-<s:property value="user.rate"/>" style="font-size: 12px;"><s:property value="user.rating"/></span></li>
+						 <li><s:text name="profile.rating"/>: <span class="rated-user user-rate-<s:property value="user.rate"/>" ><s:property value="user.rating"/></span> <span style="font-size: 13px">(<s:text name="profile.rating_max"/> <span class="rated-user user-rate-<s:property value="user.rate_max"/>" ><s:property value="%{getText('user_rate'+user.rate_max)}"/></span>, <span class="rated-user user-rate-<s:property value="user.rate_max"/>" ><s:property value="user.rating_max"/></span> )</span></li>
+
 					  </ul>
 					</div>
 				</div>

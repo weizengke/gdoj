@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							 <span style="color:grey" title="Show after contest ended">Contest Problem</span>
 							</s:else>
 	            		</td>
-	            		<td class="language" title="<s:property value="code_length" default="0"/> B"><s:property value="%{getText('language'+language)}"/></td>
+	            		<td class="language" title="<s:property value="code_length" default="0"/> B"><s:property value="language_name"/></td>
 	            		<td class="time" id="time_<s:property value="solution_id" default="0"/>"><s:property value="time" default="0"/> ms</td>
 	            		<td class="memory" id="memory_<s:property value="solution_id" default="0"/>"><s:property value="memory" default="0"/> kb</td>
 						<td class="verdict

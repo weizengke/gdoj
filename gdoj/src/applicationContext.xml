@@ -442,6 +442,7 @@
 	</bean>
 	<bean name="rejudgeBean" class="com.gdoj.admin.action.ReJudgeAction" scope="prototype">
 		<property name="solutionService" ref="solutionService" />
+		<property name="problemService" ref="problemService" />
 	</bean>
 	<bean name="adminSolutionsBean" class="com.gdoj.admin.action.SolutionListAction" scope="prototype">
 		<property name="solutionService" ref="solutionService" />

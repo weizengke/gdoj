@@ -32,7 +32,7 @@ String path = request.getContextPath();
     return ip;     
 }%>
 <%
-java.util.Date date = new java.util.Date();
-String ip=getIpAddr(request);
-System.out.println("<DEBUG > "+  ip + ", " + url + ", at " + date);
+//java.util.Date date = new java.util.Date();
+//String ip=getIpAddr(request);
+//System.out.println("<DEBUG > "+  ip + ", " + url + ", at " + date);
 %>

@@ -106,15 +106,6 @@ public class ContestSubmitionAction extends ActionSupport{
 			String judger_ip = Config.getValue("OJ_JUDGER_IP");
 			Integer judger_port = Integer.valueOf(Config.getValue("OJ_JUDGER_PORT")).intValue();
 			OJSocket.JudgeRequest(judger_ip, judger_port, solution.getSolution_id());
-			/*
-			String[] cmd={Config.getValue("OJ_PATH")+"Client.exe",Integer.toString(solution.getSolution_id()),
-					Integer.toString(solution.getLanguage()),Config.getValue("OJ_INI_PATH")};   
-			try {			
-				Runtime.getRuntime().exec(cmd);	
-			} catch (IOException e) {	
-				e.printStackTrace();
-			}*/
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 			this.addFieldError("tip", "Submit failed,please retry.");

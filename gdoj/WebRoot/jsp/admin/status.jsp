@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<td class="title">
 							<a href="admin/problemset/problem/<s:property value="problem_id"/>" ><s:property value="problem_id" default="0"/>.<s:property value="problemTitle[#st.index]" default="Unknow"/></a>
 							</td>
-							<td class="language" title="<s:property value="code_length" default="0"/> B"><s:property value="%{getText('language'+solutionList[#st.index].language)}"/></td>
+							<td class="language" title="<s:property value="code_length" default="0"/> B"><s:property value="solutionList[#st.index].language_name"/></td>
 
 							<td class="verdict
 							<s:if test="solutionList[#st.index].verdict==5">verdict_ac</s:if>

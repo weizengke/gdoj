@@ -33,9 +33,13 @@
 			<result name="login">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>	
 			<result name="contestPending">/jsp/error.jsp</result>
+			<result name="ide">/jsp/ide.jsp</result>
 		</global-results> 
 		<action name="home">	
 		<result name="success">/jsp/index.jsp</result>
+		</action>
+		<action name="ide">
+			<result name="success">/jsp/ide.jsp</result>
 		</action>
 		<action name="yourip">	
 		<result name="success">/jsp/yourip.jsp</result>

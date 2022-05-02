@@ -117,7 +117,11 @@ public class JsonSolutionListAction extends ActionSupport{
 			sql_query + sql_condition);
 			if (null != solutionList) {
 				for (Solution s : solutions) {
-					s.setLanguage_name(getText("language"+s.getLanguage()));
+					if (s.getLanguage_name() == null) {
+						s.setLanguage_name(getText("language"+s.getLanguage()));
+					} else {
+						s.setLanguage_name(s.getLanguage_name());
+					}
 					s.setStatus_description(OJUtil.getVerdictName(s.getVerdict(), s.getTestcase()));
 					s.setFriendlySubmitDate(DateUtil.toFriendlyDate(s.getSubmit_date()));
 

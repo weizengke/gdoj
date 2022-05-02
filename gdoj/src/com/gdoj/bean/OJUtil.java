@@ -1,9 +1,15 @@
 package com.gdoj.bean;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.util.Config;
+import com.util.StreamHandler;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 
 import com.gdoj.problem.service.ProblemService;
@@ -17,6 +23,96 @@ import com.util.OnlineUsers;
 import com.gdoj.user.service.UserService;
 
 public class OJUtil {
+	public static List<LangBean> getSupportLanguages(String szOjName) {
+		List<LangBean> langs = new ArrayList<LangBean>();
+		String jsonBuff = StreamHandler.read(Config.getValue("OJ_CONFIG_FILE_PATH"));
+		if (jsonBuff != null) {
+			String langItem = "languages";
+			if (szOjName.equals("HDU")) {
+				langItem = "hdu_languages";
+			} else if (szOjName.equals("CF")) {
+				langItem = "cf_languages";
+			}
+			JSONObject jsonObject = JSONObject.fromObject(jsonBuff);
+			JSONArray languages = jsonObject.getJSONArray(langItem);
+			for (Object language : languages) {
+				JSONObject languageObj = JSONObject.fromObject(language.toString());
+
+				Integer local_language_id = 0;
+				try {
+					local_language_id = Integer.parseInt(languageObj.getString("local_language_id"));
+				} catch (Exception e) {
+					local_language_id = 0;
+				}
+
+				LangBean lang = new LangBean(Integer.parseInt(languageObj.getString("id")),
+						local_language_id, languageObj.getString("language_name"));
+				Integer disableObj = new Integer(0);
+				try {
+					disableObj = Integer.parseInt(languageObj.getString("disable"));
+				} catch (Exception e) {
+					disableObj = 0;
+				}
+				if (disableObj == 0) {
+					langs.add(lang);
+				}
+			}
+		}
+		return langs;
+	}
+
+	public static String getLanguageName(String szOjName, Integer languageId) {
+		List<LangBean> languages = getSupportLanguages(szOjName);
+		if (languages == null) {
+			return null;
+		}
+		for (LangBean language : languages) {
+			if (language.getId().equals(languageId)) {
+				return language.getLangName();
+			}
+		}
+
+		return null;
+	}
+
+	public static Integer getLocalLanguageId(String szOjName, Integer languageId) {
+		List<LangBean> languages = getSupportLanguages(szOjName);
+		if (languages == null) {
+			return 0;
+		}
+
+		for (LangBean language : languages) {
+			if (language.getId().equals(languageId)) {
+				return language.getLocal_lang_id();
+			}
+		}
+
+		return 0;
+	}
+	public static List<LangBean> getSupportLanguages() {
+		return getSupportLanguages("GUET");
+	}
+	public static List<LangBean> getSupportLanguages(Integer problemId) {
+		String szOjName = "GUET";
+		try {
+			Problem problem = OJUtil.queryProblem(problemId);
+			if (problem != null) {
+				szOjName = problem.getOj_name();
+			}
+		} catch (Exception e) {
+		}
+		return getSupportLanguages(szOjName);
+	}
+
+	public static List<LangBean> getSupportLanguages(Integer contestId, String problemNum) {
+		Problem problem = OJUtil.queryProblemByContest(problemNum, contestId);
+		String szOjName = "GUET";
+		if (problem != null) {
+			szOjName = problem.getOj_name();
+		}
+		return getSupportLanguages(szOjName);
+	}
+
 	public static String getVerdictName(Integer verdictId, Integer testcase) {
 		ActionSupport action = new ActionSupport();
 		String verdictName = "";

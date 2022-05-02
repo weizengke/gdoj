@@ -3,6 +3,8 @@ java.io.File,
 javax.xml.parsers.DocumentBuilder,
 javax.xml.parsers.DocumentBuilderFactory,org.w3c.dom.Document,org.w3c.dom.NodeList,
 com.util.Config" pageEncoding="UTF-8"%>
+<%@ page import="com.gdoj.bean.LangBean" %>
+<%@ page import="com.gdoj.bean.OJUtil" %>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <%@taglib uri="/struts-dojo-tags" prefix="sx"%>
 <%
@@ -143,24 +145,12 @@ $(document).ready(function() {
 					                	  	<td class="field-name"><s:text name="profile.default_language"/></td>
 											<td><select id="select_lang"  style= "width:250px" name="user.language">
 												<%
-											   try {
-											   		String szLangPath = Config.getValue("OJ_LANG_PATH");
-											   		File f = new File(szLangPath);
-													DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-													DocumentBuilder builder = factory.newDocumentBuilder();
-													Document doc = builder.parse(f);
-													NodeList nl = doc.getElementsByTagName("VALUE");
-													String LanguageId=new String();
-													String Language=new String();
-													for (int i = 0; i < nl.getLength(); i++) {	
-														LanguageId=doc.getElementsByTagName("ID").item(i).getFirstChild().getNodeValue();
-														Language=doc.getElementsByTagName("LANG").item(i).getFirstChild().getNodeValue();
-														request.setAttribute("LanguageId",LanguageId); 
-													
-									   		 		%>		   		 			
-														<s:property value="LanguageId"/><option value="<%=LanguageId%>" <s:if test="user.language==#request.LanguageId">selected="selected"</s:if>><%=Language %></option>
-													<%
-													}
+												try {
+													List<LangBean> languages = OJUtil.getSupportLanguages();
+													for (LangBean language : languages) {
+														request.setAttribute("LanguageId",language.getId()); %>
+														<s:property value="LanguageId"/><option value="<%=language.getId()%>" <s:if test="user.language==#request.LanguageId">selected="selected"</s:if>><%=language.getLangName() %></option>
+													<%}
 												} catch (Exception e) {
 												%>
 														<option value="1" <s:if test="user.language==1">selected="selected"</s:if>>MS C++</option>

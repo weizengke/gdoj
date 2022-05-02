@@ -3,6 +3,7 @@ package com.gdoj.rating.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gdoj.bean.RatingBean;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.gdoj.contest.attend.service.AttendService;
@@ -26,39 +27,6 @@ public class JsonRatingAction extends ActionSupport{
 	private boolean success;
 	private String error;
 
-	public Integer getRateByRating(Integer rating) {
-		if (rating < 1200 && rating > 0) {			
-			return 1;
-		}
-		if (rating < 1400) {
-			return 2;			
-		}
-		if (rating < 1600) {
-			return 3;			
-		}
-		if (rating < 1750) {
-			return 4;			
-		}
-		if (rating < 1900) {
-			return 5;			
-		}
-		if (rating < 2050) {
-			return 6;			
-		}
-		if (rating < 2200) {
-			return 7;			
-		}
-		if (rating < 2600) {
-			return 8;			
-		}
-		if (rating < 3000) {
-			return 9;			
-		}
-		if (rating >= 3000) {
-			return 10;			
-		}
-		return 0;
-	}	
 	public String queryUserRatingList() throws Exception{
 		try {
 			//System.out.println(username);
@@ -79,7 +47,7 @@ public class JsonRatingAction extends ActionSupport{
 						Rating rating_ = ratingService.queryUserContestRating(attend.getContest_id(), username);					
 						if (rating_ != null) {
 							rating_.setContest_name(contest.getTitle());
-							rating_.setRate(getRateByRating(rating_.getRating()));
+							rating_.setRate(RatingBean.getRateByRating(rating_.getRating()));
 							rating_.setRating_title(getText("user_rate" + rating_.getRate()));
 							ratingList.add(rating_);
 						}

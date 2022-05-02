@@ -26,6 +26,9 @@
         <property name="language" type="java.lang.Integer">
             <column name="language" not-null="false" />
         </property>
+        <property name="language_name" type="java.lang.String">
+            <column name="language_name"  not-null="false" />
+        </property>
         <property name="verdict" type="java.lang.Integer">
             <column name="verdict" not-null="false" />
         </property>

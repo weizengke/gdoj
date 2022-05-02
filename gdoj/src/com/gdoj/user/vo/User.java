@@ -27,8 +27,10 @@ public class User implements java.io.Serializable {
 	private Integer solved;
 	private Integer submit;
 	private Integer rating;
+	private Integer rating_max;
 	private String avatar;
 	private Integer rate;
+	private Integer rate_max;
 
 	public User() {
 		this.avatar = "N";
@@ -38,7 +40,9 @@ public class User implements java.io.Serializable {
 		this.solved = 0;
 		this.submit = 0;
 		this.rating = 0;
+		this.rating_max = 0;
 		this.rate = 0;
+		this.rate_max = 0;
 	}
 	@JSON(deserialize=false,serialize=false)
 	public String getAvatar() {
@@ -149,7 +153,23 @@ public class User implements java.io.Serializable {
 	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
-	
+
+	public Integer getRate_max() {
+		return rate_max;
+	}
+
+	public void setRate_max(Integer rate_max) {
+		this.rate_max = rate_max;
+	}
+
+	public Integer getRating_max() {
+		return rating_max;
+	}
+
+	public void setRating_max(Integer rating_max) {
+		this.rating_max = rating_max;
+	}
+
 	public Date getLastlogin() {
 		return lastlogin;
 	}

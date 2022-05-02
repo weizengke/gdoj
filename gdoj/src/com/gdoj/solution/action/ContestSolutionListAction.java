@@ -99,6 +99,11 @@ public class ContestSolutionListAction extends ActionSupport{
 			List<CProblem> problemList_ = new ArrayList<CProblem>();
 			if (null != solutionList) {
 				for (Solution s : solutionList) {
+					if (s.getLanguage_name() == null) {
+						s.setLanguage_name(getText("language"+s.getLanguage()));
+					} else {
+						s.setLanguage_name(s.getLanguage_name());
+					}
 					s.setFriendlySubmitDate(DateUtil.toFriendlyDate(s.getSubmit_date()));
 					s.setStatus_description(OJUtil.getVerdictName(s.getVerdict(), s.getTestcase()));
 					problemList_.add(cproblemService.queryProblemByPid(s.getProblem_id(),s.getContest_id()));

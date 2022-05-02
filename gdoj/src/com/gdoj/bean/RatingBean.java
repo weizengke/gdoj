@@ -39,6 +39,38 @@ public class RatingBean {
 	public Integer getRating() {
 		return rating;
 	}
-	
-	
+
+	public static Integer getRateByRating(Integer rating) {
+		if (rating < 1200 && rating > 0) {
+			return 1;
+		}
+		if (rating < 1400) {
+			return 2;
+		}
+		if (rating < 1600) {
+			return 3;
+		}
+		if (rating < 1750) {
+			return 4;
+		}
+		if (rating < 1900) {
+			return 5;
+		}
+		if (rating < 2050) {
+			return 6;
+		}
+		if (rating < 2200) {
+			return 7;
+		}
+		if (rating < 2600) {
+			return 8;
+		}
+		if (rating < 3000) {
+			return 9;
+		}
+		if (rating >= 3000) {
+			return 10;
+		}
+		return 0;
+	}
 }

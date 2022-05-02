@@ -19,7 +19,19 @@
 		<from> /home.action</from>
 		<to type="forward">/home</to>
 	</outbound-rule>
-
+	<rule>
+		<note>ide</note>
+		<from>/ide$</from>
+		<to>
+			/ide.action
+		</to>
+	</rule>
+	<outbound-rule>
+		<note>ide2
+		</note>
+		<from> /ide.action</from>
+		<to type="forward">/ide</to>
+	</outbound-rule>
 	<rule>
 		<note>enter</note>
 		<from>/enter$</from>
@@ -133,15 +145,15 @@
 	</rule>
 
 	<rule>
-		<note>topic</note>
-		<from>/topic$</from>
+		<note>topics</note>
+		<from>/topics$</from>
 		<to>
 			/topic.action 
         </to>
 	</rule>
 	<rule>
-		<note>topic</note>
-		<from>/topic/page/([0-9]+)$</from>
+		<note>topics</note>
+		<from>/topics/page/([0-9]+)$</from>
 		<to>
 			/topic.action?page=$1
         </to>
@@ -167,8 +179,6 @@
 			/topic/edit.action?messageId=$1 
         </to>
 	</rule>
-
-
 
 	<rule>
 		<note>settings</note>

@@ -101,6 +101,11 @@ public class SolutionListAction extends ActionSupport{
 			
 			if (null != solutionList) {
 				for (Solution s : solutionList) {
+					if (s.getLanguage_name() == null) {
+						s.setLanguage_name(getText("language"+s.getLanguage()));
+					} else {
+						s.setLanguage_name(s.getLanguage_name());
+					}
 					Problem problem_ = problemService.queryProblem(s.getProblem_id());
 					if(problem_==null){
 						problemTitle_.add("problem missed");

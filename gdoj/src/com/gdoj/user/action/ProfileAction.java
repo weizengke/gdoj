@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.gdoj.bean.OnlineUserBean;
+import com.gdoj.bean.RatingBean;
 import com.gdoj.contest.attend.service.AttendService;
 import com.gdoj.contest.attend.vo.Attend;
 import com.gdoj.contest.service.ContestService;
@@ -163,7 +164,17 @@ public class ProfileAction extends ActionSupport {
 				this.addFieldError("tip", "No such user!");
 				return ERROR;
 			}
-			
+			user.setRate(RatingBean.getRateByRating(user.getRating()));
+
+			/* max rating */
+			String sql_rating_max ="select r from Rating r where r.username='" + user.getUsername()+"' order by rating DESC";
+			List<Rating> sql_rating_max_list_ = new ArrayList<Rating>();
+			sql_rating_max_list_ = ratingService.query(sql_rating_max);
+			if (sql_rating_max_list_ != null && sql_rating_max_list_.size() > 0) {
+				user.setRating_max(sql_rating_max_list_.get(0).getRating());
+				user.setRate_max(RatingBean.getRateByRating(user.getRating_max()));
+			}
+
 			/* rank */
 			rank = userService.getUserRank(user);
 			
@@ -207,28 +218,15 @@ public class ProfileAction extends ActionSupport {
 			if (attendList!=null){
 				for(Attend attend:attendList){
 					/* get contest name */
-					//System.out.println("Contest ID:" + attend.getContest_id());
 					Contest contest = contestService.queryContest(attend.getContest_id(), "USER");
 					if (contest != null) {
-						//System.out.println("Contest Title:" + contest.getTitle());
 						/* get rating info */
 						Rating rating_ = ratingService.queryUserContestRating(attend.getContest_id(), user.getUsername());					
 						if (rating_ != null) {
-							//System.out.println("Contest " + rating_.getContest_id() + " Rating:" + rating_.getUsername() + " " + rating_.getRank() + " "+ rating_.getRating());
 							ratingList.add(rating_);
 							contestIdList.add(attend.getContest_id());
 							contestNameList.add(contest.getTitle());
 						}
-						/* sql="select r from Rating r where r.username='" + 
-							user.getUsername()+"' and r.contest_id=" + 
-							attend.getContest_id() + " order by r.rating_date DESC";			
-						List<Rating> attendList_ = new ArrayList<Rating>();
-						attendList_ = ratingService.query(sql);
-						if (attendList_ != null && attendList_.size() > 0) {
-							System.out.println("Rating:" + attendList_.get(0).getUsername() + " " + attendList_.get(0).getRank() + " "+ attendList_.get(0).getRating());
-							ratingList.add(attendList_.get(0));
-						}
-						*/
 					}
 				}
 			}

@@ -131,12 +131,16 @@ public class Solution_sourceAction extends ActionSupport {
 			solutionSource = solutionSource_;
 			problemTitle = problemTitle_;
 			verdict = getText("verdict"+solution_.getVerdict());
-			
-			String className_[]={"cpp","cpp","cpp","cpp","java","csharp","fsharp","delphi","python","ruby","perl","lua","tcl","pike","haskell","php","bf","bf","go","scala","jscript","groovy"};
 
-			className = "brush:"+className_[solution.getLanguage()-1]+";";
-			
-			
+			String className_[]= {"cpp","cpp","cpp","cpp","java","csharp","fsharp","delphi", "python","ruby",
+					"perl", "lua","tcl","pike","haskell","php","bf","bf", "go","scala",
+					"jscript", "groovy","cpp","cpp"};
+			if (solution.getLanguage() < 25) {
+				className = "brush:"+className_[solution.getLanguage()-1]+";";
+			} else {
+				className = "brush:cpp;";
+			}
+
 			try {
 				File file;
 				judgeLog = new String();

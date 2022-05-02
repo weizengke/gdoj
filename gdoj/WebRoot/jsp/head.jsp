@@ -42,7 +42,8 @@ if (null == session.getAttribute("session_username")){
 			<li class="logo2">
 				<span style="font-size: 19px;">
 					<a href="">
-						<b><span></span>HappyOJ.com</b>
+						<img src="img/logo-happyoj.png" style="vertical-align: middle;">
+						<span></span>
 					</a>
 				</span>
 			</li>
@@ -64,12 +65,14 @@ if (null == session.getAttribute("session_username")){
 				<a href="contests" class="item"><s:text name="contests" /></a>
 			</li>
 			<li class="nav_menu">
-				<a href="topic" class="item"><s:text name="topic" /></a>
+				<a href="topics" class="item"><s:text name="topic" /></a>
 			</li>
 			<li class="t_c_faq nav_menu">
 				<a href="topic/9" class="item"><s:text name="faq" /></a>
 			</li>
-
+			<li class="t_c_faq nav_menu">
+				<a href="ide" class="item"><s:text name="IDE" /></a>
+			</li>
 			<li class="searchbox">
 				<div class="searchTool">
 					<form method="get" action="search" name="headSearchForm" id="headSearchForm">
