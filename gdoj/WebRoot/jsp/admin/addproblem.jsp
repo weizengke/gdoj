@@ -16,15 +16,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shCore.css"/>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shThemeDefault.css"/>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shCore.js"></script>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shBrushes.js"></script>
-<script type="text/javascript">
-SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scripts/clipboard.swf';
-SyntaxHighlighter.all();
-</script> 
-
   	<link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <style>
 	.ui-autocomplete-loading { background: white url('img/ui-anim_basic_16x16.gif') right center no-repeat; }
@@ -82,15 +73,15 @@ SyntaxHighlighter.all();
 						<h5>
 							Description:
 						</h5>
-						<textarea class="" id="ke-editor1" name="problem.description" rows="5" style="width: 100%" ><s:property value="problem.description"/></textarea>
+						<textarea class="ke-editor" id="ke-editor1" name="problem.description" rows="5" style="width: 100%" ><s:property value="problem.description"/></textarea>
 						<h5>
 							Input:
 						</h5>
-							<textarea class="" id="ke-editor2" name="problem.input" rows="5" style="width: 100%" ><s:property value="problem.input"/></textarea>
+							<textarea class="ke-editor" id="ke-editor2" name="problem.input" rows="5" style="width: 100%" ><s:property value="problem.input"/></textarea>
 						<h5>
 							Output:
 						</h5>
-							<textarea class="" id="ke-editor3" name="problem.output" rows="5" style="width: 100%" ><s:property value="problem.output"/></textarea>
+							<textarea class="ke-editor" id="ke-editor3" name="problem.output" rows="5" style="width: 100%" ><s:property value="problem.output"/></textarea>
 						<h5>
 							Sample Input:
 						</h5>
@@ -102,7 +93,7 @@ SyntaxHighlighter.all();
 						<h5>
 							Hint:
 						</h5>
-							<textarea class="" id="ke-editor6" name="problem.hint" rows="5" style="width: 100%" ><s:property value="problem.hint"/></textarea>
+							<textarea class="ke-editor" id="ke-editor6" name="problem.hint" rows="5" style="width: 100%" ><s:property value="problem.hint"/></textarea>
 						<h5>
 							Source:
 						</h5>
@@ -215,300 +206,84 @@ SyntaxHighlighter.all();
 	                    </div>		
 					</div>
 				    </s:form>
-	
-	
-	<script type='text/javascript' src='js/ke/kindeditor-min.js' charset='utf-8'></script>
-	
-	<style>
-	
-	.ke-icon-code {
-		background-image: url(img/code.gif);
-		background-position: 0px 0px;
-		width: 16px;
-		height: 16px;
-	}
-	.ke-icon-quote {
-		background-image: url(img/quote.gif);
-		background-position: 0px 0px;
-		width: 16px;
-		height: 16px;
-	}
-	</style>
-	<script type='text/javascript'>
-	<!--
-	$(document).ready(function(){
-	KE.lang['code'] = "插入程序代码或脚本";
-	KE.plugin['code'] = {
-		click : function(id) {
-			KE.util.selection(id);
-			var dialog = new KE.dialog({
-				id : id,
-				cmd : 'code',
-				file : 'code/insert_code.html',
-				width : 530,
-				height : 300,
-				title : KE.lang['code'],
-				yesButton : KE.lang['yes'],
-				noButton : KE.lang['no']
-			});
-			dialog.show();
-		},
-		check : function(id) {
-			var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
-			var lang = KE.$('ic_lang', dialogDoc).value;
-			var source = KE.$('ic_source', dialogDoc).value;
-			if(lang == ''){
-				alert('编程语言必须选择');
-				return false;
-			}
-			if(source == ''){
-				alert('请输入程序代码或者脚本');
-				return false;
-			}
-			return true;
-		},
-		insert : function(id, lang,source) {
-			var html = '<pre class="brush:' + lang + '; toolbar: true; auto-links: false;">';
-			html += html_encode(source);
-			html += '</pre><p> </p>';	
-			KE.util.insertHtml(id, html);
-			KE.layout.hide(id);
-			KE.util.focus(id);
-		},
-		exec : function(id) {
-			KE.util.select(id);
-			var iframeDoc = KE.g[id].iframeDoc;
-			var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
-			if (!this.check(id)) return false;
-			var lang = KE.$('ic_lang', dialogDoc).value;
-			var source = KE.$('ic_source', dialogDoc).value;
-			this.insert(id, lang, source);
+
+<script type='text/javascript' src='js/kindeditor/kindeditor-all.js' charset='utf-8'></script>
+<script type='text/javascript' src='js/editor.js'></script>
+<script src="js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var cache = {},
+	lastXhr;
+	$("a.add-tags-row").click(function() {
+		var currentLi = $(this).parent().parent();
+		var li = $("<li style='list-style-type:none;'></li>");
+		var count = $("div.add-tags input").size();
+		if(count<5){
+			 var input1 = $("<input  style=\"width: 7em;\" name=\"tag" + ++count + "\"/>");
+			 input1.appendTo(li);
+			$("<span>&nbsp;</span>").appendTo(li);
+			li.insertBefore(currentLi);
+			for(;count<5;){
+			  var input2 = $("<input  style=\"width: 7em;\" name=\"tag" + ++count + "\"/>");
+			  input2.appendTo(li);
+			 $("<span>&nbsp;</span>").appendTo(li);
+			 li.insertBefore(currentLi);
+		  }
+		  input1.focus();
+		}else{
+			alert("You can add at most 5 tags.");
 		}
-	
-	};
-	
-	
-	KE.lang['quote'] = "引用某段文字";
-	KE.plugin['quote'] = {
-		click : function(id) {
-			/*
-			KE.util.selection(id);
-			val html = KE.selectedHtml(id);
-			alert(html);
-			insert(id, html);
-			*/
-			KE.util.selection(id);
-			var dialog = new KE.dialog({
-				id : id,
-				cmd : 'quote',
-				file : 'quote/insert_quote.html',
-				width : 530,
-				height : 300,
-				title : KE.lang['quote'],
-				yesButton : KE.lang['yes'],
-				noButton : KE.lang['no']
-			});
-			dialog.show();
-		},
-		check : function(id) {
-			var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
-			var source = KE.$('ic_source', dialogDoc).value;
-			
-			if(source == ''){
-				alert('请输入要引用的文字内容');
-				return false;
-			}
-			
-			return true;
-		},
-		exec : function(id) {
-			KE.util.select(id);
-			var iframeDoc = KE.g[id].iframeDoc;
-			var dialogDoc = KE.util.getIframeDoc(KE.g[id].dialog);
-			if (!this.check(id)) return false;
-			var source = KE.$('ic_source', dialogDoc).value;
-			this.insert(id, source);
-		},
-		insert : function(id, source) {
-			var html = '<blockquote>';
-			html += html_encode(source);
-			html += '</blockquote><br/>';
-			KE.util.insertHtml(id, html);
-			KE.layout.hide(id);
-			KE.util.focus(id);
-		}
-	};
-	});
-	
-	
-	
-	//-->
-	
-	</script>
-	
-	<script type='text/javascript'>
-	
-	<!--
-	
-	$(document).ready(function(){
-		KE.show({
-			id : 'ke-editor1',
-			allowUpload : true,
-			syncType : 'auto',
-			cssPath : 'css/ke-oj.css',	
-			items : [
-					 'bold', 'italic', 'underline', 'strikethrough','subscript','superscript', 'removeformat','|','textcolor', 'bgcolor',  
-					 'title', 'fontname', 'fontsize',  '|', 
-					 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-					 'link', 'unlink', 'emoticons','code', 'image', 'quote', '|','source' ,'about'
-					 ]
-		});
-		KE.show({
-			id : 'ke-editor2',
-			allowUpload : true,
-			syncType : 'auto',
-			cssPath : 'css/ke-oj.css',	
-			items : [
-					 'bold', 'italic', 'underline', 'strikethrough','subscript','superscript', 'removeformat','|','textcolor', 'bgcolor',  
-					 'title', 'fontname', 'fontsize',  '|', 
-					 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-					 'link', 'unlink', 'emoticons','code', 'image', 'quote', '|','source' ,'about'
-					 ]
-		});
-		KE.show({
-			id : 'ke-editor3',
-			allowUpload : true,
-			syncType : 'auto',
-			cssPath : 'css/ke-oj.css',	
-			items : [
-					 'bold', 'italic', 'underline', 'strikethrough','subscript','superscript', 'removeformat','|','textcolor', 'bgcolor',  
-					 'title', 'fontname', 'fontsize',  '|', 
-					 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-					 'link', 'unlink', 'emoticons','code', 'image', 'quote', '|','source' ,'about'
-					 ]
-		});
-		KE.show({
-			id : 'ke-editor4',
-			allowUpload : true,
-			syncType : 'auto',
-			cssPath : 'css/ke-oj.css',	
-			items : [
-					 'bold', 'italic', 'underline', 'strikethrough','subscript','superscript', 'removeformat','|','textcolor', 'bgcolor',  
-					 'title', 'fontname', 'fontsize',  '|', 
-					 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-					 'link', 'unlink', 'emoticons','code', 'image', 'quote', '|','source' ,'about'
-					 ]
-		});
-		KE.show({
-			id : 'ke-editor5',
-			allowUpload : true,
-			syncType : 'auto',
-			cssPath : 'css/ke-oj.css',	
-			items : [
-					 'bold', 'italic', 'underline', 'strikethrough','subscript','superscript', 'removeformat','|','textcolor', 'bgcolor',  
-					 'title', 'fontname', 'fontsize',  '|', 
-					 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-					 'link', 'unlink', 'emoticons','code', 'image', 'quote', '|','source' ,'about'
-					 ]
-		});
-		KE.show({
-			id : 'ke-editor6',
-			allowUpload : true,
-			syncType : 'auto',
-			cssPath : 'css/ke-oj.css',	
-			items : [
-					 'bold', 'italic', 'underline', 'strikethrough','subscript','superscript', 'removeformat','|','textcolor', 'bgcolor',  
-					 'title', 'fontname', 'fontsize',  '|', 
-					 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|', 
-					 'link', 'unlink', 'emoticons','code', 'image', 'quote', '|','source' ,'about'
-					 ]
-		});
-	});
-	
-	//-->
-	
-	</script>
-			
-	
-	<script src="js/jquery-ui.min.js"></script>	
-	 <script type="text/javascript">
-	$(document).ready(function() {
-	        
-	        var cache = {},
-			lastXhr;
-	        
-	    $("a.add-tags-row").click(function() {
-	        var currentLi = $(this).parent().parent();
-	        var li = $("<li style='list-style-type:none;'></li>");
-	        var count = $("div.add-tags input").size();        
-	        if(count<5){
-	        	 var input1 = $("<input  style=\"width: 7em;\" name=\"tag" + ++count + "\"/>");     
-	       		 input1.appendTo(li);
-	        	$("<span>&nbsp;</span>").appendTo(li);
-	        	li.insertBefore(currentLi);
-	        	for(;count<5;){
-	        	  var input2 = $("<input  style=\"width: 7em;\" name=\"tag" + ++count + "\"/>");     
-	       		  input2.appendTo(li);
-	        	 $("<span>&nbsp;</span>").appendTo(li);
-	        	 li.insertBefore(currentLi);
-	       	  }
-	       	  input1.focus();
-	        }else{
-	        	alert("You can add at most 5 tags."); 
-	        }
-	        
-	        $( "input" ,li).autocomplete({
-			    delay: 300,	
-			    width:100,
-				minLength: 1,
-				selectFirst: false,
-				matchSubset:true,  
-	            matchContains: true,   
-				source: function( request, response ) {				
-					var term = request.term;		
-					if ( term in cache ) {
-						response( cache[ term ] );
-						return;
+
+		$( "input" ,li).autocomplete({
+			delay: 300,
+			width:100,
+			minLength: 1,
+			selectFirst: false,
+			matchSubset:true,
+			matchContains: true,
+			source: function( request, response ) {
+				var term = request.term;
+				if ( term in cache ) {
+					response( cache[ term ] );
+					return;
+				}
+
+				lastXhr = $.getJSON( "ajaxTags", {q:request.term} , function( data, status, xhr ) {
+					cache[ term ] = data.tags;
+					if ( xhr === lastXhr ) {
+						response( data.tags );
 					}
-	
-					lastXhr = $.getJSON( "ajaxTags", {q:request.term} , function( data, status, xhr ) {
-						cache[ term ] = data.tags;
-						if ( xhr === lastXhr ) {
-							response( data.tags );
-						}
-					});
+				});
+			}
+		});
+		return false;
+	});
+
+
+	$( ".add-tags input" ).autocomplete({
+		delay: 300,
+		width:100,
+		minLength: 1,
+		selectFirst: false,
+		matchSubset:true,
+		matchContains: true,
+		source: function( request, response ) {
+			var term = request.term;
+			if ( term in cache ) {
+				response( cache[ term ] );
+				return;
+			}
+
+			lastXhr = $.getJSON( "ajaxTags", {q:request.term} , function( data, status, xhr ) {
+				cache[ term ] = data.tags;
+				if ( xhr === lastXhr ) {
+					response( data.tags );
 				}
 			});
-			return false;
-	    });
-	    
-	
-			$( ".add-tags input" ).autocomplete({
-			    delay: 300,	
-			    width:100,
-				minLength: 1,
-				selectFirst: false,
-				matchSubset:true,  
-	            matchContains: true,   
-				source: function( request, response ) {				
-					var term = request.term;		
-					if ( term in cache ) {
-						response( cache[ term ] );
-						return;
-					}
-	
-					lastXhr = $.getJSON( "ajaxTags", {q:request.term} , function( data, status, xhr ) {
-						cache[ term ] = data.tags;
-						if ( xhr === lastXhr ) {
-							response( data.tags );
-						}
-					});
-				}
-			});
-	    
+		}
 	});
-	
-	    </script>
+});
+</script>
 	
 			<div style="margin-right: 12px;text-decoration: none;">
 					<div class="left"></div>

@@ -175,50 +175,12 @@ public class AdminAction extends ActionSupport{
 	
 	public String upload()throws Exception {
 		try {
-			//System.out.println(titlePhoto);
-			String username = (String) ActionContext.getContext().getSession()
-					.get("session_username");
-			if (null == username || "".equals(username)) {
-				return LOGIN;
-			}
-			
-			//Struts2 请求 包装过滤器，此处使用struts2的包装过滤器  
-		    MultiPartRequestWrapper wrapper = (MultiPartRequestWrapper) ServletActionContext.getRequest();  
-		    if(wrapper.getFileNames("file")==null){
-		    	ActionContext.getContext().put("tip","No File...");
-			    	//out.println(getError("请选择文件。"));  
-			     return INPUT; 
-		    }
-		    //获得上传的文件名  
-		    String fileName = wrapper.getFileNames("file")[0];  
-			System.out.println(wrapper.getFileNames("file").length);
-		    //imgFile
-		    //获得文件过滤器  
-		    File file = wrapper.getFiles("file")[0];  
-			
-		    //检查扩展名  
-		    String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1)  
-		            .toLowerCase(); 
-		    
-		  //重构上传文件的名称   
-	        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");  
-	        String newName = fileName.substring(0, fileName.lastIndexOf(".")) + PasswordMD5.MD5(username+df.format(new Date())+ new Random().nextInt(1000)) + "." + fileExt;
-		    	
-			String root = ServletActionContext.getRequest().getRealPath("/upload");
-			String path = root+"\\file";
-			if(Upload.uploadFile(file,path,newName)==false){
-				ActionContext.getContext().put("tip", "upload faild.");
-				return ERROR;
-			}	
-			
-			ActionContext.getContext().put("tip", "upload success , File path is: upload\\file\\"+newName);
 		} catch (Exception e) {
 			// TODO: handle exception
 			ActionContext.getContext().put("tip", "upload faild.");
 			return ERROR;	
 		}
-		
-		
+
 		return "admin";	
 	}
 }

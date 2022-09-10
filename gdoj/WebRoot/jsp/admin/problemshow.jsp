@@ -14,20 +14,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="ACM,OnlineJudge,JAVA,C++,Program Contest">
 	<meta http-equiv="description" content="Online Judge System fof ACM">
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
-	
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shCore.css"/>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shThemeDefault.css"/>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shCore.js"></script>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shBrushes.js"></script>
-<script type="text/javascript">
-SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scripts/clipboard.swf';
-SyntaxHighlighter.all();
-</script> 
-
+	<link rel="stylesheet" href="js/kindeditor/plugins/code/prettify.css" />
+	<script charset="utf-8" src="js/kindeditor/plugins/code/prettify.js"></script>
+	<script type="text/javascript">
+	  $(document).ready(function() {
+		  prettyPrint();
+	  });
+	</script>
   </head>
-
   <body>  
   	<jsp:include   page="/jsp/head.jsp"></jsp:include> 
   	<div class="container">
@@ -54,8 +50,8 @@ SyntaxHighlighter.all();
 	            	</ul>
 	            </div>
 	        </div> 
-   	 </div> 
-     		<div class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
+   	 </div> prettyprint
+			<div class="content-with-sidebar"> 	 <!-- class="content-with-sidebar" -->
      	<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
 	    <div class="content" style="border-left:4px solid #B9B9B9;padding:3px 3px 3px 0px;">	    	
 			<blockquote>
@@ -71,38 +67,38 @@ SyntaxHighlighter.all();
 				<h5>
 					Description:
 				</h5>
-					<s:property value="problem.description" default="null" escape="false"/></span>
+					<s:property value="problem.description" default="null" escapeHtml="false"/></span>
 				<h5>
 					Input:
 				</h5>
-					<s:property value="problem.input" default="null" escape="false"/>
+					<s:property value="problem.input" default="null" escapeHtml="false"/>
 				<h5>
 					Output:
 				</h5>
-					<s:property value="problem.output" default="null" escape="false"/>
+					<s:property value="problem.output" default="null" escapeHtml="false"/>
 				<h5>
 					Sample test:
 				</h5>
 					<div class="sample-test">
 						<div class="input"><div class="title">Input</div>
-						<div class="sample-input"><pre><s:property value="problem.sample_input" default="null" escape="false"/></pre></div>
+						<div class="sample-input"><pre><s:property value="problem.sample_input" default="null" escapeHtml="false"/></pre></div>
 						</div>					
 						<div class="output"><div class="title">Output</div>
-						<div class="sample-output"><pre><s:property value="problem.sample_output" default="null" escape="false"/></pre></div>
+						<div class="sample-output"><pre><s:property value="problem.sample_output" default="null" escapeHtml="false"/></pre></div>
 						</div>
 					</div>				
 				<h5>
 					Note:
 				</h5>
-					<s:property value="problem.hint" default="null" escape="false"/>
+					<s:property value="problem.hint" default="null" escapeHtml="false"/>
 				<h5>
 					Source:
 				</h5>
-					<s:property value="problem.source" default="null" escape="false"/>
+					<s:property value="problem.source" default="null" escapeHtml="false"/>
 				<h5>
 					Author:
 				</h5>
-					<s:property value="problem.author" default="null" escape="false"/>
+					<s:property value="problem.author" default="null" escapeHtml="false"/>
 				<h5><s:text name="problem.tags"/>:</h5>
 					<div class="tags">
 						<s:if test="tagsList.size==0"><span style="font: 11px/26px Monaco, monospace;color: #454545;"><s:text name="notags"/></span></s:if>

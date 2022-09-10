@@ -16,8 +16,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
 	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
-	<LINK href="css/prettify.css" rel="stylesheet" type="text/css"/>
-	<script type="text/javascript" src="js/prettify.js"></script>
+	<link rel="stylesheet" href="js/kindeditor/plugins/code/prettify.css" />
+	<script charset="utf-8" src="js/kindeditor/plugins/code/prettify.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 		  	prettyPrint();	

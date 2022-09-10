@@ -17,15 +17,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shCore.css"/>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shThemeDefault.css"/>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shCore.js"></script>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shBrushes.js"></script>
-<script type="text/javascript">
-SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scripts/clipboard.swf';
-SyntaxHighlighter.all();
-</script> 
-
   </head>
 
   <body>  
@@ -88,19 +79,19 @@ $(document).ready(function() {
 					<s:text name="problem.time_limit"/>:<s:property value="problem.time_limit" default="0"/>MS&nbsp;&nbsp;<s:text name="problem.memory_limit"/>:<s:property value="problem.memory_limit" default="0"/>KB<br/>										
 				</div>
 				<div class="probleminfo" style="padding:0px 12px 12px 0px;">
-					<h5><s:text name="problem.description"/>:</h5><s:property value="problem.description" default="" escape="false"/>
-					<h5><s:text name="problem.input"/>:</h5><s:property value="problem.input" default="" escape="false"/>
-					<h5><s:text name="problem.output"/>:</h5><s:property value="problem.output" default="" escape="false"/>
+					<h5><s:text name="problem.description"/>:</h5><s:property value="problem.description" default="" escapeHtml="false"/>
+					<h5><s:text name="problem.input"/>:</h5><s:property value="problem.input" default="" escapeHtml="false"/>
+					<h5><s:text name="problem.output"/>:</h5><s:property value="problem.output" default="" escapeHtml="false"/>
 					<h5><s:text name="problem.sample_test"/>:</h5>
 						<div class="sample-test">
 							<div class="input"><div class="title"><s:text name="problem.sample_input"/></div>
-							<div class="sample-input"><pre><s:property value="problem.sample_input" default="" escape="false"/></pre></div>
+							<div class="sample-input"><pre><s:property value="problem.sample_input" default="" escapeHtml="false"/></pre></div>
 							</div>					
 							<div class="output"><div class="title"><s:text name="problem.sample_output"/></div>
-							<div class="sample-output"><pre><s:property value="problem.sample_output" default="" escape="false"/></pre></div>
+							<div class="sample-output"><pre><s:property value="problem.sample_output" default="" escapeHtml="false"/></pre></div>
 							</div>
 						</div>				
-					<h5><s:text name="problem.note"/>:</h5><s:property value="problem.hint" default="" escape="false"/>
+					<h5><s:text name="problem.note"/>:</h5><s:property value="problem.hint" default="" escapeHtml="false"/>
 				</div>	  
 			</blockquote>   	  	 
 	   </div>    

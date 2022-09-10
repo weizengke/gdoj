@@ -38,7 +38,7 @@ SyntaxHighlighter.all();
 						<div class="title-sidebox" style="width: 100%"><s:text name="sidebar.infobox"/></div>
 					</div>
 					<div class="" style="margin: 6px;font-size: 12px;word-wrap:break-word;">
-						<pre><s:property value="contest.description" escape="flase"/></pre>
+						<pre><s:property value="contest.description" escapeHtml="flase"/></pre>
 					</div>
 				</div>
 		 </div>

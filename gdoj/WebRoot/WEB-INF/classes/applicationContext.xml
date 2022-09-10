@@ -65,6 +65,9 @@
 	<bean name="uploadBean" class="com.gdoj.common.action.UploadAction" scope="prototype">
 		<property name="userService" ref="userService" />
 	</bean>
+	<bean name="jsonUploadBean" class="com.gdoj.common.action.JsonUploadAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
 	<bean name="onlineUserBean" class="com.gdoj.listener.OnlineHttpSessionListener" scope="prototype">
 		<property name="userService" ref="userService" />
 	</bean>
@@ -355,8 +358,7 @@
 		<property name="attendService" ref="attendService" />
 	</bean>
 
-	
-		<!--Contest Problem -->
+	<!--Contest Problem -->
 	<bean id="cproblemService" class="com.gdoj.contest.problem.service.CProblemServiceImpl">
 		<property name="cproblemDao" ref="cproblemDao" />
 	</bean>

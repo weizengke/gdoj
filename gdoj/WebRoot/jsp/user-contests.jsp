@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<s:text name="became"/> <span class='rated-user user-rate-<s:property value="rate"/>'><s:property value="rating_title"/></span>
 								</s:else>			            		
 			            		</td>
-			            		<s:set name="#prev_rate" value="rate"></s:set>
+			            		<s:set var="#prev_rate" value="rate"></s:set>
 			            	</tr>	
 			           		</s:iterator>   
 						</table>

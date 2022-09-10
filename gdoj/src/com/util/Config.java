@@ -3,7 +3,6 @@
  */
 package com.util;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,11 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
 public class Config {
-
-	private final static Logger log = Logger.getLogger(Config.class);
 	private static final String PATH = "config.properties";
 	private static Properties properties = null;
 	
@@ -57,7 +52,6 @@ public class Config {
 			is.close();// ¹Ø±ÕÁ÷ 
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error("can not load config.properties");
 		}
 	}
 	

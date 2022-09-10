@@ -28,14 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
 	<link data-name="js/monaco-editor/vs/editor/editor.main" rel="stylesheet" href="js/monaco-editor/min/vs/editor/editor.main.css">
-	<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shCore.css"/>
-	<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shThemeDefault.css"/>
-	<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shCore.js"></script>
-	<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shBrushes.js"></script>
-	<script type="text/javascript">
-	SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scripts/clipboard.swf';
-	SyntaxHighlighter.all();
-	</script>
+
   </head>
   <style>
   .headerNav{min-width:1024px;width:96%!important;}
@@ -110,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  </div>
 				  <table class="test-box-tb">
 					  <tr id="test-box-tb-input" >
-						  <td><textarea id="input" class="test-box-input small-scrollbar" name="input" rows="10"><s:property value="problem.sample_input" default="" escape="false"/></textarea></td>
+						  <td><textarea id="input" class="test-box-input small-scrollbar" name="input" rows="10"><s:property value="problem.sample_input" default="" escapeHtml="false"/></textarea></td>
 					  </tr>
 					  <tr id="test-box-tb-output" style="display:none">
 						  <td>

@@ -28,13 +28,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
 	<link data-name="js/monaco-editor/vs/editor/editor.main" rel="stylesheet" href="js/monaco-editor/min/vs/editor/editor.main.css">
-	<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shCore.css"/>
-	<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shThemeDefault.css"/>
-	<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shCore.js"></script>
-	<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shBrushes.js"></script>
+	<link rel="stylesheet" href="js/kindeditor/plugins/code/prettify.css" />
+	<script charset="utf-8" src="js/kindeditor/plugins/code/prettify.js"></script>
 	<script type="text/javascript">
-	SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scripts/clipboard.swf';
-	SyntaxHighlighter.all();
+	  $(document).ready(function() {
+		  prettyPrint();
+	  });
 	</script>
   </head>
   <style>
@@ -91,19 +90,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<s:text name="problem.time_limit"/>:<s:property value="problem.time_limit" default="0"/>MS&nbsp;&nbsp;<s:text name="problem.memory_limit"/>:<s:property value="problem.memory_limit" default="0"/>KB<br/>
 					</div>
 					<div class="probleminfo" style="padding:0px 12px 12px 0px;">
-						<h5><s:text name="problem.description"/>:</h5><s:property value="problem.description" default="" escape="false"/>
-						<h5><s:text name="problem.input"/>:</h5><s:property value="problem.input" default="" escape="false"/>
-						<h5><s:text name="problem.output"/>:</h5><s:property value="problem.output" default="" escape="false"/>
+						<h5><s:text name="problem.description"/>:</h5><s:property value="problem.description" default="" escapeHtml="false"/>
+						<h5><s:text name="problem.input"/>:</h5><s:property value="problem.input" default="" escapeHtml="false"/>
+						<h5><s:text name="problem.output"/>:</h5><s:property value="problem.output" default="" escapeHtml="false"/>
 						<h5><s:text name="problem.sample_test"/>:</h5>
 							<div class="sample-test">
 								<div class="input"><div class="title"><s:text name="problem.sample_input"/></div>
-								<div class="sample-input"><pre><s:property value="problem.sample_input" default="" escape="false"/></pre></div>
+								<div class="sample-input"><pre><s:property value="problem.sample_input" default="" escapeHtml="false"/></pre></div>
 								</div>
 								<div class="output"><div class="title"><s:text name="problem.sample_output"/></div>
-								<div class="sample-output"><pre><s:property value="problem.sample_output" default="" escape="false"/></pre></div>
+								<div class="sample-output"><pre><s:property value="problem.sample_output" default="" escapeHtml="false"/></pre></div>
 								</div>
 							</div>
-						<h5><s:text name="problem.note"/>:</h5><s:property value="problem.hint" default="" escape="false"/>
+						<h5><s:text name="problem.note"/>:</h5><s:property value="problem.hint" default="" escapeHtml="false"/>
 						<h5><s:text name="problem.tags"/>:</h5>
 						<div class="tags">
 							<s:if test="tagsList.size==0"><span style="font: 11px/26px Monaco, monospace;color: #454545;"><s:text name="notags"/></span></s:if>
@@ -158,7 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 					<table class="test-box-tb">
 						<tr id="test-box-tb-input" >
-							<td><textarea id="input" class="test-box-input small-scrollbar" name="input" rows="10"><s:property value="problem.sample_input" default="" escape="false"/></textarea></td>
+							<td><textarea id="input" class="test-box-input small-scrollbar" name="input" rows="10"><s:property value="problem.sample_input" default="" escapeHtml="false"/></textarea></td>
 						</tr>
 						<tr id="test-box-tb-output" style="display:none">
 							<td>

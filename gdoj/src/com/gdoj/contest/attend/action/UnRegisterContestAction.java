@@ -46,7 +46,7 @@ public class UnRegisterContestAction extends ActionSupport {
 			}
 			
 			if(contest_.getStart_time().before(new Date())){
-				this.addFieldError("tip", "The contest has been ended.");
+				this.addFieldError("tip", "The contest has been start.");
 				return ERROR;
 			}
 			

@@ -18,15 +18,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
-  	<script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shCore.css"/>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shThemeDefault.css"/>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shCore.js"></script>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shBrushes.js"></script>
-<script type="text/javascript">
-SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scripts/clipboard.swf';
-SyntaxHighlighter.all();
-</script>
 </head>
   
   <body>
@@ -49,7 +40,7 @@ SyntaxHighlighter.all();
 				</div>
 				<div class="content">   
 			       	<blockquote>
-			      	<p><s:property value="news.content" escape="false"/></p>		      				   
+			      	<p><s:property value="news.content" escapeHtml="false"/></p>
 			        </blockquote>
 			     </div>
 			    

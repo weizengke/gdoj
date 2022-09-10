@@ -15,17 +15,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
-
-
-import com.util.Config;
-
-
 public class StreamHandler {
-
-	private final static Logger log = Logger.getLogger(StreamHandler.class);
-	
 	public static void write(OutputStream os, String content) {
 		/**
 		 * for Runner.
@@ -126,7 +116,6 @@ public class StreamHandler {
 			out.close();
 			return true;
 		} catch (IOException ioe) {
-			log.warn("---- write file by fileName catches a IOException ----");
 			ioe.printStackTrace();
 			return false;
 		}
@@ -142,7 +131,6 @@ public class StreamHandler {
 			out.close();
 			return true;
 		} catch (IOException ioe) {
-			log.warn("---- write file by file catches a IOException ----");
 			ioe.printStackTrace();
 			return false;
 		}

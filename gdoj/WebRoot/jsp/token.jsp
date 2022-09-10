@@ -1,6 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
-<%@ taglib uri="/struts-dojo-tags" prefix="sx"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,7 +8,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <html>
   <head>
-  	<sx:head extraLocales="en-us,nl-nl,de-de" />
     <base href="<%=basePath%>">
     <title>Online Judge System</title>
 	<meta http-equiv="pragma" content="no-cache">
@@ -25,28 +23,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="<%=basePath%>js/ui/jquery.ui.core.js"></script>
 	<script src="<%=basePath%>js/ui/jquery.ui.widget.js"></script>
 	<script src="<%=basePath%>js/ui/jquery.ui.datepicker.js"></script>
-	
-	
-	
- 	<script type="text/javascript">
 
-        $(document).ready(function() {
-
-    $('input.birthday').datepick({
-
-    yearRange: "-100:0",
-
-    showOn: 'button',
-
-    buttonImageOnly: true,
-
-    buttonImage: 'img/dateIcon.gif'
-
-    });
-
-        });
-
-    </script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('input.birthday').datepick({
+	yearRange: "-100:0",
+	showOn: 'button',
+	buttonImageOnly: true,
+	buttonImage: 'img/dateIcon.gif'
+	});
+});
+</script>
 <script type="text/javascript">
 function HS_DateAdd(interval,number,date){
 	number = parseInt(number);
@@ -264,7 +251,6 @@ function HS_setDate(inputObj){
 	       </div>     
 	    </div>   
     </div>
-    
         <jsp:include  page="/jsp/footer.jsp" ></jsp:include>
   </div>
   </body>

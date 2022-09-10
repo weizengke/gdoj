@@ -14,18 +14,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="ACM,OJ,OnlineJudge,JAVA,C++,Program Contest">
 	<meta http-equiv="description" content="Online Judge System for ACM">
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
-	
   	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
   	<script type="text/javascript" src="js/gdoj.js"></script>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shCore.css"/>
-<link type="text/css" rel="stylesheet" href="js/ckeditor/plugins/syntaxhighlight/styles/shThemeDefault.css"/>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shCore.js"></script>
-<script type="text/javascript" src="js/ckeditor/plugins/syntaxhighlight/scripts/shBrushes.js"></script>
-<script type="text/javascript">
-SyntaxHighlighter.config.clipboardSwf = 'js/ckeditor/plugins/syntaxhighlight/scripts/clipboard.swf';
-SyntaxHighlighter.all();
-</script> 
-
 	<link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <style>
 	.ui-autocomplete-loading { background: white url('img/ui-anim_basic_16x16.gif') right center no-repeat; }
@@ -60,7 +50,7 @@ SyntaxHighlighter.all();
 	            	<div class="title-sidebox" style="width: 100%">Contest Info.</div>
 	            </div>  
 	            <div class="" style="margin: 6px;font-size: 12px;word-wrap:break-word;">
-        			<pre><s:property value="contest.description" escape="flase"/></pre>
+        			<pre><s:property value="contest.description" escapeHtml="flase"/></pre>
 	            </div>           
 	        </div>    	   
             <div class="sidebox roundbox">

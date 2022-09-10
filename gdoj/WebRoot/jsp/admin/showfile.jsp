@@ -26,11 +26,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    	<div class="container">
         <div class="content">
 	   		<jsp:include  page="/jsp/admin/head.jsp" ></jsp:include> 
-	     	<s:property value="fileName" escape="false"/>
+	     	<s:property value="fileName" escapeHtml="false"/>
 	     	<div class="probleminfo" style="margin: 0 auto;">
 	     		<div class="sample-test">
 					<div class="input"><div class="title">Content</div>
-					<div class="sample-input"><s:property value="content" escape="false"/></div>							
+					<div class="sample-input"><s:property value="content" escapeHtml="false"/></div>
 				</div>		   	
 	     	</div>	
 	   	</div>

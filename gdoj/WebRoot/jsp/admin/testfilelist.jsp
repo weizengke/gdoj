@@ -71,12 +71,12 @@ $(document).ready(function() {
 		     	<s:iterator value="testFiles" status="st">
 		     	<div class="sample-test">
 					<div class="input">
-						<div class="title"><s:property value="testFiles[#st.index].inFileName" escape="false"/></div>
-						<div class="sample-input"><s:property value="testFiles[#st.index].inputString" escape="false"/></div>
+						<div class="title"><s:property value="testFiles[#st.index].inFileName" escapeHtml="false"/></div>
+						<div class="sample-input"><s:property value="testFiles[#st.index].inputString" escapeHtml="false"/></div>
 					</div>					
 					<div class="output">
-						<div class="title"><s:property value="testFiles[#st.index].outFileName" escape="false"/></div>
-						<div class="sample-output"><s:property value="testFiles[#st.index].outputString" escape="false"/></div>
+						<div class="title"><s:property value="testFiles[#st.index].outFileName" escapeHtml="false"/></div>
+						<div class="sample-output"><s:property value="testFiles[#st.index].outputString" escapeHtml="false"/></div>
 					</div>
 				</div>
 				</s:iterator>

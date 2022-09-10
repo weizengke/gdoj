@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
 	<include file="struts-default.xml" />
@@ -17,7 +17,12 @@
 
 	<constant name="struts.action.excludePattern" value="/ws/.*,ws://.*"></constant>
 
-    <package name="gdoj" extends="struts-default" >
+	<!-- 配置struts2 可以受理请求的扩展名:以.action，.do结尾或者什么都不写均可 -->
+	<constant name="struts.action.extension" value="action,do,"></constant>
+	<!-- 通配符的配置方法一：需要设置这个常量为true，然后再在action中单独设置 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+
+    <package name="gdoj" extends="struts-default" strict-method-invocation="false">
 		<interceptors>  
 			<interceptor name="isLogin" class="com.gdoj.common.interceptor.LoginInterceptor"/>
 			<interceptor name="isEnter" class="com.gdoj.common.interceptor.EnterInterceptor"/>
@@ -159,11 +164,9 @@
 		<action name="problemset" class="problemListBean" method="problemSet">
 			<result name="success">/jsp/problemset.jsp</result>	
 		</action>
-
 		<action name="contests" class="contestListBean" method="contestSet">
 			<result name="success">/jsp/contest/contestlist.jsp</result>	
 		</action>
-
 		<action name="contest" class="contestShowBean" method="contestShow">
 			<result name="success">/jsp/contest/contestshow.jsp</result>	
 			<interceptor-ref name="defaultStack"></interceptor-ref>
@@ -715,9 +718,11 @@
 		<action name="jsonRatings" class="jsonRatingBean" method="queryUserRatingList">	
 			<result type="json"/>    	
 			   	 <param name="excludeProperties"></param> 			
-		</action> 	
-    </package>  
-	
-	
+		</action>
+	   <action name="uploadImage" class="jsonUploadBean" method="upload">
+		   <result type="json"/>
+		   <param name="excludeProperties"></param>
+	   </action>
+    </package>
 </struts>
 

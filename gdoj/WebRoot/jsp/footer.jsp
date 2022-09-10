@@ -3,7 +3,7 @@
  <div id="footer">
 	<div>
     Copyright &copy; 2011-2021 <a href="#" style="text-decoration: none;" target="_blank">weizengke</a>. All Rights Reserved.<br>
-	The Programming Contest Web 1.7 platform & Judge Kernel v1.1.280 version.<br>
+	The Programming Contest Web 1.8 platform & Judge Kernel v1.1.330 version.<br>
 	<a href="admin" title="administrator">Admin</a>&nbsp;|
 	<a href="#" class="locale-zh" title="Chinese">中文</a>&nbsp;|
 	<a href="#" class="locale-en" title="English">English</a><br>

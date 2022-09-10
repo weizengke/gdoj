@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</a>
 							<div class='b'>
 						<h3><a href="topic/<s:property value="messageId"/>" style="<s:if test="orderNum>0">color:red</s:if>"><s:property value="title"/></a></h3>
-		    			<p><s:property value="content_abstract" escape="false"/></p>
+		    			<p><s:property value="content_abstract" escapeHtml="false"/></p>
 		    			<div class="buttom">
 		    				<div class="opts">
 		    				<a href="topic/<s:property value="messageId"/>"><s:text name="topic.more"/></a>&nbsp;
@@ -62,17 +62,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class=left></div>
 					<div class="right">
 							<s:if test="page>1">
-								<a href="topic/page/<s:property value="page-1"/><s:if test="order!=null">?ORDER=<s:property value="order"/></s:if>" style="color:#000;text-decoration: none;">  &larr; </a>
+								<a href="topics/page/<s:property value="page-1"/><s:if test="order!=null">?ORDER=<s:property value="order"/></s:if>" style="color:#000;text-decoration: none;">  &larr; </a>
 							</s:if>	
 							<s:iterator value="pageList" status="st_page">				
 								<s:if test="pageList[#st_page.index]==0">...</s:if>
-								<s:else><a href="topic/page/<s:property/>" style="color:#000;text-decoration: none;">
+								<s:else><a href="topics/page/<s:property/>" style="color:#000;text-decoration: none;">
 									<s:if test="page==pageList[#st_page.index]"><b><s:property/></b></s:if>
 									<s:else><s:property/></s:else>
 								</a></s:else>
 							</s:iterator>	
 							<s:if test="page < pageCount">		
-								<a href="topic/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>		
+								<a href="topics/page/<s:property value="page+1"/>" style="color:#000;text-decoration: none;">  &rarr; </a>
 							</s:if>						
 				   </div>
 				</div>

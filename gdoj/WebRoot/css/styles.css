@@ -35,7 +35,6 @@ A.unsubmit:hover	{ COLOR: #CD6839; TEXT-DECORATION: none ;background-color:#9BCD
 
 .grey{color:grey}
 
-pre.prettyprint{font-size:110%;font-size:12px;line-height: 14px;min-height:128px;word-wrap:break-all;}
 .code{
 	font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
 	font-size:13px;line-height: 15px; display:block;
@@ -92,6 +91,7 @@ pre.prettyprint{font-size:110%;font-size:12px;line-height: 14px;min-height:128px
 .pop-div-judgelog{	
 	word-wrap:no-break-word;
 	white-space:nowrap;
+	font-size: 12px!important;
 	line-height: 10px;
 }
 

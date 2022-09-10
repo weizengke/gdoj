@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
 <s:if test="#session.session_username==null">
-<jsp:include   page="/jsp/problemshowguest.jsp"></jsp:include> 
+<jsp:include   page="/jsp/problemshowguest.jsp"></jsp:include>
 </s:if>
 <s:else>
 <jsp:include   page="/jsp/problemshowex.jsp"></jsp:include> 

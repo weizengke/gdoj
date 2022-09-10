@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" errorPage="error.jsp"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
-<LINK href="css/prettify.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="js/prettify.js"></script>
+<link rel="stylesheet" href="js/kindeditor/plugins/code/prettify.css" />
+<script charset="utf-8" src="js/kindeditor/plugins/code/prettify.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		prettyPrint();

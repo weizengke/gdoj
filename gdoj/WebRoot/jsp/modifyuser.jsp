@@ -6,7 +6,6 @@ com.util.Config" pageEncoding="UTF-8"%>
 <%@ page import="com.gdoj.bean.LangBean" %>
 <%@ page import="com.gdoj.bean.OJUtil" %>
 <%@taglib uri="/struts-tags" prefix="s"%>
-<%@taglib uri="/struts-dojo-tags" prefix="sx"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -15,7 +14,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <html>
   <head>
-   <sx:head extraLocales="en-us,nl-nl,de-de" />
     <base href="<%=basePath%>">
     <title>Setings</title>
 	<meta http-equiv="pragma" content="no-cache">
